@@ -1,0 +1,535 @@
+{
+  "retrieved_at": "2026-10-25T18:44:47.145136+00:00",
+  "pages": [
+    "https://misc.bpdb.gov.bd/daily-generation-archive",
+    "https://misc.bpdb.gov.bd/daily-generation-archive?page=10"
+  ],
+  "document_count": 75,
+  "documents": [
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261025_20261025111030.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261025_20261025111030.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261025_20261025111030.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261024_20261025105156.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261024_20261025105156.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261024_20261025105156.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261023_20261025103143.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261023_20261025103143.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261023_20261025103143.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261022_20261025095744.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261022_20261025095744.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261022_20261025095744.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261021_20261025093848.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261021_20261025093848.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261021_20261025093848.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261020_20261025091835.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261020_20261025091835.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261020_20261025091835.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20261020_20261025143041.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261019_20261019110801.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261019_20261019110801.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261019_20261019110801.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20261019_20261025143024.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261018_20261018120933.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261018_20261018120933.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261018_20261018120933.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20261018_20261019101525.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261017_20261017115328.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-17"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261017_20261017115328.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-17"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261017_20261017115328.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-17"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20261017_20261018094903.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-17"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20261016_20261017101355.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-16"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20261016_20261017101355.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-16"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20261016_20261017101355.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-16"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20261016_20261018094853.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive",
+      "archive_date_hint": "2026-10-16"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260727_20260727214000.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-27"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260727_20260727214000.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-27"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260727_20260727214000.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-27"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260727_20260730105503.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-27"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260726_20260727213914.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-26"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260726_20260727213914.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-26"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260726_20260727213914.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-26"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260726_20260727213914.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-26"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260725_20260727213758.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260725_20260727213758.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260725_20260727213758.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260725_20260727213758.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-25"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260724_20260727213638.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260724_20260727213638.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260724_20260727213638.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260724_20260727213656.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-24"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260723_20260727213511.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260723_20260727213511.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260723_20260727213511.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260723_20260727213545.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-23"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260722_20260722144447.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260722_20260722144447.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260722_20260722144447.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260722_20260727213532.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-22"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260721_20260721150936.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260721_20260721150936.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260721_20260721150936.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260721_20260722144342.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-21"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260720_20260720125604.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260720_20260720125604.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260720_20260720125604.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260720_20260722144332.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-20"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260719_20260719121446.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260719_20260719121446.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260719_20260719121446.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260719_20260720101146.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-19"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260718_20260718225922.pdf",
+      "label": "Download",
+      "category": "page_1",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_2_20260718_20260718225922.pdf",
+      "label": "Download",
+      "category": "page_2",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/page_3_20260718_20260718225922.pdf",
+      "label": "Download",
+      "category": "page_3",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-18"
+    },
+    {
+      "url": "https://misc.bpdb.gov.bd/storage/daily_archive/summary_20260718_20260720101138.pdf",
+      "label": "Download",
+      "category": "summary",
+      "archive_page_url": "https://misc.bpdb.gov.bd/daily-generation-archive?page=10",
+      "archive_date_hint": "2026-07-18"
+    }
+  ]
+}
