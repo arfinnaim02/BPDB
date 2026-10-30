@@ -33,3 +33,6 @@ out/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Google Drive worker credentials
+/secrets/
