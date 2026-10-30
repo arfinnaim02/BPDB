@@ -36,3 +36,5 @@ Thumbs.db
 
 # Google Drive worker credentials
 /secrets/
+
+.venv-recovery/
