@@ -2,6 +2,8 @@ name: BPDB daily collection
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
 
 permissions:
   contents: read
@@ -202,7 +204,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          python -u -m ingestion.daily_worker --apply --trigger manual
+          python -u -m ingestion.daily_worker --apply --trigger "${{ github.event_name == 'schedule' && 'scheduled' || 'manual' }}"
 
       - name: Save verified collection state
         id: save
