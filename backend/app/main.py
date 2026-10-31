@@ -55,7 +55,7 @@ def ready() -> HealthResponse:
         with get_engine().connect() as connection:
             connection.execute(text("SELECT 1"))
             revision = connection.execute(text("SELECT version_num FROM alembic_version")).scalar()
-            if revision != "0001_foundation":
+            if revision != "0002_environment_observations":
                 raise RuntimeError("Migration pending")
     except Exception:
         # Never return driver exception text; it can contain credentials or connection details.
