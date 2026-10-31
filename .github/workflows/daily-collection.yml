@@ -37,6 +37,113 @@ jobs:
           python -m pip install -r backend/requirements.txt
           python -m pip check
 
+      - name: Check BPDB connectivity
+        run: |
+          python - <<'PY'
+          import json
+          import socket
+          import ssl
+
+          import certifi
+          import httpx
+
+          from ingestion.http import create_client
+
+          host = "misc.bpdb.gov.bd"
+          url = f"https://{host}/daily-generation-archive?page=1"
+
+          try:
+              addresses = socket.getaddrinfo(
+                  host, 443, type=socket.SOCK_STREAM
+              )
+              print(json.dumps({
+                  "dns": "passed",
+                  "addresses": sorted({
+                      item[4][0] for item in addresses
+                  }),
+              }), flush=True)
+          except OSError as exc:
+              print(json.dumps({
+                  "dns": "failed",
+                  "error_type": type(exc).__name__,
+                  "errno": exc.errno,
+              }), flush=True)
+              raise SystemExit(1) from None
+
+          def probe(label, factory):
+              try:
+                  with factory() as client:
+                      with client.stream("GET", url) as response:
+                          content_type = response.headers.get(
+                              "content-type", ""
+                          )
+                          passed = (
+                              response.status_code == 200
+                              and "html" in content_type.lower()
+                          )
+                          print(json.dumps({
+                              "client": label,
+                              "passed": passed,
+                              "http_status": response.status_code,
+                              "content_type": content_type,
+                          }), flush=True)
+                          return passed
+              except Exception as exc:
+                  chain = []
+                  current = exc
+                  seen = set()
+
+                  while current is not None and id(current) not in seen:
+                      seen.add(id(current))
+                      item = {
+                          "error_type": type(current).__name__,
+                      }
+                      if isinstance(current, OSError):
+                          item["errno"] = current.errno
+                      if isinstance(
+                          current, ssl.SSLCertVerificationError
+                      ):
+                          item["verify_code"] = current.verify_code
+                          item["verify_message"] = current.verify_message
+
+                      chain.append(item)
+                      current = (
+                          current.__cause__ or current.__context__
+                      )
+
+                  print(json.dumps({
+                      "client": label,
+                      "passed": False,
+                      "exception_chain": chain,
+                  }), flush=True)
+                  return False
+
+          current_ok = probe(
+              "current_operating_system_store",
+              lambda: create_client(timeout=20),
+          )
+
+          probe(
+              "verified_ca_bundle",
+              lambda: httpx.Client(
+                  verify=ssl.create_default_context(
+                      cafile=certifi.where()
+                  ),
+                  timeout=20,
+                  follow_redirects=False,
+                  headers={
+                      "User-Agent": "BPDB-Research-Collector/0.2"
+                  },
+              ),
+          )
+
+          if not current_ok:
+              raise SystemExit(
+                  "BPDB connectivity preflight failed. "
+                  "Review the diagnostic output."
+              )
+          PY
+
       - name: Prepare private Drive credentials
         env:
           DRIVE_TOKEN_JSON: ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}

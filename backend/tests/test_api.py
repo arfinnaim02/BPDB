@@ -45,6 +45,14 @@ def test_readiness_migration_check(monkeypatch):
             with engine.begin() as c:
                 c.execute(text("CREATE TABLE alembic_version (version_num TEXT)"))
                 c.execute(text("INSERT INTO alembic_version VALUES ('0001_foundation')"))
+            assert client.get("/health/ready").status_code == 503
+
+            with engine.begin() as c:
+                c.execute(text(
+                    "UPDATE alembic_version "
+                    "SET version_num='0002_environment_observations'"
+                ))
+
             assert client.get("/health/ready").json()["status"] == "ready"
     engine.dispose()
 
