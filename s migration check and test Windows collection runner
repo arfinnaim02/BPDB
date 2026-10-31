@@ -1,0 +1,32 @@
+[1mdiff --git a/.github/workflows/daily-collection.yml b/.github/workflows/daily-collection.yml[m
+[1mindex ca612ba..27ad35a 100644[m
+[1m--- a/.github/workflows/daily-collection.yml[m
+[1m+++ b/.github/workflows/daily-collection.yml[m
+[36m@@ -12,9 +12,13 @@[m [mconcurrency:[m
+ [m
+ jobs:[m
+   collect:[m
+[31m-    runs-on: ubuntu-latest[m
+[32m+[m[32m    runs-on: windows-latest[m
+     timeout-minutes: 30[m
+ [m
+[32m+[m[32m    defaults:[m
+[32m+[m[32m      run:[m
+[32m+[m[32m        shell: bash[m
+[32m+[m
+     env:[m
+       PYTHONPATH: backend[m
+       PYTHONUNBUFFERED: "1"[m
+[1mdiff --git a/backend/app/main.py b/backend/app/main.py[m
+[1mindex 671de3f..32b8184 100644[m
+[1m--- a/backend/app/main.py[m
+[1m+++ b/backend/app/main.py[m
+[36m@@ -55,7 +55,7 @@[m [mdef ready() -> HealthResponse:[m
+         with get_engine().connect() as connection:[m
+             connection.execute(text("SELECT 1"))[m
+             revision = connection.execute(text("SELECT version_num FROM alembic_version")).scalar()[m
+[31m-            if revision != "0001_foundation":[m
+[32m+[m[32m            if revision != "0002_environment_observations":[m
+                 raise RuntimeError("Migration pending")[m
+     except Exception:[m
+         # Never return driver exception text; it can contain credentials or connection details.[m
