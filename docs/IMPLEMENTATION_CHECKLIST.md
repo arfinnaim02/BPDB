@@ -43,3 +43,11 @@
 - [ ] Frozen report snapshots and analytical PDF generator.
 - [ ] Verified literature, thesis draft and defense materials using actual outputs.
 
+
+
+## CSV presentation
+
+- [x] Values-only daily export with one row per date and descriptive unit headings.
+- [x] Separate source-evidence export retaining detailed provenance.
+- [x] Precision, null/zero, date-filter and dimension tests.
+- [ ] User acceptance of downloaded daily/evidence CSV against live Neon records.

@@ -56,3 +56,13 @@ full-history data-quality audit and analytical/model development.
 - Next: local authenticated desktop/mobile acceptance, then compatible API hosting and Vercel
   deployment. After that, complete the full-history data-quality audit before analytics/models.
 - See WEB_WORKSPACE.md for private configuration, commands, CSV semantics and acceptance checks.
+
+
+## Values-only daily CSV update
+
+- Main website CSV: one date per row, 13 stable metric headings with units, only dates and
+  numeric/blank cells. Source-evidence CSV remains a separate detailed download.
+- Date filters, chronological order, canonical-only selection and exact values are preserved.
+- Missing values remain blank; redundant fractional zeroes are removed without float conversion.
+- New tests cover headers, daily pivot, precision, zero/null distinction and dimension safeguards.
+- Local/live Neon acceptance of the new file format remains required after restarting servers.

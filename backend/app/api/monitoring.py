@@ -4,8 +4,9 @@ import csv
 import hashlib
 from collections.abc import Iterator
 from datetime import date, datetime, timezone
+from decimal import Decimal
 from io import StringIO
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from pydantic import BaseModel
@@ -277,6 +278,49 @@ CSV_FIELDS = (
 )
 
 
+# Fixed daily schema: heading, metric, unit, period, fuel. Never collapse dimensions.
+DAILY_COLUMNS = (
+    ("Day Peak Generation (MW)", "day_peak_generation", "MW", "day_peak", None),
+    ("Evening Peak Generation (MW)", "evening_peak_generation", "MW", "evening_peak", None),
+    ("Day Peak Demand (MW)", "day_peak_demand", "MW", "day_peak", None),
+    ("Evening Peak Demand (MW)", "evening_peak_demand", "MW", "evening_peak", None),
+    ("Minimum Generation (MW)", "minimum_generation", "MW", "daily_minimum", None),
+    ("Maximum Generation (MW)", "maximum_generation", "MW", "daily_maximum", None),
+    ("Energy Generated (million kWh)", "energy_generated", "million_kWh", "daily", None),
+    ("Energy Demand (million kWh)", "energy_demand", "million_kWh", "daily", None),
+    ("Energy Unserved (million kWh)", "energy_unserved", "million_kWh", "daily", None),
+    ("Maximum Temperature (deg C)", "maximum_temperature", "degC", "daily_maximum", None),
+    ("Gas Supplied (MMCFD)", "gas_supplied", "MMCFD", "daily", "gas"),
+    ("Production Cost per kWh (BDT/kWh)", "production_cost_per_kwh", "BDT/kWh", "daily", "all"),
+    ("Total Production Cost (BDT)", "total_production_cost", "BDT", "daily", "all"),
+)
+
+
+def daily_csv(days: list[MasterDay]) -> bytes:
+    output = StringIO(newline="")
+    headings = ["Operational Date", *(column[0] for column in DAILY_COLUMNS)]
+    writer = csv.writer(output)
+    writer.writerow(headings)
+    allowed = {column[1:] for column in DAILY_COLUMNS}
+    for day in days:
+        values = {}
+        for measurement in day.measurements:
+            key = (measurement.metric, measurement.unit, measurement.period, measurement.fuel)
+            if key not in allowed or key in values:
+                raise HTTPException(
+                    503, "Daily CSV requires supported unambiguous metric dimensions"
+                )
+            value = measurement.value
+            if value is not None:
+                value = format(Decimal(value), "f")
+                if "." in value:
+                    value = value.rstrip("0").rstrip(".")
+            values[key] = value
+        writer.writerow([day.operational_date, *(values.get(c[1:]) for c in DAILY_COLUMNS)])
+    # BOM lets spreadsheet applications recognize UTF-8; rows contain only dates/numbers/blanks.
+    return output.getvalue().encode("utf-8-sig")
+
+
 def csv_text(value) -> str:
     """Neutralize spreadsheet formulas in text without altering numeric measurements."""
     value = "" if value is None else str(value)
@@ -287,6 +331,7 @@ def csv_text(value) -> str:
 
 def export_csv(
     session: Session, start_date: date | None = None, end_date: date | None = None,
+    layout: Literal["daily", "evidence"] = "evidence",
 ) -> Response:
     if start_date and end_date and start_date > end_date:
         raise HTTPException(422, "start_date must not be after end_date")
@@ -325,9 +370,10 @@ def export_csv(
                 for key, value in record.items()
             })
             measurement_rows += 1
-    body = output.getvalue().encode("utf-8")
+    body = daily_csv(days) if layout == "daily" else output.getvalue().encode("utf-8")
+    filename = "bpdb-master-daily.csv" if layout == "daily" else "bpdb-source-evidence.csv"
     return Response(body, media_type="text/csv", headers={
-        "Content-Disposition": 'attachment; filename="bpdb-master.csv"',
+        "Content-Disposition": f'attachment; filename="{filename}"',
         "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
         "X-Dataset-SHA256": hashlib.sha256(body).hexdigest(),
         "X-Exported-At": exported_at, "X-Canonical-Dates": str(len(days)),
@@ -338,5 +384,7 @@ def export_csv(
 @router.get("/dataset/export.csv", response_class=Response)
 def download_csv(
     session: Database, start_date: date | None = None, end_date: date | None = None,
+    layout: Literal["daily", "evidence"] = "daily",
 ) -> Response:
-    return export_csv(session, start_date, end_date)
+    return export_csv(session, start_date, end_date, layout=layout)
+

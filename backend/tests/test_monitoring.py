@@ -283,3 +283,56 @@ def test_csv_bounds_empty_and_auth(session, monkeypatch):
             assert client.get("/api/v1/dataset/export.csv").status_code == 401
     finally:
         app.dependency_overrides.pop(read_session, None)
+
+
+
+def test_daily_csv_is_one_date_per_row_with_numeric_cells(session):
+    import csv
+    from io import StringIO
+
+    from app.api.monitoring import DAILY_COLUMNS, export_csv
+
+    _, version, source, _ = seed(session, 1)
+    seed(session, 3)
+    seed(session, 4, "partial")
+    session.add_all([
+        GenerationObservation(
+            version_id=version.id, source_id=source.id, metric="energy_generated",
+            value=Decimal("12.340000"), unit="million_kWh", period="daily",
+        ),
+        CostObservation(
+            version_id=version.id, source_id=source.id, metric="total_production_cost",
+            value=Decimal("0"), unit="BDT", period="daily", fuel="all",
+        ),
+    ])
+    session.flush()
+    response = export_csv(session, layout="daily")
+    rows = list(csv.reader(StringIO(response.body.decode("utf-8-sig"))))
+    assert rows[0] == ["Operational Date", *(column[0] for column in DAILY_COLUMNS)]
+    assert len(rows) == 3
+    assert rows[1][0] == "2026-01-01" and rows[2][0] == "2026-01-03"
+    assert rows[1][1] == "1234.5" and rows[1][7] == "12.34"
+    assert rows[1][-1] == "0" and rows[2][-1] == ""
+    for row in rows[1:]:
+        assert len(row) == len(rows[0])
+        for value in row[1:]:
+            if value:
+                assert Decimal(value).is_finite()
+    assert "source_url" not in rows[0] and "raw_text" not in rows[0]
+    filtered = export_csv(session, date(2026, 1, 3), date(2026, 1, 3), layout="daily")
+    assert len(list(csv.reader(StringIO(filtered.body.decode("utf-8-sig"))))) == 2
+
+
+def test_daily_csv_refuses_unsupported_dimensions(session):
+    from app.api.monitoring import export_csv
+
+    _, version, source, _ = seed(session, 1)
+    session.add(CostObservation(
+        version_id=version.id, source_id=source.id, metric="total_production_cost",
+        value=Decimal("1"), unit="BDT", fuel="coal", period="daily",
+    ))
+    session.flush()
+    with pytest.raises(HTTPException) as exc:
+        export_csv(session, layout="daily")
+    assert exc.value.status_code == 503
+    assert export_csv(session, layout="evidence").status_code == 200
