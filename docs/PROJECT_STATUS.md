@@ -75,3 +75,16 @@ full-history data-quality audit and analytical/model development.
 - Existing GitHub Actions worker, Neon data and Drive persistence retained.
 - Actual Vercel import, private environment configuration and live acceptance remain pending.
 - Follow VERCEL_DEPLOYMENT.md; hosting is not marked complete by code preparation.
+
+
+## Full-history quality reporting — November 1, 2026
+- User reports the API and website are live on Vercel; production URLs were not independently inspected.
+- Added authenticated /api/v1/dataset/quality using all current validated national records.
+- Calendar coverage by year, full-history/year-selected metric availability, explicit zero counts,
+  first/last non-null bounds and paginated inclusive gap ranges.
+- Replaced the previous latest-100-date sample; no source-gap cause is inferred.
+- Local tests: 57 backend passed, 1 PostgreSQL integration skipped; 4 frontend tests passed.
+  TypeScript, Next.js build, Ruff, Python compilation and dependency checks passed.
+- Live acceptance of this endpoint/page remains pending after both Vercel deployments.
+- Next: investigate gaps, unavailable fields and original-source agreement before research modelling.
+- Definitions and acceptance: DATA_QUALITY.md.

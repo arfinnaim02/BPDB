@@ -59,3 +59,13 @@
 - [ ] Import backend project and verify live/readiness plus authenticated data.
 - [ ] Import frontend project, configure private environment and verify live workspace.
 - [ ] Verify CSV, source links and scheduled updates with local terminals closed.
+
+
+## Full-history data quality
+- [x] All-current-canonical metric availability, including zeros and preserving dimensions.
+- [x] Calendar coverage per year, including partial boundary years and missing entire years.
+- [x] Metric year selector and earliest/latest non-null dates.
+- [x] Inclusive calendar-gap ranges, pagination and explicit unassessed source status.
+- [x] Aggregation, exclusions, date edge cases, auth and pagination tests.
+- [ ] Verify the deployed quality page and API against live Neon.
+- [ ] Investigate source causes and independently validate selected original PDF measurements.
