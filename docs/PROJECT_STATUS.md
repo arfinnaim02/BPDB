@@ -38,6 +38,21 @@
 
 ## Next milestone
 
-Run the authenticated API acceptance checks, then build the real-data management frontend:
-Overview, Collection History, Master Dataset and Data Quality. Add dashboard CSV access,
-choose compatible API hosting and deploy before moving to analytical/model development.
+Complete local browser acceptance of the real-data management frontend and CSV download.
+Then choose compatible API hosting and deploy the API/frontend before moving to the
+full-history data-quality audit and analytical/model development.
+
+
+## Website update — November 1, 2026
+
+- Real-data Overview, Collection History, Master Dataset and Data Quality pages implemented.
+- Server-only API access, signed administrator sessions, sign-out and safe source links.
+- Date filters, bounded pagination, metric-column selection and expandable source evidence.
+- Complete filtered long-format CSV download from one backend snapshot, with provenance.
+- Recent-sample metric availability is separate from whole-history calendar coverage.
+- Frontend tests, TypeScript and production build passed; backend 44 passed, 1 skipped.
+- Browser QA unavailable due to preview service/Next.js CLI incompatibility. No live Neon
+  acceptance or website/API deployment was performed for this update.
+- Next: local authenticated desktop/mobile acceptance, then compatible API hosting and Vercel
+  deployment. After that, complete the full-history data-quality audit before analytics/models.
+- See WEB_WORKSPACE.md for private configuration, commands, CSV semantics and acceptance checks.

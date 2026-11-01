@@ -28,8 +28,10 @@
 - [x] Protected paginated current master records, date filters and provenance.
 - [x] Automated canonical filtering, authentication, pagination and consistency tests.
 - [ ] Authenticated live acceptance of the newly committed API against Neon.
-- [ ] Dashboard CSV download with dataset metadata.
-- [ ] Real-data Overview, Collection, Dataset and Data Quality frontend pages.
+- [x] Dashboard filtered CSV download with export timestamp, version/source lineage and HTTP checksum.
+- [x] Real-data Overview, Collection, Dataset and Data Quality frontend pages implemented.
+- [x] Signed workspace sessions and server-only backend credentials.
+- [ ] Live browser acceptance of website, source evidence and CSV against Neon.
 - [ ] API/frontend hosting and deployed end-to-end acceptance.
 
 ## Research
@@ -40,3 +42,4 @@
 - [ ] Forecast dashboards, uncertainty and evidence-backed decision support.
 - [ ] Frozen report snapshots and analytical PDF generator.
 - [ ] Verified literature, thesis draft and defense materials using actual outputs.
+

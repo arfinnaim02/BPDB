@@ -1,39 +1,24 @@
+import Link from "next/link";
+import { requireSession } from "../lib/auth";
+import { readApi } from "../lib/backend";
+import { calendar, count, timestamp } from "../lib/format";
+import type { History, Summary } from "../lib/types";
+import { Badge, ErrorPanel, Heading, Icon, Shell, Stat, Updated } from "../components/ui";
+import { RunTable } from "../components/run-table";
 export const dynamic = "force-dynamic";
-type Check = { label: string; message: string; ok: boolean };
-async function check(label: string, path: string): Promise<Check> {
-  const base = process.env.BACKEND_URL || "http://127.0.0.1:8000";
-  try {
-    const response = await fetch(`${base}${path}`, {
-      cache: "no-store", signal: AbortSignal.timeout(12000),
-    });
-    const body: unknown = await response.json();
-    const message = body && typeof body === "object" && "detail" in body
-      ? String(body.detail) : response.ok ? "Available" : "Unavailable";
-    return { label, message, ok: response.ok };
-  } catch {
-    return { label, message: "Backend could not be reached", ok: false };
-  }
-}
-export default async function Page() {
-  const checks = await Promise.all([
-    check("API process", "/health/live"), check("Database and migration", "/health/ready"),
+export default async function Overview() {
+  await requireSession();
+  const [summary, history] = await Promise.all([
+    readApi<Summary>("/api/v1/dataset/summary"), readApi<History>("/api/v1/collection/runs?limit=5"),
   ]);
-  return <main className="mx-auto max-w-4xl px-6 py-16">
-    <p className="text-sm font-semibold uppercase tracking-widest text-slate-500">Research platform · Day 1</p>
-    <h1 className="mt-3 text-4xl font-semibold">BPDB Intelligence</h1>
-    <p className="mt-4 max-w-2xl text-lg text-slate-600">Data acquisition, forecasting and decision support for Bangladesh’s power sector.</p>
-    <section aria-label="System health" className="mt-10 grid gap-4 sm:grid-cols-2">
-      {checks.map(item => <article key={item.label} className="rounded-xl border border-slate-200 bg-white p-6">
-        <h2 className="font-semibold">{item.label}</h2>
-        <p className={`mt-3 text-sm ${item.ok ? "text-emerald-700" : "text-amber-800"}`}>
-          {item.ok ? "Ready: " : "Pending: "}{item.message}
-        </p>
-      </article>)}
-    </section>
-    <section className="mt-8 rounded-xl bg-slate-900 p-6 text-white">
-      <h2 className="text-xl font-semibold">Research data pending</h2>
-      <p className="mt-3 text-slate-300">No measurements or forecasts are displayed until authentic reports have been parsed and validated. The collector schedule, analytics and forecasting modules are planned for subsequent phases.</p>
-    </section>
-    <p className="mt-8 text-sm text-slate-600">Refresh this page after starting the API or applying migrations to check the connection again.</p>
-  </main>;
+  const data = summary.ok ? summary.data : null;
+  const latest = history.ok ? history.data.items[0] : undefined;
+  return <Shell active="/"><Heading eyebrow="YOUR DATA, IN VIEW" title="Workspace overview" description="A clear view of your national dataset and its daily collection pipeline."><Link className="button primary" href="/dataset">Explore dataset <Icon name="arrow"/></Link></Heading>
+    {!summary.ok && <ErrorPanel message={summary.message}/>}
+    {data && <><div className="section-meta"><span className="scope-tag">Validated national records</span><Updated at={data.generated_at}/></div><div className="stat-grid"><Stat label="CANONICAL DATES" value={count(data.canonical_dates)} detail="One current validated record per date" accent/><Stat label="LATEST OPERATIONAL DATE" value={calendar(data.latest_operational_date)} detail="Date covered by the latest canonical report"/><Stat label="HISTORY STARTS" value={calendar(data.earliest_operational_date)} detail="Earliest canonical operational date"/><Stat label="CALENDAR GAPS" value={count(data.missing_dates_between_bounds)} detail="Dates without a canonical record between bounds"/></div></>}
+    <div className="overview-grid"><section className="panel pipeline-panel"><div className="panel-heading"><div><span className="tiny-label">DAILY OPERATION</span><h2>Collection pipeline</h2></div><Icon name="collection"/></div>{!history.ok ? <ErrorPanel message={history.message}/> : <><div className="pipeline-status">{latest ? <Badge status={latest.status}/> : <span className="muted">No recorded run</span>}<span className="muted">Latest worker outcome</span></div><dl className="detail-list"><div><dt>Latest run</dt><dd>{latest ? timestamp(latest.started_at) + " BD" : "Not recorded"}</dd></div><div><dt>Schedule target</dt><dd>12:00 · Asia/Dhaka</dd></div><div><dt>Execution</dt><dd>GitHub Actions · Python worker</dd></div><div><dt>Drive checkpoint</dt><dd>Verify in GitHub Actions</dd></div></dl><p className="small-note">Scheduled starts can be delayed. Worker success and Drive persistence are separate outcomes.</p><a href="https://github.com/arfinnaim02/BPDB/actions/workflows/daily-collection.yml" target="_blank" rel="noreferrer" className="inline-link">Open workflow runs ↗</a></>}</section>
+    <section className="research-card"><span className="tiny-label">RESEARCH FOUNDATION</span><h2>Traceable data.<br/>Trustworthy next steps.</h2><p>Every displayed measurement comes from a current validated Neon record, with its original PDF reference and extraction evidence.</p><div className="research-tags"><span>Source lineage</span><span>Exact units</span><span>Version history</span></div><Link href="/quality" className="light-link">Review data coverage <Icon name="arrow"/></Link></section></div>
+    <section className="panel"><div className="panel-heading"><div><h2>Recent collections</h2><p>The latest daily worker runs recorded in Neon.</p></div><Link href="/collection" className="inline-link">View all runs →</Link></div>{history.ok ? <RunTable runs={history.data.items}/> : <ErrorPanel message={history.message}/>}</section>
+    <div className="notice"><strong>Current research scope</strong><p>Supported Page 1 national metrics. Regional, fuel-wise and recorded zonal load-shedding extraction are still pending. Calendar gaps do not prove that official reports are missing.</p></div>
+  </Shell>;
 }

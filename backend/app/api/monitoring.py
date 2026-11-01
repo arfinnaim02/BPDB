@@ -1,7 +1,10 @@
 """Read-only views of canonical data and daily worker history."""
 
+import csv
+import hashlib
 from collections.abc import Iterator
 from datetime import date, datetime, timezone
+from io import StringIO
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
@@ -188,6 +191,14 @@ def read_master(
     rows = session.execute(query.order_by(DailyReport.report_date.desc()).offset(
         (page - 1) * page_size
     ).limit(page_size)).all()
+    return MasterPage(
+        total_dates=total, page=page, page_size=page_size,
+        total_pages=(total + page_size - 1) // page_size,
+        items=materialize_days(session, rows),
+    )
+
+
+def materialize_days(session: Session, rows) -> list[MasterDay]:
     days = {
         row.version_id: MasterDay(
             operational_date=row.operational_date, report_version_id=row.version_id,
@@ -229,10 +240,8 @@ def read_master(
             if not day.sources or not day.measurements:
                 raise HTTPException(503, "Canonical data consistency check failed")
             day.measurements.sort(key=lambda m: (m.metric, m.period, m.unit, m.fuel or ""))
-    return MasterPage(
-        total_dates=total, page=page, page_size=page_size,
-        total_pages=(total + page_size - 1) // page_size, items=list(days.values()),
-    )
+    return list(days.values())
+
 
 
 @router.get("/dataset/summary", response_model=DatasetSummary)
@@ -257,3 +266,77 @@ def daily(
 ) -> MasterPage:
     response.headers["Cache-Control"] = "no-store"
     return read_master(session, start_date, end_date, page, page_size)
+
+
+# Bounded in-memory export; use the existing CLI for larger research snapshots.
+MAX_EXPORT_DATES = 10000
+CSV_FIELDS = (
+    "exported_at", "operational_date", "quality_status", "report_version_id",
+    "parser_version", "available_at", "metric", "value", "unit", "zone", "period",
+    "fuel", "source_id", "source_page", "source_url", "source_sha256", "raw_text",
+)
+
+
+def csv_text(value) -> str:
+    """Neutralize spreadsheet formulas in text without altering numeric measurements."""
+    value = "" if value is None else str(value)
+    if value.lstrip().startswith(("=", "+", "-", "@")) or value.startswith(("\t", "\r", "\n")):
+        return "'" + value
+    return value
+
+
+def export_csv(
+    session: Session, start_date: date | None = None, end_date: date | None = None,
+) -> Response:
+    if start_date and end_date and start_date > end_date:
+        raise HTTPException(422, "start_date must not be after end_date")
+    query = canonical_query()
+    if start_date:
+        query = query.where(DailyReport.report_date >= start_date)
+    if end_date:
+        query = query.where(DailyReport.report_date <= end_date)
+    rows = session.execute(
+        query.order_by(DailyReport.report_date).limit(MAX_EXPORT_DATES + 1)
+    ).all()
+    if len(rows) > MAX_EXPORT_DATES:
+        raise HTTPException(422, "Narrow the export date range or use the export CLI")
+    days = materialize_days(session, rows)
+    exported_at = datetime.now(timezone.utc).isoformat()
+    output = StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=CSV_FIELDS)
+    writer.writeheader()
+    measurement_rows = 0
+    for day in days:
+        sources = {source.id: source for source in day.sources}
+        for measurement in day.measurements:
+            source = sources[measurement.source_id]
+            record = {
+                "exported_at": exported_at, "operational_date": day.operational_date,
+                "quality_status": "validated", "report_version_id": day.report_version_id,
+                "parser_version": day.parser_version, "available_at": day.available_at,
+                "metric": measurement.metric, "value": measurement.value,
+                "unit": measurement.unit, "zone": measurement.zone, "period": measurement.period,
+                "fuel": measurement.fuel, "source_id": measurement.source_id,
+                "source_page": measurement.source_page, "source_url": source.url,
+                "source_sha256": source.sha256, "raw_text": measurement.raw_text,
+            }
+            writer.writerow({
+                key: value if key in ("value", "source_page") else csv_text(value)
+                for key, value in record.items()
+            })
+            measurement_rows += 1
+    body = output.getvalue().encode("utf-8")
+    return Response(body, media_type="text/csv", headers={
+        "Content-Disposition": 'attachment; filename="bpdb-master.csv"',
+        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
+        "X-Dataset-SHA256": hashlib.sha256(body).hexdigest(),
+        "X-Exported-At": exported_at, "X-Canonical-Dates": str(len(days)),
+        "X-Measurement-Rows": str(measurement_rows),
+    })
+
+
+@router.get("/dataset/export.csv", response_class=Response)
+def download_csv(
+    session: Database, start_date: date | None = None, end_date: date | None = None,
+) -> Response:
+    return export_csv(session, start_date, end_date)

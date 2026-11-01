@@ -232,3 +232,54 @@ def test_history_order_and_limit(session):
     history = read_runs(session, 2)
     assert len(history.items) == 2
     assert [item.started_at.day for item in history.items] == [3, 2]
+
+
+def test_csv_snapshot_precision_provenance_and_formula_safety(session):
+    import csv
+    import hashlib
+    from io import StringIO
+
+    from app.api.monitoring import export_csv
+
+    _, _, source, measurement = seed(session, 1)
+    measurement.raw_text = '=HYPERLINK("bad")'
+    seed(session, 3)
+    seed(session, 4, "partial")
+    session.flush()
+    response = export_csv(session)
+    rows = list(csv.DictReader(StringIO(response.body.decode())))
+    assert len(rows) == 2
+    assert [row["operational_date"] for row in rows] == ["2026-01-01", "2026-01-03"]
+    assert rows[0]["value"] == "1234.500000"
+    assert rows[0]["source_sha256"] == source.sha256
+    assert rows[0]["source_url"] == source.original_url
+    assert rows[0]["available_at"] == ""
+    assert rows[0]["raw_text"].startswith("'=HYPERLINK")
+    assert response.headers["x-dataset-sha256"] == hashlib.sha256(response.body).hexdigest()
+    assert response.headers["x-canonical-dates"] == "2"
+    assert response.headers["x-measurement-rows"] == "2"
+    filtered = export_csv(session, date(2026, 1, 3), date(2026, 1, 3))
+    assert filtered.headers["x-measurement-rows"] == "1"
+
+
+def test_csv_bounds_empty_and_auth(session, monkeypatch):
+    from app.api.monitoring import export_csv
+
+    assert export_csv(session).headers["x-measurement-rows"] == "0"
+    with pytest.raises(HTTPException) as exc:
+        export_csv(session, date(2026, 2, 1), date(2026, 1, 1))
+    assert exc.value.status_code == 422
+    seed(session, 1)
+    monkeypatch.setattr("app.api.monitoring.MAX_EXPORT_DATES", 0)
+    with pytest.raises(HTTPException) as exc:
+        export_csv(session)
+    assert exc.value.status_code == 422
+    monkeypatch.setattr("app.main.get_settings", lambda: Settings(
+        _env_file=None, admin_api_key="test-only",
+    ))
+    app.dependency_overrides[read_session] = lambda: None
+    try:
+        with TestClient(app) as client:
+            assert client.get("/api/v1/dataset/export.csv").status_code == 401
+    finally:
+        app.dependency_overrides.pop(read_session, None)

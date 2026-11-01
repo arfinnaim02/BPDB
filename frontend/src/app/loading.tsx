@@ -1,3 +1,3 @@
 export default function Loading() {
-  return <p role="status" className="p-10">Checking system health…</p>;
+  return <main className="loading-page" aria-busy="true"><div className="spinner"/><h1>Reading the dataset…</h1><p>Fetching current canonical records from the API.</p></main>;
 }

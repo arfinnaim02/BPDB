@@ -1,0 +1,7 @@
+import type { Run } from "../lib/types";
+import { count, duration, timestamp } from "../lib/format";
+import { Badge, Empty } from "./ui";
+export function RunTable({ runs, detailed = false }: { runs: Run[]; detailed?: boolean }) {
+  if (!runs.length) return <Empty title="No worker runs recorded" text="Collection history will appear when the daily worker records a run in Neon."/>;
+  return <div className="table-scroll"><table><caption className="sr-only">Daily collection worker history. Times are Bangladesh time.</caption><thead><tr><th>Started · Bangladesh</th><th>Status</th><th>Trigger</th><th className="numeric">Downloaded</th><th className="numeric">Promoted</th><th className="numeric">Scan failures</th>{detailed && <><th className="numeric">Processing errors</th><th>Duration</th></>}</tr></thead><tbody>{runs.map(run => <tr key={run.id}><td><span className="table-strong">{timestamp(run.started_at)}</span><span className="table-sub" title={run.id}>Run {run.id.slice(0, 8)}</span></td><td><Badge status={run.status}/></td><td><span className="trigger">{run.trigger}</span></td><td className="numeric">{count(run.counters.downloaded)}</td><td className="numeric">{count(run.counters.promoted)}</td><td className={`numeric ${run.archive_page_failures ? "text-danger" : ""}`}>{count(run.archive_page_failures)}</td>{detailed && <><td className="numeric">{count(run.counters.processing_failed)}</td><td className="muted nowrap">{duration(run.started_at, run.finished_at)}</td></>}</tr>)}</tbody></table></div>;
+}

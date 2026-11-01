@@ -16,11 +16,15 @@
    constraints do not substitute for a production permissions and concurrency audit.
 9. Each API request uses a consistent PostgreSQL snapshot, but separate pagination requests can
    observe intervening canonical changes. This API is not a frozen research dataset version.
-10. Frontend is still the foundation health page; dashboard CSV access and application hosting
-    remain to be implemented. No new web deployment is part of this update.
+10. The data-management frontend and CSV download are implemented, but live browser/Neon
+    acceptance and frontend/API deployment remain outstanding. Managed browser preview could
+    not launch Next.js because it supplied unsupported CLI options.
+    The shared administrator sign-in has no durable distributed rate limiter; configure
+    hosting-layer access controls before public deployment.
 11. `/system` capability flags describe implemented features, not scheduler punctuality or health.
 12. Publication/availability timestamps and metric coverage must be audited before forecasting.
     Historical consumed-fuel cost and modern production cost definitions must not be merged blindly.
 13. No research models, validated forecast results, decision module, analytical PDF generator or
     complete thesis draft are implemented in the current repository.
 14. FastAPI/Starlette TestClient emits an upstream httpx deprecation warning; tests still pass.
+

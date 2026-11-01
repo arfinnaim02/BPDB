@@ -8,6 +8,7 @@ Do not put this key into frontend browser code or a `NEXT_PUBLIC_*` variable.
 | --- | --- | --- |
 | `/api/v1/dataset/summary` | None | Current validated national date count, bounds and calendar gaps |
 | `/api/v1/collection/runs` | `limit=20` (1–100) | Latest daily-worker runs, newest first; safe counters and scan outcomes |
+| `/api/v1/dataset/export.csv` | `start_date`, `end_date` | Complete filtered national long-format CSV in one read-only snapshot |
 | `/api/v1/dataset/daily` | `start_date`, `end_date`, `page=1`, `page_size=20` | Current validated national records with version/source/measurement evidence |
 
 Dates use ISO `YYYY-MM-DD`; bounds are inclusive. `page` is 1–100000 and `page_size` is
@@ -55,4 +56,6 @@ Open `http://127.0.0.1:8000/docs`; use **Try it out** and the `x-api-key` field:
 7. Confirm no secret/storage path is exposed and responses contain `Cache-Control: no-store`.
 
 The existing `ingestion.export_master` CLI still produces database-derived CSVs.
-An HTTP CSV endpoint and the real-data frontend are separate next work items.
+The HTTP CSV endpoint and real-data frontend are now implemented; see WEB_WORKSPACE.md
+for setup, export scope and live acceptance checks.
+
