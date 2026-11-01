@@ -26,7 +26,8 @@ def test_admin_auth(monkeypatch):
         assert client.get("/api/v1/system").status_code == 401
         assert client.get("/api/v1/system", headers={"X-API-Key": "wrong"}).status_code == 401
         response = client.get("/api/v1/system", headers={"X-API-Key": "test-only-value"})
-        assert response.json()["scheduler_implemented"] is False
+        assert response.json()["scheduler_implemented"] is True
+        assert response.json()["parser_implemented"] is True
 
 
 def test_readiness_migration_check(monkeypatch):
@@ -73,3 +74,4 @@ def test_config_tls_and_driver():
         database_url="postgresql+psycopg://test:test@ep-test.neon.tech/db?sslmode=require",
     )
     assert "test:test" not in repr(settings)
+

@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import text
 
+from app.api.monitoring import router as monitoring_router
 from app.core.config import get_settings
 from app.db.session import get_engine
 
@@ -42,6 +43,9 @@ def require_admin(x_api_key: Annotated[str | None, Header()] = None) -> None:
         raise HTTPException(401, "Invalid API key")
 
 
+app.include_router(monitoring_router, dependencies=[Depends(require_admin)])
+
+
 @app.get("/health/live", response_model=HealthResponse)
 def live() -> HealthResponse:
     return HealthResponse(status="ok")
@@ -66,8 +70,9 @@ def ready() -> HealthResponse:
 @app.get("/api/v1/system", dependencies=[Depends(require_admin)])
 def system() -> dict:
     return {
-        "phase": "foundation",
+        "phase": "data_management",
         "collection_schedule": "12:00 Asia/Dhaka",
-        "scheduler_implemented": False,
-        "parser_implemented": False,
+        "scheduler_implemented": True,
+        "parser_implemented": True,
     }
+

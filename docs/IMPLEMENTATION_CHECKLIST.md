@@ -1,57 +1,42 @@
-# Implementation checklist
+# Implementation checklist — November 1, 2026
 
-## Day 1 — foundation
+## Acquisition and canonical dataset
 
-- [x] Read instructions and audit local inputs.
-- [x] Audit available legacy collector/parser, CSV and selected ML code in shared Drive.
-- [x] Define architecture, relational schema and canonical correction rules.
-- [x] Initialize repository and implement FastAPI foundation.
-- [x] Implement Neon-compatible configuration and frozen initial migration.
-- [x] Implement bounded archive discovery and tests.
-- [x] Reuse numeric preservation principle with exact Decimal validation.
-- [x] Implement minimal Next.js / TypeScript / Tailwind status page.
-- [x] Test backend, lint, frontend compilation and API/frontend runtime wiring.
-- [x] Supply Windows commands and maintain required status documents.
-- [ ] Verify successful actual Neon connection and migration execution.
-- [ ] Verify actual archive discovery against live HTML and PDFs.
-- [ ] Confirm complete source inventory and source-verified field dictionary.
+- [x] Repository, database schema, migrations and health endpoints.
+- [x] Historical PDF collection and incremental archive scanning.
+- [x] Supported Page 1 national extraction, validation and quarantine.
+- [x] Source registration, staging and database consistency verification.
+- [x] Canonical promotion and repeat-ingestion checks on the initial imported batch.
+- [x] Authoritative database-derived CSV export.
+- [ ] Complete independent source-sample audit and per-metric historical coverage assessment.
+- [ ] Investigate calendar gaps, failed extractions and ambiguous/conflicting sources.
+- [ ] Extract supported regional, fuel-wise and recorded load-shedding fields.
 
-## Day 2 — ingestion
+## Daily operation
 
-- [ ] Preserve immutable original PDFs in persistent storage.
-- [ ] Adapt and independently verify modern/legacy parsers with authentic fixtures.
-- [ ] Resolve legacy source date / zonal temporal-grain / energy-scale issues.
-- [ ] Validate source units, totals, missingness and source membership.
-- [ ] Implement idempotent ingestion, reviewed revisions and quarantine.
-- [ ] Test concurrent PostgreSQL behavior and repeated end-to-end collection.
-- [ ] Backfill verified history and derive authoritative CSV from database snapshots.
+- [x] Hosted worker, private credentials, serialized workflow writes.
+- [x] Recent-file/checkpoint persistence and checksum-verified restore.
+- [x] Successful manual and scheduled hosted execution.
+- [ ] Observe sustained scheduled operation and add failure notifications.
+- [ ] Detect replacements at already-known URLs.
+- [ ] Complete historical cloud backup and full disaster-recovery test.
+- [ ] Persist/link Drive outcome to the corresponding database run.
 
-## Day 3 — scheduling and analytics
+## Data-management platform
 
-- [ ] Noon Asia/Dhaka worker, retries, overlap scan, job locking and monitoring.
-- [ ] Data quality, generation, demand, fuel, cost and shedding analytics.
-- [ ] Independent numerical reconciliation and analytical API tests.
+- [x] Protected summary and daily-worker history endpoints.
+- [x] Protected paginated current master records, date filters and provenance.
+- [x] Automated canonical filtering, authentication, pagination and consistency tests.
+- [ ] Authenticated live acceptance of the newly committed API against Neon.
+- [ ] Dashboard CSV download with dataset metadata.
+- [ ] Real-data Overview, Collection, Dataset and Data Quality frontend pages.
+- [ ] API/frontend hosting and deployed end-to-end acceptance.
 
-## Day 4 — research
+## Research
 
-- [ ] Confirm targets, source availability and sufficient coverage.
-- [ ] Exact calendar target/lag alignment, fold-contained preprocessing and baselines.
-- [ ] Walk-forward evaluations, uncertainty and reproducible model artifacts.
-- [ ] Audit feasibility of zonal event prediction; document unsupported tasks.
-
-## Day 5 — dashboard
-
-- [ ] Real data overview, collection, dataset, quality and analytics views.
-- [ ] Validated experiment, forecast and evidence-backed decision views.
-- [ ] Responsive, accessible filters, navigation and failure states.
-
-## Day 6 — reporting
-
-- [ ] Frozen analytical snapshots, report jobs and reproducible academic PDF generator.
-- [ ] Verified references, figures, tables, methodology and thesis draft.
-
-## Day 7 — finalization
-
-- [ ] Full live collection, database, forecasting and reporting integration checks.
-- [ ] Deployment, backup/recovery verification and final demonstration guide.
-- [ ] Thesis review and defense material based only on reproduced results.
+- [ ] Data dictionary, variable coverage, target feasibility and availability-time policy.
+- [ ] Independently verified historical aggregations and analytics.
+- [ ] Chronological baselines, walk-forward evaluation and reproducible model artifacts.
+- [ ] Forecast dashboards, uncertainty and evidence-backed decision support.
+- [ ] Frozen report snapshots and analytical PDF generator.
+- [ ] Verified literature, thesis draft and defense materials using actual outputs.
