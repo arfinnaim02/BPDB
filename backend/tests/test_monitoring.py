@@ -336,3 +336,16 @@ def test_daily_csv_refuses_unsupported_dimensions(session):
         export_csv(session, layout="daily")
     assert exc.value.status_code == 503
     assert export_csv(session, layout="evidence").status_code == 200
+
+
+def test_hosted_export_size_limit_is_explicit(session, monkeypatch):
+    from app.api.monitoring import export_csv
+
+    seed(session, 1)
+    monkeypatch.setattr("app.api.monitoring.MAX_HOSTED_CSV_BYTES", 1)
+    monkeypatch.setenv("VERCEL", "1")
+    with pytest.raises(HTTPException) as exc:
+        export_csv(session, layout="daily")
+    assert exc.value.status_code == 422
+    monkeypatch.delenv("VERCEL")
+    assert export_csv(session, layout="daily").status_code == 200

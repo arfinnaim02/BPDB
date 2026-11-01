@@ -66,3 +66,12 @@ full-history data-quality audit and analytical/model development.
 - Missing values remain blank; redundant fractional zeroes are removed without float conversion.
 - New tests cover headers, daily pivot, precision, zero/null distinction and dimension safeguards.
 - Local/live Neon acceptance of the new file format remains required after restarting servers.
+
+
+## Vercel deployment preparation
+- Two projects from one repository: backend FastAPI and frontend Next.js.
+- Python 3.12 pin, API 60-second function configuration and frontend export duration.
+- Explicit hosted CSV size guard to avoid oversized function responses.
+- Existing GitHub Actions worker, Neon data and Drive persistence retained.
+- Actual Vercel import, private environment configuration and live acceptance remain pending.
+- Follow VERCEL_DEPLOYMENT.md; hosting is not marked complete by code preparation.

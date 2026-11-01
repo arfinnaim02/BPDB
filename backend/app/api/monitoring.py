@@ -2,6 +2,7 @@
 
 import csv
 import hashlib
+import os
 from collections.abc import Iterator
 from datetime import date, datetime, timezone
 from decimal import Decimal
@@ -271,6 +272,7 @@ def daily(
 
 # Bounded in-memory export; use the existing CLI for larger research snapshots.
 MAX_EXPORT_DATES = 10000
+MAX_HOSTED_CSV_BYTES = 4_000_000
 CSV_FIELDS = (
     "exported_at", "operational_date", "quality_status", "report_version_id",
     "parser_version", "available_at", "metric", "value", "unit", "zone", "period",
@@ -371,6 +373,10 @@ def export_csv(
             })
             measurement_rows += 1
     body = daily_csv(days) if layout == "daily" else output.getvalue().encode("utf-8")
+    if os.environ.get("VERCEL") == "1" and len(body) > MAX_HOSTED_CSV_BYTES:
+        raise HTTPException(
+            422, "Hosted export is too large; narrow the dates or use the export CLI"
+        )
     filename = "bpdb-master-daily.csv" if layout == "daily" else "bpdb-source-evidence.csv"
     return Response(body, media_type="text/csv", headers={
         "Content-Disposition": f'attachment; filename="{filename}"',

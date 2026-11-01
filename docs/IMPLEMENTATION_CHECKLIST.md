@@ -51,3 +51,11 @@
 - [x] Separate source-evidence export retaining detailed provenance.
 - [x] Precision, null/zero, date-filter and dimension tests.
 - [ ] User acceptance of downloaded daily/evidence CSV against live Neon records.
+
+
+## Hosting
+- [x] Prepare backend/frontend Vercel configuration and deployment guide.
+- [x] Add an explicit hosted CSV size guard with a regression test.
+- [ ] Import backend project and verify live/readiness plus authenticated data.
+- [ ] Import frontend project, configure private environment and verify live workspace.
+- [ ] Verify CSV, source links and scheduled updates with local terminals closed.
