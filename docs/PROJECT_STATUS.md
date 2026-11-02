@@ -100,3 +100,16 @@ full-history data-quality audit and analytical/model development.
 - Local tests: 69 backend passed, 1 PostgreSQL test skipped; 4 frontend tests passed; TypeScript/build/lint
   and compilation/dependency checks passed. Production/browser acceptance remains pending.
 - Definitions and live checks: SOURCE_AUDIT.md.
+
+
+## Generation and demand analytics — November 2, 2026
+- Added protected descriptive analytics API and Generation & demand website page.
+- Inclusive date filters; daily/monthly/yearly observed series with source-record drill-down.
+- Correct MW means versus observed energy sums, completeness labels and missing-value gaps.
+- Daily descriptive statistics, availability counts and precise decimal tables.
+- Parser-capability-aware metric descriptions, without date-based layout assumptions or imputation.
+- Apache ECharts history chart; read-only analysis, no forecasts or data repairs.
+- Local checks: 84 backend tests passed, 1 PostgreSQL integration skipped; 7 frontend tests,
+  lint, compilation, dependencies, TypeScript and production build passed.
+- Deployed chart/runtime acceptance and original-PDF verification remain separate checks.
+- Methodology and acceptance: HISTORICAL_ANALYTICS.md.

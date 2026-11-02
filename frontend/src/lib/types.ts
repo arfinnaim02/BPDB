@@ -77,3 +77,26 @@ export type AuditReport = {
   sample_policy: string; sample_candidate_dates: number; sample_review_status: string;
   sample_error: string | null; samples: Day[]; limitation: string;
 };
+
+export type AnalyticsPoint = {
+  label: string; start_date: string; end_date: string; value: string | null;
+  mean: string | null; minimum: string | null; maximum: string | null;
+  observed_days: number; canonical_dates: number; expected_days: number;
+  coverage_percent: number | null; zero_days: number;
+  full_period_selected: boolean; complete_period: boolean;
+};
+export type AnalyticsReport = {
+  scope: string; generated_at: string; metric: string; label: string; unit: string; period: string;
+  resolution: "daily" | "monthly" | "yearly"; aggregation: string; parser_support: string;
+  earliest_canonical_date: string | null; latest_canonical_date: string | null;
+  start_date: string | null; end_date: string | null; calendar_days: number;
+  canonical_dates: number; missing_canonical_dates: number; unavailable_metric_dates: number;
+  metric_calendar_coverage_percent: number | null; metric_canonical_coverage_percent: number | null;
+  first_value_date: string | null; last_value_date: string | null;
+  statistics: {
+    observations: number; zero_days: number; mean: string | null; median: string | null;
+    minimum: string | null; maximum: string | null; sample_stddev: string | null;
+    observed_total: string | null;
+  };
+  points: AnalyticsPoint[]; data_fingerprint: string; limitation: string;
+};

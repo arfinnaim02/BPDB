@@ -81,3 +81,14 @@
 - [ ] Inspect original PDFs and record independent comparison findings.
 - [ ] Reconcile historical local quarantines/failures not registered in Neon.
 - [ ] Repair eligible gaps only through reviewed versioned ingestion.
+
+
+## Generation and demand descriptive analytics
+- [x] Authenticated observed-series API, inclusive date filtering and canonical/version scope.
+- [x] Daily/monthly/yearly views; correct MW averages and observed energy sums.
+- [x] Null/zero, calendar completeness and layout-dependent availability labels.
+- [x] Decimal descriptive statistics and source-record drill-down.
+- [x] Zoomable ECharts line chart, exact period table and frontend filters.
+- [x] Aggregation, date, precision, integrity, authentication and filter tests.
+- [ ] Deployed browser/Neon acceptance of new chart and API.
+- [ ] Independent PDF checks and interpretation before inferential or forecasting claims.

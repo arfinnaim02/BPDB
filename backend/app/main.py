@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import text
 
+from app.api.analytics import router as analytics_router
 from app.api.audit import router as audit_router
 from app.api.monitoring import router as monitoring_router
 from app.api.quality import router as quality_router
@@ -48,6 +49,7 @@ def require_admin(x_api_key: Annotated[str | None, Header()] = None) -> None:
 app.include_router(monitoring_router, dependencies=[Depends(require_admin)])
 app.include_router(quality_router, dependencies=[Depends(require_admin)])
 app.include_router(audit_router, dependencies=[Depends(require_admin)])
+app.include_router(analytics_router, dependencies=[Depends(require_admin)])
 
 
 @app.get("/health/live", response_model=HealthResponse)
@@ -79,6 +81,7 @@ def system() -> dict:
         "scheduler_implemented": True,
         "parser_implemented": True,
     }
+
 
 
 
