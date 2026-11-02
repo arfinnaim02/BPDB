@@ -21,7 +21,7 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
   const tablePoints = d?.points.slice((f.page - 1) * tableSize, f.page * tableSize) ?? [];
   const href = (page: number) => { const q = new URLSearchParams(f.query); q.set("table_page", String(page)); return `/analytics?${q}#period-table`; };
   return <Shell active="/analytics">
-    <Heading eyebrow="OBSERVED NATIONAL HISTORY" title="Generation & demand" description="Explore available measurements with coverage-aware summaries. No imputation or forecasts."><Link href="/quality" className="button secondary">Review data quality →</Link></Heading>
+    <Heading eyebrow="OBSERVED NATIONAL HISTORY" title="Generation & demand" description="Explore available measurements with coverage-aware summaries. No imputation or forecasts."><Link href="/analytics/comparisons" className="button primary">Trends & comparisons →</Link><Link href="/quality" className="button secondary">Review data quality →</Link></Heading>
     <section className="panel filter-panel"><form action="/analytics" className="filter-form">
       <div className="field"><label htmlFor="metric">Measurement</label><select id="metric" name="metric" defaultValue={f.metric}>{ANALYTIC_METRICS.map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></div>
       <div className="field"><label htmlFor="resolution">View</label><select id="resolution" name="resolution" defaultValue={f.resolution}><option value="daily">Daily</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option></select></div>
@@ -50,3 +50,4 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
     </>}
   </Shell>;
 }
+

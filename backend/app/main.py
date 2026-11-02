@@ -9,6 +9,7 @@ from sqlalchemy import text
 
 from app.api.analytics import router as analytics_router
 from app.api.audit import router as audit_router
+from app.api.comparisons import router as comparisons_router
 from app.api.measurement_review import router as measurement_review_router
 from app.api.monitoring import router as monitoring_router
 from app.api.quality import router as quality_router
@@ -51,6 +52,7 @@ app.include_router(monitoring_router, dependencies=[Depends(require_admin)])
 app.include_router(quality_router, dependencies=[Depends(require_admin)])
 app.include_router(audit_router, dependencies=[Depends(require_admin)])
 app.include_router(analytics_router, dependencies=[Depends(require_admin)])
+app.include_router(comparisons_router, dependencies=[Depends(require_admin)])
 app.include_router(measurement_review_router, dependencies=[Depends(require_admin)])
 
 
@@ -83,6 +85,7 @@ def system() -> dict:
         "scheduler_implemented": True,
         "parser_implemented": True,
     }
+
 
 
 

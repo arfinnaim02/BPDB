@@ -107,3 +107,15 @@
 - [ ] Freeze a manifest-backed research dataset and assess complete-month target feasibility.
 - [ ] Execute and report chronological baseline/model experiments using actual data.
 
+## Historical comparison dashboard — November 2, 2026
+- [x] Protected comparison API, paired generation/demand means and signed differences.
+- [x] Matched daily observations, explicit calendar coverage and missing-value gaps.
+- [x] Seasonal year profiles, year-by-month heatmap and weighted annual summaries.
+- [x] Complete-month MoM/YoY comparison gates with unavailable/zero-baseline reasons.
+- [x] Date/year filters, daily/monthly/yearly paired views and preserved pagination.
+- [x] Source links, unresolved-screen warnings and request fingerprints.
+- [x] Automated comparison/filter/chart-input tests and documented manual acceptance list.
+- [ ] Deployed browser acceptance of the new comparisons dashboard against Neon.
+- [ ] Independent source verification and final analysis interpretation before modelling.
+
+

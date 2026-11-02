@@ -152,3 +152,22 @@ full-history data-quality audit and analytical/model development.
 - Neither the January source nor the June source has been independently PDF-verified.
   Canonical measurements remain unchanged; the remaining source-review gate is open.
 
+## Historical comparison dashboard — November 2, 2026
+
+- Added protected `/api/v1/analytics/comparisons` and `/analytics/comparisons`.
+- Day/evening generation-demand timelines use identical matched daily observations;
+  daily/monthly/yearly views, signed differences, coverage and source-record drill-down.
+- Selected-year monthly profiles, year-by-month heatmap, exact monthly/year tables,
+  correct observed energy sums and observation-weighted annual MW means.
+- MoM/YoY changes require complete calendar months and nonzero baselines; otherwise
+  explicit unavailable reasons are shown. Missing data remains null, and zero remains zero.
+- Date filters, up to eight seasonal years, independent table pagination, zoom/legends,
+  screen-warning counts and request fingerprints. Screening candidates remain included.
+- Local checks: 117 backend tests passed, 1 PostgreSQL integration skipped; 11 frontend
+  tests passed. Ruff, compilation, TypeScript and production build passed.
+- Same 117 tests also pass in the pinned lightweight foundation environment.
+- Production deployment and browser acceptance of this new dashboard are separate checks.
+- Detailed formulas, scope, Windows commands and 12 manual tests: HISTORICAL_COMPARISONS.md.
+- No models, forecasts, causal conclusions or source corrections were produced by this step.
+
+
