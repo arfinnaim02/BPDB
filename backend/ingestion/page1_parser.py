@@ -4,8 +4,6 @@ import re
 from datetime import datetime
 from decimal import Decimal
 
-import pdfplumber
-
 from ingestion.numbers import decimal_token
 
 NUMBER = r"([0-9]+(?:,[0-9]+)*(?:\.[0-9]+)?)"
@@ -26,6 +24,9 @@ def legacy_date(value):
 
 
 def parse_page1(path):
+    # Text-only parser tests and API checks do not require the PDF runtime.
+    import pdfplumber
+
     with pdfplumber.open(path) as pdf:
         if not pdf.pages:
             raise ValueError("PDF has no pages")

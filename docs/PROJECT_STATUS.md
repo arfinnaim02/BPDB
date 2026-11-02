@@ -138,3 +138,17 @@ full-history data-quality audit and analytical/model development.
 - This update's production/browser acceptance is separate from local CI; see final
   delivery notes for any live verification performed after deployment.
 
+### Live acceptance and CI follow-up
+
+- Production review screened 2,383 dates at approximately 23:00 Bangladesh time on
+  2 November: 19 flagged dates, comprising 18 low-ratio heuristic dates and one minimum
+  daily-energy bound warning (9 June 2026). These are not 19 confirmed errors.
+- Browser-verified the full queue, source evidence expansion and inclusive 4 January
+  2020 filter returning exactly one flagged date with the stored energy=1 evidence.
+- Foundation CI exposed that its lightweight pinned environment lacks pdfplumber.
+  Moved PDF-runtime import inside the file-opening function; text-only tests now run
+  without that optional runtime. Both pinned-foundation and full-worker environments
+  pass 103 tests, with one PostgreSQL integration skipped and one upstream warning.
+- Neither the January source nor the June source has been independently PDF-verified.
+  Canonical measurements remain unchanged; the remaining source-review gate is open.
+

@@ -100,7 +100,7 @@
 - [x] Legacy split/malformed energy token protection with regression tests.
 - [x] Representative local legacy/modern PDF extraction checks.
 - [x] Documented research readiness, source correction and chronological evaluation protocol.
-- [ ] Live acceptance of the new measurement review page against Neon.
+- [x] Live acceptance of the new measurement review page, filters and evidence against Neon.
 - [ ] Confirm the original 4 January 2020 PDF and other flagged source values.
 - [ ] Durable reviewer decisions and independently assessed extraction accuracy.
 - [ ] Reviewed versioned historical repairs; rerun consistency checks and exports.

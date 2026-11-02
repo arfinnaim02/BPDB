@@ -33,6 +33,18 @@ them rather than joining digits. The two available local representative PDFs sti
 extract energy as 166.4 (30 November 2019) and 324.38721 (27 October 2026) million kWh.
 These targeted examples are not a random extraction-accuracy estimate.
 
+The deployed screen at approximately 23:00 Bangladesh time on 2 November checked all
+2,383 available canonical energy/maximum pairs. It found 19 review dates: 18 below the
+explicit 0.10 ratio heuristic and one below the reported minimum-generation energy
+floor. Counts depend on the current records and rule version, not a frozen dataset.
+
+The latter is 9 June 2026: stored energy 306.09336 million kWh, minimum 13,125 MW
+(implied floor 315 million kWh), maximum 15,490 MW. Stored text agrees with those
+numbers; their printed values and compatible definitions are still unverified.
+Source: https://misc.bpdb.gov.bd/storage/daily_archive/page_1_20260610_20260610143323.pdf
+SHA-256: `f4cc99ac5979bc3c6da4ff261d6b6acf568507bf6c331ad9fa3799394850cbc8`.
+Do not label this as an official reporting error without inspecting the original.
+
 ## Implemented review queue
 
 - Website: `/quality/review`; protected API: `/api/v1/dataset/measurement-review`.
