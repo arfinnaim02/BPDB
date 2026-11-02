@@ -69,3 +69,15 @@
 - [x] Aggregation, exclusions, date edge cases, auth and pagination tests.
 - [ ] Verify the deployed quality page and API against live Neon.
 - [ ] Investigate source causes and independently validate selected original PDF measurements.
+
+
+## Registered source audit
+- [x] Gap-date registered report/version/source/issue evidence.
+- [x] Separate archive hints and explicit unknown official-report availability.
+- [x] Undated held-source queue and bounded/paginated evidence.
+- [x] Targeted original-PDF comparison plan with preserved source provenance.
+- [x] Read-only/auth/privacy/pagination/association and sample-integrity tests.
+- [ ] Verify deployed audit page against live Neon metadata.
+- [ ] Inspect original PDFs and record independent comparison findings.
+- [ ] Reconcile historical local quarantines/failures not registered in Neon.
+- [ ] Repair eligible gaps only through reviewed versioned ingestion.

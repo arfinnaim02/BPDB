@@ -50,3 +50,30 @@ export type QualityReport = {
   };
   limitation: string;
 };
+
+
+export type AuditSource = {
+  id: string; url: string; sha256: string; status: string;
+  report_date_metadata: string | null; archive_date_hint: string | null;
+};
+export type AuditIssue = {
+  id: string; source_id: string; version_id: string | null;
+  code: string; severity: string; resolved: boolean; checks: string[];
+};
+export type GapAudit = {
+  operational_date: string; assessment: string; findings: string[]; source_report_status: string;
+  report_ids: string[]; version_count: number;
+  versions: { id: string; report_id: string; quality_status: string; is_current: boolean; parser_version: string }[];
+  source_count: number; sources: AuditSource[]; archive_hint_count: number;
+  archive_hint_candidates: AuditSource[]; issue_count: number; issues: AuditIssue[];
+};
+export type AuditReport = {
+  scope: string; generated_at: string; canonical_dates: number;
+  earliest_operational_date: string | null; latest_operational_date: string | null;
+  missing_dates: number; gap_page: number; gap_page_size: number; gap_total_pages: number;
+  gap_items: GapAudit[]; undated_source_count: number; source_page: number;
+  source_page_size: number; source_total_pages: number;
+  undated_sources: { source: AuditSource; issue_count: number; issues: AuditIssue[] }[];
+  sample_policy: string; sample_candidate_dates: number; sample_review_status: string;
+  sample_error: string | null; samples: Day[]; limitation: string;
+};

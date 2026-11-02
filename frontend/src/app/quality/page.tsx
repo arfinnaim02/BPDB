@@ -21,7 +21,7 @@ export default async function Quality({ searchParams }: { searchParams: Promise<
   const size = Number(single(params.gap_page_size));
   const pageSize = [20, 50, 100].includes(size) ? size : 20;
   const result = await readApi<QualityReport>(`/api/v1/dataset/quality?gap_page=${page}&gap_page_size=${pageSize}`);
-  if (!result.ok) return <Shell active="/quality"><Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history canonical coverage and calendar gaps."/><ErrorPanel message={result.message}/></Shell>;
+  if (!result.ok) return <Shell active="/quality"><Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history canonical coverage and calendar gaps."><Link href="/quality/audit" className="button secondary">Investigate sources →</Link></Heading><ErrorPanel message={result.message}/></Shell>;
   const d = result.data;
   const requestedYear = Number(single(params.metric_year));
   const selectedYear = d.years.some(y => y.year === requestedYear) ? requestedYear : null;
@@ -33,7 +33,7 @@ export default async function Quality({ searchParams }: { searchParams: Promise<
   };
 
   return <Shell active="/quality">
-    <Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history coverage of current validated national records, with metric availability by year."/>
+    <Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history coverage of current validated national records, with metric availability by year."><Link href="/quality/audit" className="button primary">Investigate sources →</Link></Heading>
     <div className="section-meta"><span className="scope-tag">All canonical history</span><Updated at={d.generated_at}/></div>
     <div className="stat-grid">
       <Stat label="CANONICAL DATES" value={count(d.canonical_dates)} detail="Current validated national records"/>
@@ -88,3 +88,4 @@ export default async function Quality({ searchParams }: { searchParams: Promise<
     </div>
   </Shell>;
 }
+

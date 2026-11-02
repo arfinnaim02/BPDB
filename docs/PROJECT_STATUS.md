@@ -88,3 +88,15 @@ full-history data-quality audit and analytical/model development.
 - Live acceptance of this endpoint/page remains pending after both Vercel deployments.
 - Next: investigate gaps, unavailable fields and original-source agreement before research modelling.
 - Definitions and acceptance: DATA_QUALITY.md.
+
+
+## Registered source audit — November 2, 2026
+- Added protected /api/v1/dataset/audit and Data Quality → Investigate sources.
+- Missing-date evidence links national report versions, Page 1 source metadata and safe issue codes.
+- Archive hints remain possible matches, separate from operational-date-linked metadata.
+- Undated held-source queue exposes registered quarantine/review states without assigning dates.
+- Deterministic PDF comparison plan includes original links/checksums and canonical measurement evidence.
+- No original PDFs were newly inspected, no verification result was certified, and no records were repaired.
+- Local tests: 69 backend passed, 1 PostgreSQL test skipped; 4 frontend tests passed; TypeScript/build/lint
+  and compilation/dependency checks passed. Production/browser acceptance remains pending.
+- Definitions and live checks: SOURCE_AUDIT.md.
