@@ -33,7 +33,7 @@ export default async function Quality({ searchParams }: { searchParams: Promise<
   };
 
   return <Shell active="/quality">
-    <Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history coverage of current validated national records, with metric availability by year."><Link href="/quality/audit" className="button primary">Investigate sources →</Link></Heading>
+    <Heading eyebrow="COVERAGE & LIMITATIONS" title="Data quality" description="Full-history coverage of current validated national records, with metric availability by year."><Link href="/quality/missing" className="button primary">Assess missing data →</Link><Link href="/quality/audit" className="button secondary">Investigate sources →</Link></Heading>
     <div className="section-meta"><span className="scope-tag">All canonical history</span><Updated at={d.generated_at}/></div>
     <div className="stat-grid">
       <Stat label="CANONICAL DATES" value={count(d.canonical_dates)} detail="Current validated national records"/>
@@ -88,4 +88,5 @@ export default async function Quality({ searchParams }: { searchParams: Promise<
     </div>
   </Shell>;
 }
+
 

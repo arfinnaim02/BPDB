@@ -183,4 +183,23 @@ full-history data-quality audit and analytical/model development.
 - Both workflows and both deployments passed on the feature commit; Reset follow-up
   deployment acceptance is recorded in the final delivery notes.
 
+## Missing-data assessment — November 3, 2026
+
+- Added protected `/api/v1/dataset/missingness` and Missing data website page.
+- All 13 supported metrics: non-null/zero counts, calendar gaps, absent fields and explicit
+  nulls, first/last observed values and separate leading/internal/trailing unavailability.
+- Consecutive calendar missing/observed runs, descriptive gap-length distribution,
+  complete/full/sliced months and longest complete-month streaks for target assessment.
+- Selected-metric gap/month tables, inclusive date filters, independent pagination,
+  source-investigation links, input fingerprints and visible assessment limitations.
+- Causes are unassessed: parser support and temporal patterns are not proof of structural
+  absence, parser failure, official-report unavailability, recoverability or missingness mechanism.
+- No imputation, corrections, target selection, prepared model dataset or forecasts.
+- Local checks: 133 backend tests passed in the full environment; 13 frontend tests,
+  Ruff, compilation, TypeScript and production build passed. One PostgreSQL integration
+  remains skipped. The same 133 tests also pass in the pinned foundation environment.
+  Deployed browser acceptance is a separate check.
+- Policy, definitions, evidence limits, Windows commands and manual tests: MISSING_DATA.md.
+
+
 

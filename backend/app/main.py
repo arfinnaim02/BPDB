@@ -11,6 +11,7 @@ from app.api.analytics import router as analytics_router
 from app.api.audit import router as audit_router
 from app.api.comparisons import router as comparisons_router
 from app.api.measurement_review import router as measurement_review_router
+from app.api.missingness import router as missingness_router
 from app.api.monitoring import router as monitoring_router
 from app.api.quality import router as quality_router
 from app.core.config import get_settings
@@ -54,6 +55,7 @@ app.include_router(audit_router, dependencies=[Depends(require_admin)])
 app.include_router(analytics_router, dependencies=[Depends(require_admin)])
 app.include_router(comparisons_router, dependencies=[Depends(require_admin)])
 app.include_router(measurement_review_router, dependencies=[Depends(require_admin)])
+app.include_router(missingness_router, dependencies=[Depends(require_admin)])
 
 
 @app.get("/health/live", response_model=HealthResponse)
@@ -85,6 +87,7 @@ def system() -> dict:
         "scheduler_implemented": True,
         "parser_implemented": True,
     }
+
 
 
 

@@ -118,4 +118,17 @@
 - [x] Deployed browser acceptance of counts, paired values, legacy nulls and source drill-down.
 - [ ] Independent source verification and final analysis interpretation before modelling.
 
+## Missing-data assessment — November 3, 2026
+- [x] Read-only availability assessment for all 13 supported national metrics.
+- [x] Separate canonical-gap, absent-field, explicit-null and observed-zero states.
+- [x] Leading/internal/trailing unavailability and calendar-based run/streak statistics.
+- [x] Complete, incomplete and sliced months with consecutive complete-month counts.
+- [x] Filtered/paginated frontend evidence views, source links and input fingerprints.
+- [x] Integrity/auth/no-store, state partition, leap/calendar, completeness and filter tests.
+- [x] Documented evidence-first treatment policy with training-only preparation rules.
+- [ ] Confirm production results and browser acceptance against live Neon.
+- [ ] Verify missing causes and recover source-supported values through reviewed ingestion.
+- [ ] Implement a separate lineage-preserving prepared dataset and evaluate treatments.
+
+
 

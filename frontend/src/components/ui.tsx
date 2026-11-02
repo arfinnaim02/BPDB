@@ -19,6 +19,7 @@ const navigation = [
   ["/analytics", "Generation & demand", "bolt"],
   ["/analytics/comparisons", "Trends & comparisons", "grid"],
   ["/quality/review", "Measurement review", "quality"],
+  ["/quality/missing", "Missing data", "dataset"],
 ];
 export function Shell({ active, children }: { active: string; children: React.ReactNode }) {
   return <div className="app-shell">
@@ -52,6 +53,7 @@ export function Stat({ label, value, detail, accent = false }: { label: string; 
   return <article className={`stat-card ${accent ? "stat-accent" : ""}`}><p className="stat-label">{label}</p><strong className="stat-value">{value}</strong><p className="stat-detail">{detail}</p></article>;
 }
 export function Updated({ at }: { at: string }) { return <span className="updated">Read at {timestamp(at)} BD</span>; }
+
 
 
 
