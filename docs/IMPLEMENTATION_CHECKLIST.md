@@ -90,5 +90,20 @@
 - [x] Decimal descriptive statistics and source-record drill-down.
 - [x] Zoomable ECharts line chart, exact period table and frontend filters.
 - [x] Aggregation, date, precision, integrity, authentication and filter tests.
-- [ ] Deployed browser/Neon acceptance of new chart and API.
+- [x] Deployed browser/Neon acceptance of new chart and API for generation/energy views.
 - [ ] Independent PDF checks and interpretation before inferential or forecasting claims.
+
+## Measurement review and research gates — November 2, 2026
+- [x] Authenticated read-only national energy/generation review API and website queue.
+- [x] Explicit consistency rules and separately labelled heuristic threshold.
+- [x] Source evidence, rule counts, filters/pagination and request fingerprint.
+- [x] Legacy split/malformed energy token protection with regression tests.
+- [x] Representative local legacy/modern PDF extraction checks.
+- [x] Documented research readiness, source correction and chronological evaluation protocol.
+- [ ] Live acceptance of the new measurement review page against Neon.
+- [ ] Confirm the original 4 January 2020 PDF and other flagged source values.
+- [ ] Durable reviewer decisions and independently assessed extraction accuracy.
+- [ ] Reviewed versioned historical repairs; rerun consistency checks and exports.
+- [ ] Freeze a manifest-backed research dataset and assess complete-month target feasibility.
+- [ ] Execute and report chronological baseline/model experiments using actual data.
+

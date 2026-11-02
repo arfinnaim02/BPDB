@@ -6,6 +6,8 @@ from decimal import Decimal
 
 import pdfplumber
 
+from ingestion.numbers import decimal_token
+
 NUMBER = r"([0-9]+(?:,[0-9]+)*(?:\.[0-9]+)?)"
 
 COST_SECTION = (
@@ -51,6 +53,12 @@ def parse_page1_text(text):
         match = matches[0]
         source_value = match.group(1)
         value = Decimal(source_value.replace(",", ""))
+        if parser_version.startswith("legacy") and metric == "energy_generated":
+            try:
+                value = decimal_token(source_value)
+            except ValueError:
+                issues.append({"code": "invalid_numeric_token", "metric": metric})
+                return
 
         observation = {
             "metric": metric,
@@ -208,7 +216,7 @@ def parse_page1_text(text):
                 })
 
     elif "The Summary of Yesterday" in text:
-        parser_version = "legacy_page1_v2"
+        parser_version = "legacy_page1_v3"
         metric_text = text.split("EXPORT / IMPORT", 1)[0]
 
         date_match = re.search(
@@ -251,7 +259,11 @@ def parse_page1_text(text):
 
         add(
             "energy_generated",
-            r"Total Gen\.\s*\(MKWH\)\s*:\s*" + NUMBER,
+            # Do not accept a numeric prefix from a split/malformed token.
+            # Never join digits speculatively: ambiguous extraction is quarantined.
+            r"Total Gen\.\s*\(MKWH\)\s*:\s*" + NUMBER
+            + r"(?![0-9.,A-Za-z])(?!(?:[ \t]+)[0-9.,])"
+            + r"(?!(?:[ \t]*\n[ \t]*)[0-9.,])",
             "million_kWh",
         )
 

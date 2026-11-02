@@ -40,7 +40,7 @@ export default async function Audit({ searchParams }: { searchParams: Promise<Pa
   const rawSize = Number(single(params.gap_page_size));
   const pageSize = [10, 20, 50].includes(rawSize) ? rawSize : 20;
   const result = await readApi<AuditReport>(`/api/v1/dataset/audit?gap_page=${page}&gap_page_size=${pageSize}&source_page=${sourcePage}`);
-  const heading = <Heading eyebrow="REGISTERED EVIDENCE & PDF REVIEW" title="Source audit" description="Investigate missing canonical dates using registered evidence, then verify original PDFs."><Link href="/quality" className="button secondary">← Data quality</Link></Heading>;
+  const heading = <Heading eyebrow="REGISTERED EVIDENCE & PDF REVIEW" title="Source audit" description="Investigate missing canonical dates using registered evidence, then verify original PDFs."><Link href="/quality/review" className="button secondary">Review measurements →</Link><Link href="/quality" className="button secondary">← Data quality</Link></Heading>;
   if (!result.ok) return <Shell active="/quality">{heading}<ErrorPanel message={result.message}/></Shell>;
   const d = result.data;
   const href = (gap: number, source: number, section: string) => `/quality/audit?${new URLSearchParams({ gap_page: String(gap), gap_page_size: String(pageSize), source_page: String(source) })}#${section}`;
@@ -70,3 +70,4 @@ export default async function Audit({ searchParams }: { searchParams: Promise<Pa
     </section>
   </Shell>;
 }
+

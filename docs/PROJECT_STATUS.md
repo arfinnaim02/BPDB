@@ -113,3 +113,28 @@ full-history data-quality audit and analytical/model development.
   lint, compilation, dependencies, TypeScript and production build passed.
 - Deployed chart/runtime acceptance and original-PDF verification remain separate checks.
 - Methodology and acceptance: HISTORICAL_ANALYTICS.md.
+
+## Measurement screening and research-readiness audit — November 2, 2026
+
+- Added protected read-only `/api/v1/dataset/measurement-review` and `/quality/review`.
+- Screens current national generation/energy measurements with explicit physical-bound
+  tolerances, dimension/provenance checks and a labelled low-energy-ratio heuristic.
+- Preserves flagged values, source/checksum/page/raw text, version links and pagination;
+  it does not save review decisions, alter canonical data or certify unflagged records.
+- Legacy parser v3 rejects split/malformed energy numeric prefixes instead of silently
+  accepting their first digit. Already-linked historical records are not auto-repaired.
+- A synthetic split-token regression reproduces the prior failure mode; this does not
+  prove the cause of the 4 January 2020 energy=1 record. Its original PDF is unverified.
+- Local checks: 103 backend tests passed, 1 PostgreSQL integration skipped; 7 frontend
+  tests passed. TypeScript, production build, Ruff and Python compilation passed.
+- Representative existing PDFs still extract 166.4 (30 November 2019 legacy) and
+  324.38721 (27 October 2026 modern) million kWh. Not a measured accuracy estimate.
+- Earlier analytics deployment was browser-verified for generation and energy. User
+  screenshots subsequently show 2,383 canonical dates through 1 November 2026.
+- Research protocol: `RESEARCH_READINESS.md`, including source verification, versioned
+  corrections, immutable snapshots, target feasibility and leakage-safe evaluation.
+- Pending: original-PDF confirmation, durable review ledger, reviewed historical repair,
+  frozen research dataset, cost-target complete-month assessment and model experiments.
+- This update's production/browser acceptance is separate from local CI; see final
+  delivery notes for any live verification performed after deployment.
+
