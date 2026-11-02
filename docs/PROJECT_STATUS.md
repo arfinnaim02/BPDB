@@ -170,4 +170,17 @@ full-history data-quality audit and analytical/model development.
 - Detailed formulas, scope, Windows commands and 12 manual tests: HISTORICAL_COMPARISONS.md.
 - No models, forecasts, causal conclusions or source corrections were produced by this step.
 
+### Live comparison acceptance
+
+- Production loaded 2,383 paired evening-peak dates over 2,571 calendar days (92.69%)
+  and preserved the 19 generation/energy screening candidates.
+- Verified 1 November 2026: 16,103.76 MW generation, 16,325.68 MW demand and signed
+  difference 221.92 MW, with a working source-record link showing the same master values.
+- Verified legacy 4 January 2020 day-peak demand remains unavailable: zero matched days,
+  null comparison values and the existing energy review warning; energy units remain separate.
+- The live Reset test exposed stale uncontrolled form selections after client navigation.
+  Keyed the analytics forms by their applied query so controls remount with applied filters.
+- Both workflows and both deployments passed on the feature commit; Reset follow-up
+  deployment acceptance is recorded in the final delivery notes.
+
 

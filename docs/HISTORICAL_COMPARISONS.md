@@ -93,6 +93,7 @@ Use the authenticated production site; both Vercel projects must finish deployin
 3. **Known single-date comparison.** Set both dates to `2026-11-01`, choose Evening peak,
    and apply. Compare the reported generation and demand with Master dataset for that date.
    Calculate demand minus generation yourself; the displayed signed difference must match.
+   At live verification: generation 16,103.76 MW, demand 16,325.68 MW, difference 221.92 MW.
    On a one-day selection Monthly/Yearly periods must be marked incomplete/sliced.
 4. **Legacy unavailable field.** Set both dates to `2020-01-04`, choose Day peak, and apply.
    Expect no matched pairs if the existing legacy record has no day-peak demand. Demand
@@ -124,7 +125,8 @@ Use the authenticated production site; both Vercel projects must finish deployin
     repair, remove, promote or exclude any canonical records.
 12. **Invalid and empty filters.** Reverse the dates: expect a date-validation message.
     Choose a range beyond known history: expect an empty-state message with no invented
-    data. Reset should restore the default full-history comparison.
+    data. Reset should restore both the default full-history data and its visible controls:
+    Day peak generation, Evening peak, Monthly, blank dates and latest-three-year selection.
 
 ## Optional local checks — Windows CMD
 

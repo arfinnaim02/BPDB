@@ -35,7 +35,7 @@ export default async function Comparisons({ searchParams }: { searchParams: Prom
   const maximum = numericValues.length ? Math.max(...numericValues) : 0;
   return <Shell active="/analytics/comparisons">
     <Heading eyebrow="HISTORICAL PATTERNS & COMPARISONS" title="Trends & comparisons" description="Compare observed generation and demand, seasonal profiles and complete-month changes."><Link className="button secondary" href="/analytics">Single-metric history →</Link></Heading>
-    <section className="panel"><form className="filter-form" action="/analytics/comparisons">
+    <section className="panel"><form key={f.query.toString()} className="filter-form" action="/analytics/comparisons">
       <div className="field"><label htmlFor="metric">Seasonal measurement</label><select id="metric" name="metric" defaultValue={f.metric}>{ANALYTIC_METRICS.map(([key, label]) => <option value={key} key={key}>{label}</option>)}</select></div>
       <div className="field"><label htmlFor="peak">Generation–demand pair</label><select id="peak" name="peak" defaultValue={f.peak}><option value="evening">Evening peak</option><option value="day">Day peak</option></select></div>
       <div className="field"><label htmlFor="resolution">Paired chart view</label><select id="resolution" name="resolution" defaultValue={f.resolution}><option value="daily">Daily</option><option value="monthly">Monthly</option><option value="yearly">Yearly</option></select></div>

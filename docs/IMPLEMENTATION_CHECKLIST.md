@@ -115,7 +115,7 @@
 - [x] Date/year filters, daily/monthly/yearly paired views and preserved pagination.
 - [x] Source links, unresolved-screen warnings and request fingerprints.
 - [x] Automated comparison/filter/chart-input tests and documented manual acceptance list.
-- [ ] Deployed browser acceptance of the new comparisons dashboard against Neon.
+- [x] Deployed browser acceptance of counts, paired values, legacy nulls and source drill-down.
 - [ ] Independent source verification and final analysis interpretation before modelling.
 
 
