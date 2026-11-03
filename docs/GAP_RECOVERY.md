@@ -129,3 +129,19 @@ fixture tests alone do not establish how many of the 75 dates are recoverable.
 - Missing/unsafe/corrupt local evidence must remain unresolved. No automatic imports or estimates.
 - Anonymous API/proxy downloads are rejected; server API keys and private storage paths stay hidden.
 - Reset clears both visible date controls and applied gap filters.
+
+## Live acceptance — 3 November 2026
+
+- Both GitHub workflows and both Vercel deployments succeeded for the feature update.
+- Source audit filtered to 2024-01-01 through 2024-12-31: 75 gap dates, 291 canonical
+  dates. Worklist export contained exactly 75 unique dates and matched the preceding
+  research preparation snapshot's missing-canonical-date set.
+- Registered evidence: 36 dates had archive hints only; 39 had no date-linked Neon
+  evidence. Neither state establishes source absence or a recoverable parser cause.
+- No per-date evidence truncations occurred in this selected export. Worklist ID:
+  ef6c80b1bd3d88bcbfcf793d4c338b93efbc12cf46c5562cb430c631a27e2ea4.
+- Download from gap page 2 still exported all 75 dates and the same content ID.
+- Filter pagination preserved both dates; Reset cleared filters and restored full-history
+  188-gap coverage with bounds 2019-10-19 through 2026-11-01.
+- Downloaded worklist passed the local consumer's identity/date validation. Actual local
+  reconciliation against the user's historical journal/batch/PDF archive remains pending.

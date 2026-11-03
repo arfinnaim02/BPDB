@@ -156,7 +156,8 @@
 - [x] All saved revision matching, path bounds and size/SHA verification.
 - [x] Worklist/local metadata fingerprints and non-overwriting investigation reports.
 - [x] Backend integrity/auth/calendar/reconciliation tests and frontend filter tests.
-- [ ] Confirm deployed 2024 worklist includes all 75 current gap dates and preserves filters.
+- [x] Confirm deployed 2024 worklist includes all 75 current gap dates and preserves filters.
+- [x] Verify all-date export from page two, content identity, preparation-gap agreement and Reset.
 - [ ] Run local reconciliation against actual historical PDFs and inspect its output.
 - [ ] Verify original PDFs, correct supported parser cases and review conflicts.
 - [ ] Stage/verify/promote recovered source-supported values and create a new research snapshot.
