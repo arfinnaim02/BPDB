@@ -10,12 +10,12 @@ from ingestion.page1_parser import (
 from ingestion.validate_page1 import check_record
 
 FIXTURES = Path(__file__).parent / "fixtures/page1_geometry"
-SOURCES = json.loads((FIXTURES / "sources.json").read_text())
+SOURCES = json.loads((FIXTURES / "sources.json").read_text(encoding="utf-8"))
 
 
 @pytest.mark.parametrize("source", SOURCES, ids=lambda s: s["fixture"])
 def test_verified_legacy_rows_preserve_dates_units_and_five_exact_values(source):
-    text = (FIXTURES / source["fixture"]).read_text()
+    text = (FIXTURES / source["fixture"]).read_text(encoding="utf-8")
     result = parse_page1_text(text)
     assert result["parser_version"] == "legacy_page1_v4"
     assert result["operational_date"] == source["operational_date"]
@@ -81,8 +81,8 @@ Name of the Power Stations Installed Capacity MW Energy Generated KWH"""
 
 
 def test_existing_modern_sample_preserves_all_thirteen_measurements_and_units():
-    evidence = json.loads((FIXTURES / "modern_recent.json").read_text())
-    result = parse_page1_text((FIXTURES / "modern_recent.txt").read_text())
+    evidence = json.loads((FIXTURES / "modern_recent.json").read_text(encoding="utf-8"))
+    result = parse_page1_text((FIXTURES / "modern_recent.txt").read_text(encoding="utf-8"))
     assert result["parser_version"] == "modern_page1_v5"
     assert result["operational_date"] == evidence["operational_date"]
     assert result["issues"] == [] and len(result["observations"]) == 13

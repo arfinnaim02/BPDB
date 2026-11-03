@@ -44,6 +44,7 @@ jobs:
     env:
       PYTHONPATH: backend
       PYTHONUNBUFFERED: "1"
+      PYTHONUTF8: "1"
       WINDOW_START: ${{ inputs.start_date || '2024-01-01' }}
       WINDOW_END: ${{ inputs.end_date || '2024-12-31' }}
       MAX_FILES: ${{ inputs.max_files || '10' }}
