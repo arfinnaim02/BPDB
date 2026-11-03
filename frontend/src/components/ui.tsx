@@ -20,6 +20,7 @@ const navigation = [
   ["/analytics/comparisons", "Trends & comparisons", "grid"],
   ["/quality/review", "Measurement review", "quality"],
   ["/quality/missing", "Missing data", "dataset"],
+  ["/quality/prepare", "Research preparation", "dataset"],
 ];
 export function Shell({ active, children }: { active: string; children: React.ReactNode }) {
   return <div className="app-shell">

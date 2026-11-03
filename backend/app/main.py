@@ -13,6 +13,7 @@ from app.api.comparisons import router as comparisons_router
 from app.api.measurement_review import router as measurement_review_router
 from app.api.missingness import router as missingness_router
 from app.api.monitoring import router as monitoring_router
+from app.api.preparation import router as preparation_router
 from app.api.quality import router as quality_router
 from app.core.config import get_settings
 from app.db.session import get_engine
@@ -56,6 +57,7 @@ app.include_router(analytics_router, dependencies=[Depends(require_admin)])
 app.include_router(comparisons_router, dependencies=[Depends(require_admin)])
 app.include_router(measurement_review_router, dependencies=[Depends(require_admin)])
 app.include_router(missingness_router, dependencies=[Depends(require_admin)])
+app.include_router(preparation_router, dependencies=[Depends(require_admin)])
 
 
 @app.get("/health/live", response_model=HealthResponse)

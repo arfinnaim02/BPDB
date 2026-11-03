@@ -126,9 +126,23 @@
 - [x] Filtered/paginated frontend evidence views, source links and input fingerprints.
 - [x] Integrity/auth/no-store, state partition, leap/calendar, completeness and filter tests.
 - [x] Documented evidence-first treatment policy with training-only preparation rules.
-- [ ] Confirm production results and browser acceptance against live Neon.
+- [x] Confirm production results and browser acceptance against live Neon.
 - [ ] Verify missing causes and recover source-supported values through reviewed ingestion.
-- [ ] Implement a separate lineage-preserving prepared dataset and evaluate treatments.
+- [x] Implement a separate lineage-preserving research candidate export.
+- [ ] Evaluate and approve treatments after source investigation.
 
 
 
+## Research preparation — November 3, 2026
+- [x] Separate read-only research candidate with original values and complete calendar.
+- [x] Explicit chronological train/validation/test cutoffs; held-out targets never filled.
+- [x] Default observed-only policy plus optional auditable, bounded previous-week candidate.
+- [x] Donor original-value/provenance/timely-availability gates; no recursive or boundary fill.
+- [x] Conservative numerical-review holds without modifying master values or review decisions.
+- [x] Downloadable original snapshot, values/audit CSVs, observed monthly totals and manifest.
+- [x] Input/config identity, member checksums, stale-preview protection and protected downloads.
+- [x] Automated split, donor, zero, hold, leakage, month, identity, bundle and API/filter tests.
+- [ ] Production acceptance of new preparation preview and downloadable bundle.
+- [ ] Source-supported historical recovery and durable independently reviewed decisions.
+- [ ] Compare missing-data treatments on realistic chronological training folds.
+- [ ] Approve target definitions/sample feasibility, freeze accepted experiment and train models.

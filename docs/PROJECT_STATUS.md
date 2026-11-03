@@ -203,3 +203,25 @@ full-history data-quality audit and analytical/model development.
 
 
 
+## Research preparation — November 3, 2026
+
+- Added protected read-only preparation API and authenticated Research preparation page.
+- Explicit one-metric study window and chronological training/validation/test cutoffs;
+  every calendar date retained with original values, evidence states and source/version lineage.
+- Default observed-only baseline and optional experimental previous-week training-only
+  candidate: 1–3-day internal runs, original t-7 donor, no recursive fill, no boundary fill,
+  no review-held value substitution, known/timely donor availability required.
+- Validation/test targets never filled. Original numerical flags retained and conservative
+  research holds applied separately; no database/source/review decisions changed.
+- Five-file downloadable research bundle with original snapshot, numeric daily values,
+  daily audit, strictly observed additive monthly totals and checksummed manifest.
+- Stable input/config snapshot ID and stale-preview download protection. Bundles are not
+  persisted server-side; download to retain. Not a point-in-time backtest/model registry.
+- Local verification: 149 backend tests passed, 1 opt-in PostgreSQL integration skipped;
+  15 frontend tests passed, Ruff, TypeScript and production build passed.
+- Source verification/recovery, treatment accuracy comparison, accepted study/split design,
+  rolling-origin modelling and model results remain pending. Weekly candidates are not
+  approved thesis imputations. See RESEARCH_PREPARATION.md for protocol and manual tests.
+- Previous missingness live acceptance confirmed: 2,383 canonical dates /2,571 calendar
+  days, 188 gaps; cost 626 observed days with 22 internal missing days. Full leap-month,
+  partial-month and Reset behavior verified in production.
