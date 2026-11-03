@@ -255,3 +255,17 @@ Tested the deployed preparation page against Neon after secure sign-in.
   source recovery, historical point-in-time validation or a mobile acceptance test.
 - The 75 unavailable 2024 calendar dates are a canonical-data finding, NOT proof that
   official PDFs are absent. Source/quarantine investigation remains the next priority.
+
+## Canonical-gap recovery investigation — November 3, 2026
+
+- Added selected gap-date windows to Source audit, preserving both pagers and page-size forms.
+- Added protected complete recovery-worklist JSON export: all dates across pages, explicit
+  bounded window, counts, evidence-detail truncation and versioned content identity.
+- Added local read-only ingestion.reconcile_gaps for explicit historical batch and journal:
+  exact extraction-date candidates vs same/next-day archive hints, all journal revisions,
+  path/size/SHA checks, parser issue codes, local evidence fingerprints and new output report.
+- No PDF dates independently verified, no originals/journal/Neon changed, and no recoveries
+  or approved imputations claimed. Full historical archive remains on the user's Windows PC.
+- Local checks: 162 backend tests passed, 1 opt-in PostgreSQL integration skipped; 17 frontend
+  tests, Ruff, TypeScript and production build passed. Live worklist acceptance follows deployment.
+- Windows command, evidence semantics and review workflow: GAP_RECOVERY.md.

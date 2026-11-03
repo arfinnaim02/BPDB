@@ -148,3 +148,15 @@
 - [ ] Source-supported historical recovery and durable independently reviewed decisions.
 - [ ] Compare missing-data treatments on realistic chronological training folds.
 - [ ] Approve target definitions/sample feasibility, freeze accepted experiment and train models.
+
+## Canonical-gap recovery investigation — November 3, 2026
+- [x] Filter missing canonical dates without losing edges or gap-only windows.
+- [x] Complete bounded worklist export independent of visible pagination.
+- [x] Read-only local journal/batch reconciliation with explicit candidate evidence states.
+- [x] All saved revision matching, path bounds and size/SHA verification.
+- [x] Worklist/local metadata fingerprints and non-overwriting investigation reports.
+- [x] Backend integrity/auth/calendar/reconciliation tests and frontend filter tests.
+- [ ] Confirm deployed 2024 worklist includes all 75 current gap dates and preserves filters.
+- [ ] Run local reconciliation against actual historical PDFs and inspect its output.
+- [ ] Verify original PDFs, correct supported parser cases and review conflicts.
+- [ ] Stage/verify/promote recovered source-supported values and create a new research snapshot.

@@ -68,6 +68,7 @@ export type GapAudit = {
   archive_hint_candidates: AuditSource[]; issue_count: number; issues: AuditIssue[];
 };
 export type AuditReport = {
+  selected_start_date: string | null; selected_end_date: string | null; canonical_dates_in_window: number;
   scope: string; generated_at: string; canonical_dates: number;
   earliest_operational_date: string | null; latest_operational_date: string | null;
   missing_dates: number; gap_page: number; gap_page_size: number; gap_total_pages: number;
@@ -100,3 +101,4 @@ export type AnalyticsReport = {
   };
   points: AnalyticsPoint[]; data_fingerprint: string; limitation: string;
 };
+

@@ -2,9 +2,10 @@ import Link from "next/link";
 import { requireSession } from "../../../lib/auth";
 import { readApi } from "../../../lib/backend";
 import { calendar, count, metricLabel, safeSourceUrl } from "../../../lib/format";
-import { single, type Params } from "../../../lib/filters";
+import { type Params } from "../../../lib/filters";
 import type { AuditIssue, AuditReport, AuditSource } from "../../../lib/types";
 import { Empty, ErrorPanel, Heading, Shell, Stat, Updated } from "../../../components/ui";
+import { auditFilters, auditHref } from "../../../lib/audit-filters";
 export const dynamic = "force-dynamic";
 
 const labels: Record<string, string> = {
@@ -22,7 +23,7 @@ const labels: Record<string, string> = {
   date_linked_source_metadata: "Source report-date metadata or version link found",
   unresolved_extraction_issues: "Unresolved extraction issues recorded",
 };
-const boundedPage = (value: string | undefined) => value && /^\d+$/.test(value) && Number(value) >= 1 && Number(value) <= 100000 ? Number(value) : 1;
+
 
 function Source({ source }: { source: AuditSource }) {
   const url = safeSourceUrl(source.url);
@@ -34,23 +35,26 @@ function Issues({ issues, total }: { issues: AuditIssue[]; total: number }) {
 
 export default async function Audit({ searchParams }: { searchParams: Promise<Params> }) {
   await requireSession();
-  const params = await searchParams;
-  const page = boundedPage(single(params.gap_page));
-  const sourcePage = boundedPage(single(params.source_page));
-  const rawSize = Number(single(params.gap_page_size));
-  const pageSize = [10, 20, 50].includes(rawSize) ? rawSize : 20;
-  const result = await readApi<AuditReport>(`/api/v1/dataset/audit?gap_page=${page}&gap_page_size=${pageSize}&source_page=${sourcePage}`);
+  const f = auditFilters(await searchParams);
+  const page = f.gapPage, sourcePage = f.sourcePage, pageSize = f.pageSize;
+  const result = f.error ? {ok:false as const,message:f.error} : await readApi<AuditReport>(`/api/v1/dataset/audit?${f.query}`);
   const heading = <Heading eyebrow="REGISTERED EVIDENCE & PDF REVIEW" title="Source audit" description="Investigate missing canonical dates using registered evidence, then verify original PDFs."><Link href="/quality/review" className="button secondary">Review measurements →</Link><Link href="/quality" className="button secondary">← Data quality</Link></Heading>;
   if (!result.ok) return <Shell active="/quality">{heading}<ErrorPanel message={result.message}/></Shell>;
   const d = result.data;
-  const href = (gap: number, source: number, section: string) => `/quality/audit?${new URLSearchParams({ gap_page: String(gap), gap_page_size: String(pageSize), source_page: String(source) })}#${section}`;
+  const href = (gap: number, source: number, section: string) => auditHref(f,gap,source,section);
   return <Shell active="/quality">{heading}
+    <section className="panel"><form key={f.dates.toString()} className="filter-form" action="/quality/audit">
+      <div className="field"><label htmlFor="start_date">Gap window from</label><input type="date" id="start_date" name="start_date" defaultValue={f.start}/></div>
+      <div className="field"><label htmlFor="end_date">Gap window to</label><input type="date" id="end_date" name="end_date" defaultValue={f.end}/></div>
+      <input type="hidden" name="gap_page_size" value={pageSize}/>
+      <div className="filter-actions"><button className="button primary">Apply dates</button><Link href="/quality/audit" className="text-button">Reset</Link></div>
+    </form><div className="panel-body"><p>Dates filter the missing-canonical-date worklist. The undated-source queue and PDF verification plan below remain full-history views.</p><a href={`/api/recovery-worklist?${f.dates}`} className="button secondary">Download complete recovery worklist ↓</a><p className="small-note">Includes every gap date in the selected window, across all pages; maximum 3,660 calendar days. Source detail lists remain capped with explicit counts and truncation flags. No PDFs are downloaded or records repaired by this export.</p><p className="small-note">Use ingestion.reconcile_gaps on your local PDF archive to investigate historical extraction records. Original-PDF review is still required before any import or promotion.</p></div></section>
     <div className="section-meta"><span className="scope-tag">Read-only evidence review</span><Updated at={d.generated_at}/></div>
-    <div className="stat-grid"><Stat label="MISSING CANONICAL DATES" value={count(d.missing_dates)} detail={`${calendar(d.earliest_operational_date)} – ${calendar(d.latest_operational_date)}`}/><Stat label="DATE-LINKED EVIDENCE" value={count(d.gap_items.filter(g => g.assessment === "registered_evidence").length)} detail={`Among ${d.gap_items.length} dates on this page only`}/><Stat label="ARCHIVE HINTS ONLY" value={count(d.gap_items.filter(g => g.assessment === "archive_hints_only").length)} detail="Among displayed dates; operational date unconfirmed"/><Stat label="UNDATED HELD SOURCES" value={count(d.undated_source_count)} detail="Registered Page 1 sources without national date links"/></div>
+    <div className="stat-grid"><Stat label="MISSING CANONICAL DATES" value={count(d.missing_dates)} detail={`${calendar(d.selected_start_date)} – ${calendar(d.selected_end_date)} · selected window`}/><Stat label="DATE-LINKED EVIDENCE" value={count(d.gap_items.filter(g => g.assessment === "registered_evidence").length)} detail={`Among ${d.gap_items.length} dates on this page only`}/><Stat label="ARCHIVE HINTS ONLY" value={count(d.gap_items.filter(g => g.assessment === "archive_hints_only").length)} detail="Among displayed dates; operational date unconfirmed"/><Stat label="UNDATED HELD SOURCES" value={count(d.undated_source_count)} detail="Registered Page 1 sources without national date links"/></div>
     <div className="notice"><strong>Evidence is not an established cause</strong><p>No date-linked record in Neon does not prove a missing official PDF. Historical local quarantines and failed downloads may not have been registered. Archive hints must not be treated as operational dates.</p></div>
 
-    <section className="panel" id="gap-audit"><div className="panel-heading"><div><h2>Missing-date evidence</h2><p>Individual gap dates, oldest first. No records are promoted, repaired or filled by this view.</p></div><form className="compact-form" action="/quality/audit"><label htmlFor="gap_page_size">Show</label><select name="gap_page_size" id="gap_page_size" defaultValue={pageSize}>{[10, 20, 50].map(n => <option key={n} value={n}>{n} dates</option>)}</select><input type="hidden" name="source_page" value={sourcePage}/><button className="button secondary">Apply</button></form></div>
-      {!d.gap_items.length ? <Empty title={d.missing_dates ? "No gap dates on this page" : "No calendar gaps within observed bounds"} text="Calendar gaps cover only the span between the earliest and latest canonical dates."/> : <div className="table-scroll"><table><caption className="sr-only">Registered evidence for missing canonical dates</caption><thead><tr><th>Operational date</th><th>Evidence assessment</th><th>Registered details</th><th>Official report status</th></tr></thead><tbody>{d.gap_items.map(g => <tr key={g.operational_date}><td className="table-strong nowrap">{calendar(g.operational_date)}</td><td><span className="table-strong">{labels[g.assessment] || metricLabel(g.assessment)}</span>{g.findings.map(f => <p key={f} className="small-note">{labels[f] || metricLabel(f)}</p>)}</td><td><details className="source-details"><summary>{g.version_count} versions · {g.source_count} sources · {g.archive_hint_count} hints</summary><div className="source-content">
+    <section className="panel" id="gap-audit"><div className="panel-heading"><div><h2>Missing-date evidence</h2><p>Individual gap dates, oldest first. No records are promoted, repaired or filled by this view.</p></div><form className="compact-form" action="/quality/audit"><label htmlFor="gap_page_size">Show</label><select name="gap_page_size" id="gap_page_size" defaultValue={pageSize}>{[10, 20, 50].map(n => <option key={n} value={n}>{n} dates</option>)}</select><input type="hidden" name="source_page" value={sourcePage}/><input type="hidden" name="start_date" value={f.start}/><input type="hidden" name="end_date" value={f.end}/><button className="button secondary">Apply</button></form></div>
+      {!d.gap_items.length ? <Empty title={d.missing_dates ? "No gap dates on this page" : "No calendar gaps within observed bounds"} text="Dates are clipped to known canonical-history bounds; a filtered gap-only window is retained."/> : <div className="table-scroll"><table><caption className="sr-only">Registered evidence for missing canonical dates</caption><thead><tr><th>Operational date</th><th>Evidence assessment</th><th>Registered details</th><th>Official report status</th></tr></thead><tbody>{d.gap_items.map(g => <tr key={g.operational_date}><td className="table-strong nowrap">{calendar(g.operational_date)}</td><td><span className="table-strong">{labels[g.assessment] || metricLabel(g.assessment)}</span>{g.findings.map(f => <p key={f} className="small-note">{labels[f] || metricLabel(f)}</p>)}</td><td><details className="source-details"><summary>{g.version_count} versions · {g.source_count} sources · {g.archive_hint_count} hints</summary><div className="source-content">
         <h4>Report versions</h4><p className="small-note">Showing {g.versions.length} of {g.version_count}.</p>{g.versions.map(v => <div className="evidence-item" key={v.id}><strong>{v.quality_status} · {v.is_current ? "current pointer" : "not current"}</strong><p className="mono">Version: {v.id}</p><p className="mono">Stored parser/version key: {v.parser_version}</p></div>)}
         <h4>Date-linked source metadata</h4><p className="small-note">Showing {g.sources.length} of {g.source_count}. Report-date metadata or a national report-version link is present; verify the date inside the PDF.</p>{g.sources.map(s => <Source key={s.id} source={s}/>)}
         <h4>Archive-hint candidates</h4><p className="small-note">Showing {g.archive_hint_candidates.length} of {g.archive_hint_count}. These are possible matches only; a PDF may concern another operational date.</p>{g.archive_hint_candidates.map(s => <Source key={s.id} source={s}/>)}

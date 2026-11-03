@@ -74,6 +74,9 @@ class AuditReport(BaseModel):
     earliest_operational_date: date | None
     latest_operational_date: date | None
     missing_dates: int
+    selected_start_date: date | None = None
+    selected_end_date: date | None = None
+    canonical_dates_in_window: int = 0
     gap_page: int
     gap_page_size: int
     gap_total_pages: int
@@ -134,7 +137,14 @@ def issue_view(issue: ExtractionIssue) -> IssueEvidence:
 
 
 def read_audit(
-    session: Session, gap_page: int = 1, gap_page_size: int = 20, source_page: int = 1
+    session: Session,
+    gap_page: int = 1,
+    gap_page_size: int = 20,
+    source_page: int = 1,
+    start_date: date | None = None,
+    end_date: date | None = None,
+    all_gaps: bool = False,
+    auxiliary: bool = True,
 ) -> AuditReport:
     if (
         not 1 <= gap_page <= 100000
@@ -142,25 +152,40 @@ def read_audit(
         or not 1 <= source_page <= 100000
     ):
         raise HTTPException(422, "Invalid audit pagination")
+    if start_date and end_date and start_date > end_date:
+        raise HTTPException(422, "start_date must not be after end_date")
     rows = session.execute(canonical_query().order_by(DailyReport.report_date)).all()
     first = rows[0].operational_date if rows else None
     last = rows[-1].operational_date if rows else None
+    start = max(start_date or first, first) if first else None
+    end = min(end_date or last, last) if last else None
+    if start and start > end:
+        start = end = None
+    if all_gaps and start and (end - start).days >= 3660:
+        raise HTTPException(422, "Recovery worklists support at most 3660 calendar days")
     # Count and page missing dates using ranges, without expanding an unbounded calendar.
     gap_ranges = []
     missing = 0
     for previous, following in zip(rows, rows[1:]):
-        length = (following.operational_date - previous.operational_date).days - 1
-        if length:
-            gap_ranges.append((previous.operational_date + timedelta(days=1), length))
+        if start is None:
+            break
+        gap_start = max(previous.operational_date + timedelta(days=1), start)
+        gap_end = min(following.operational_date - timedelta(days=1), end)
+        length = (gap_end - gap_start).days + 1
+        if length > 0:
+            gap_ranges.append((gap_start, length))
             missing += length
+    if all_gaps:
+        gap_page_size = max(1, missing)
+        gap_page = 1
     offset = (gap_page - 1) * gap_page_size
     selected = []
-    for start, length in gap_ranges:
+    for range_start, length in gap_ranges:
         if offset >= length:
             offset -= length
             continue
         count = min(length - offset, gap_page_size - len(selected))
-        selected.extend(start + timedelta(days=offset + i) for i in range(count))
+        selected.extend(range_start + timedelta(days=offset + i) for i in range(count))
         offset = 0
         if len(selected) == gap_page_size:
             break
@@ -226,12 +251,20 @@ def read_audit(
         SourceDocument.status.in_(["quarantined", "review_required", "failed"]),
         ~dated_link,
     )
-    queue_total = session.scalar(select(func.count()).select_from(queue.subquery())) or 0
-    queue_sources = session.scalars(
-        queue.order_by(SourceDocument.retrieved_at.desc(), SourceDocument.id)
-        .offset((source_page - 1) * 10)
-        .limit(10)
-    ).all()
+    queue_total = (
+        (session.scalar(select(func.count()).select_from(queue.subquery())) or 0)
+        if auxiliary
+        else 0
+    )
+    queue_sources = (
+        session.scalars(
+            queue.order_by(SourceDocument.retrieved_at.desc(), SourceDocument.id)
+            .offset((source_page - 1) * 10)
+            .limit(10)
+        ).all()
+        if auxiliary
+        else []
+    )
     sources = {source.id: source for _, source in links}
     sources.update({source.id: source for source in candidates})
     sources.update({source.id: source for source in queue_sources})
@@ -333,7 +366,7 @@ def read_audit(
 
     # A reproducible review plan; selecting evidence is not recording a completed PDF audit.
     by_year = {}
-    for row in rows:
+    for row in rows if auxiliary else []:
         by_year.setdefault(row.operational_date.year, []).append(row)
     sample_map = {}
     for values in by_year.values():
@@ -363,6 +396,11 @@ def read_audit(
         earliest_operational_date=first,
         latest_operational_date=last,
         missing_dates=missing,
+        selected_start_date=start,
+        selected_end_date=end,
+        canonical_dates_in_window=sum(start <= r.operational_date <= end for r in rows)
+        if start
+        else 0,
         gap_page=gap_page,
         gap_page_size=gap_page_size,
         gap_total_pages=(missing + gap_page_size - 1) // gap_page_size,
@@ -384,6 +422,8 @@ def audit(
     gap_page: Annotated[int, Query(ge=1, le=100000)] = 1,
     gap_page_size: Annotated[int, Query(ge=1, le=50)] = 20,
     source_page: Annotated[int, Query(ge=1, le=100000)] = 1,
+    start_date: date | None = None,
+    end_date: date | None = None,
 ) -> AuditReport:
     response.headers["Cache-Control"] = "no-store"
-    return read_audit(session, gap_page, gap_page_size, source_page)
+    return read_audit(session, gap_page, gap_page_size, source_page, start_date, end_date)
