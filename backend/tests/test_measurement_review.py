@@ -197,7 +197,7 @@ def test_legacy_energy_never_silently_accepts_numeric_prefix(token):
 )
 def test_legacy_valid_energy_preserves_exact_value(token, expected):
     result = parse_page1_text(LEGACY + token + "\nEXPORT / IMPORT")
-    assert result["parser_version"] == "legacy_page1_v3"
+    assert result["parser_version"] == "legacy_page1_v4"
     assert result["quality_status"] == "pilot_extracted"
     assert (
         next(m["value"] for m in result["observations"] if m["metric"] == "energy_generated")

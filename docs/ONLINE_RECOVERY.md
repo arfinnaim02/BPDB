@@ -128,3 +128,9 @@ acceptance run is the separate integration gate.
   2fe99deb2cdd4db661408a7605181a94c47e86f08d1fa127ec6fc63591fd5d71.
 - Production Source audit now links to the online workflow. No office/home runtime was used.
   Complete archival backup and independently reviewed measurement recovery are still pending.
+
+## Parser geometry release
+
+See SOURCE_GROUNDED_PARSER_REPAIR.md for the real-PDF cause, fixture hashes and revised
+legacy_page1_v4 / modern_page1_v5 extraction. The workflow now runs parser regression
+tests before investigation. All parsed candidates still require reviewed versioned ingestion.

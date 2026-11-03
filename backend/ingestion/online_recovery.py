@@ -8,6 +8,7 @@ import sqlite3
 from collections import Counter
 from contextlib import contextmanager
 from datetime import date, datetime, timedelta, timezone
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from urllib.parse import urlsplit
 from uuid import uuid4
@@ -19,7 +20,7 @@ from ingestion.discovery import official_url
 from ingestion.validate_page1 import check_record
 
 ROOT = Path(__file__).resolve().parents[2]
-RULE_VERSION = "online_recovery_v1"
+RULE_VERSION = "online_recovery_v2"
 MAX_BYTES = 30 * 1024 * 1024
 
 
@@ -148,10 +149,12 @@ def select_candidates(worklist, journal):
 def first_page_text(path):
     import pdfplumber
 
+    from ingestion.page1_parser import extract_page_text
+
     with pdfplumber.open(path) as pdf:
         if not pdf.pages:
             return ""
-        return pdf.pages[0].extract_text(layout=True) or ""
+        return extract_page_text(pdf.pages[0])[0]
 
 
 def preserve_candidate(client, service, folder_id, candidate, output):
@@ -206,6 +209,9 @@ def preserve_candidate(client, service, folder_id, candidate, output):
         )
     except Exception as exc:
         result.update(status="parse_failed_or_unsupported", parse_error_type=type(exc).__name__)
+        code = getattr(exc, "code", None)
+        if isinstance(code, str) and re.fullmatch(r"[A-Za-z0-9_]{1,100}", code):
+            result["parse_error_code"] = code
     try:
         text = first_page_text(path)
         if text:
@@ -238,8 +244,14 @@ def investigate(worklist, candidates, client, service, folder_id, output, offset
         print(f"Investigation {i}/{len(selected)}: {result['status']}", flush=True)
     represented = {day for c in candidates for day in c["candidate_gap_dates"]}
     all_gaps = {i["operational_date"] for i in worklist["items"]}
+    try:
+        pdf_runtime = version("pdfplumber")
+    except PackageNotFoundError:
+        pdf_runtime = None
     report = {
         "rule_version": RULE_VERSION,
+        "parser_source_sha256": digest(Path(__file__).with_name("page1_parser.py")),
+        "pdfplumber_version": pdf_runtime,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "worklist_id": worklist["worklist_id"],
         "window": worklist["window"],

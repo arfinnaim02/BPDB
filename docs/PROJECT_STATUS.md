@@ -321,3 +321,18 @@ Tested the deployed preparation page against Neon after secure sign-in.
   2fe99deb2cdd4db661408a7605181a94c47e86f08d1fa127ec6fc63591fd5d71.
 - Production Source audit now links to the online workflow. No office/home runtime was used.
   Complete archival backup and independently reviewed measurement recovery are still pending.
+
+## Source-grounded parser geometry repair — November 3, 2026
+
+- Inspected preserved originals and enlarged Poppler renders: default 3-point tolerance
+  merged rows in two physically small-font PDFs; fields were present in the originals.
+- Added deterministic height-scaled extraction below 3-point median character height;
+  normal font behavior unchanged, with explicit extraction-method metadata and no digit joining.
+- Both 7390 (2024-01-01) and 7396 (2024-01-04) now yield five exact national metrics,
+  matching inspected rendered source headers and passing existing numeric validation.
+- 7388 is a single-page Page 2 station table despite its filename; explicit unsupported code.
+- Source-grounded fixtures, normal legacy/modern compatibility checks and strict token guards.
+- Release labels legacy_page1_v4 / modern_page1_v5; online report records parser SHA/runtime.
+- Local verification: 187 backend tests passed, one optional PostgreSQL integration skipped.
+- Hosted rerun is a separate gate. Zero historical measurement imports/promotions performed.
+- Source hashes, reviewed values, method, limits: SOURCE_GROUNDED_PARSER_REPAIR.md.

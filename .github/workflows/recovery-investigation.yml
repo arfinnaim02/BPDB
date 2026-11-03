@@ -60,7 +60,10 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements.txt
       - name: Install dependencies
-        run: python -m pip install -r backend/requirements.txt
+        run: python -m pip install -r backend/requirements-dev.txt
+
+      - name: Verify source-grounded parser regression fixtures
+        run: python -m pytest -q backend/tests/test_page1_layouts.py backend/tests/test_measurement_review.py
 
       - name: Prepare private Drive credentials
         env:

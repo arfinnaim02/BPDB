@@ -1,0 +1,44 @@
+[
+  {
+    "fixture": "7390page1.txt",
+    "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/7390page1.pdf",
+    "source_sha256": "d137b0ba773bbb9b9c37d71607f608166cad0d8cff9c9402d232ba9f2953987d",
+    "operational_date": "2024-01-01",
+    "reporting_date": "2024-01-02",
+    "values": {
+      "day_peak_generation": "9084.0",
+      "evening_peak_generation": "9944.0",
+      "evening_peak_demand": "9944.0",
+      "maximum_generation": "9944.0",
+      "energy_generated": "198.094"
+    }
+  },
+  {
+    "fixture": "7394page1.txt",
+    "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/7394page1.pdf",
+    "source_sha256": "5203f3811973d384a0a7a9f6381adc24a6077f075b8f79dff4f960af93a53d21",
+    "operational_date": "2024-01-03",
+    "reporting_date": "2024-01-04",
+    "values": {
+      "day_peak_generation": "9287.0",
+      "evening_peak_generation": "10131.0",
+      "evening_peak_demand": "10131.0",
+      "maximum_generation": "10131.0",
+      "energy_generated": "205.711"
+    }
+  },
+  {
+    "fixture": "7396page1.txt",
+    "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/7396page1.pdf",
+    "source_sha256": "2c8d54b6ed4d1e490c7b1ec427aaf728acdff117c051ff251478bdfe12da0ed7",
+    "operational_date": "2024-01-04",
+    "reporting_date": "2024-01-05",
+    "values": {
+      "day_peak_generation": "9508.0",
+      "evening_peak_generation": "10107.0",
+      "evening_peak_demand": "10107.0",
+      "maximum_generation": "10107.0",
+      "energy_generated": "206.896"
+    }
+  }
+]

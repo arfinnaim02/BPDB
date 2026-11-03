@@ -1,0 +1,12 @@
+POWER GRID COMPANY OF BANGLADESH LTD.
+NATIONAL LOAD DESPATCH CENTER
+DAILY REPORT
+Reporting Date : 5-Jan-24
+Till now the maximum generation is : - 15648.0 21:00 Hrs on 19-Apr-23
+The Summary of Yesterday's 4-Jan-24 Generation & Demand Today's Actual Min Gen. & Probable Gen. & Demand
+Day Peak Generation : 9508.0 MW Hour : 12:00 Min. Gen. at 5:00 6576
+Evening Peak Generation : 10107.0 MW Hour : 18:00 Available Max Generation : 11881
+E.P. Demand (at gen end) : 10107.0 MW Hour : 18:00 Max Demand (Evening) : 10000
+Maximum Generation : 10107.0 MW Hour : 18:00 Reserve(Generation end) 1881
+Total Gen. (MKWH) : 206.896 System Load Factor : 85.29% Load Shed : 0
+EXPORT / IMPORT THROUGH EAST-WEST INTERCONNECTOR

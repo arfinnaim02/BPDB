@@ -174,3 +174,14 @@
 - [x] Verify real PDF/text/report preservation, artifact checksum and zero database promotions.
 - [ ] Independently verify PDFs, resolve supported parser/source cases, stage and promote repairs.
 - [ ] Complete backup of the historical home-PC archive if original-byte continuity is required.
+
+## Source-grounded parser geometry repair — November 3, 2026
+- [x] Retrieve preserved originals and inspect enlarged source-summary renders.
+- [x] Identify default-tolerance row merging and add deterministic small-font extraction.
+- [x] Preserve strict numbers, date/metric ambiguity guards and unchanged normal-font extraction.
+- [x] Exact-value/date/unit fixtures for repaired sources and normal legacy/modern references.
+- [x] Reject mislabeled station-table source with an explicit unsupported-kind code.
+- [x] Record extraction geometry, parser SHA/runtime and bounded hosted PDF/text evidence.
+- [x] Local suite passes: 187 backend tests, one optional PostgreSQL integration skipped.
+- [ ] Complete hosted repaired-parser acceptance and inspect resulting candidates.
+- [ ] Stage and verify reviewed source-supported repairs before previewing canonical promotion.

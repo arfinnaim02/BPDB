@@ -1,0 +1,27 @@
+                                                                                    
+                                                                                    
+                                                                          QF-LDC-08(Sheet-1)
+                                                                              page 1 of 3
+                                       Power Grid Bangladesh PLC                    
+                                     National Load Dispatch Center (NLDC)           
+                                       System Summary Report                        
+               Date :  27-10-2026                                                   
+                                     Power Supply Scenario                          
+        Day Peak Generation 14718.62 MW 12:00 Hr. Energy Generated 324.38721 MKWHr. 
+        Day Peak Demand   14718.62 MW 12:00 Hr. Energy Unserverd 28.58200 MKWHr.    
+        Evening Peak Generation 14169.39 MW 21:00 Hr. Energy Demand 352.96921 MKWHr.
+        Evening Peak Demand 16927.06 MW 19:30 Hr. Maximum Temperature 37.10 °C      
+        Minimum Generation of the Day 9349.76 MW 13:00 Hr. Total Gas Supplied 752.84 MMCFD
+        Maximum Generation of the Day 15524.72 MW 00:00 Hr. Production Cost per KWHr 8.91001 Tk.
+                                  
+Zone-wise Generation Summary
+
+Production Cost (Tk.)                          
+                          Fuel     Tk.     Fuel    Tk.                              
+                          Gas    348281234.3 Hydro 213772                           
+                          Coal   867618013.7 Solar 76516264.93                      
+                          HFO    1248369707 Import 305795570.6                      
+                          HSD    42688996.88 Wind 810950.4                          
+                                Total: 289,02,94,509 Tk.                            
+                                   
+E-W Interconnector
