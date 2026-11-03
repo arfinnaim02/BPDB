@@ -225,3 +225,33 @@ full-history data-quality audit and analytical/model development.
 - Previous missingness live acceptance confirmed: 2,383 canonical dates /2,571 calendar
   days, 188 gaps; cost 626 observed days with 22 internal missing days. Full leap-month,
   partial-month and Reset behavior verified in production.
+
+## Live preparation acceptance — 3 November 2026
+
+Tested the deployed preparation page against Neon after secure sign-in.
+
+- Energy generated, 2024-01-01 through 2024-12-31; training cutoff 2024-06-30,
+  validation cutoff 2024-09-30.
+- Split calendar/observed/missing counts: train 182/171/11, validation 92/78/14,
+  test 92/42/50. Zero numerical review holds in this selected window.
+- Observed-only baseline: 366 unique, continuous calendar rows, 291 original canonical
+  records, zero estimates and no prepared-training values on validation/test rows.
+- Downloaded all five members. All four manifest member hashes matched; reconstructing
+  the snapshot ID from exported original evidence/config matched the live preview.
+- Numeric CSV values matched the audit CSV row-by-row and original measurement snapshot;
+  available monthly totals reconciled exactly. Only February and August 2024 met the
+  complete, observed/unheld monthly-total gate in this selected window.
+- Baseline ID: 0e959965c6eac65797d38751ec4b2ea70c3072975a00ff14e5a1580ead08d30e.
+  Reset and re-preview reproduced the same ID.
+- Experimental one-day policy ID:
+  24db81632763f1bcb2fa4fc8ad57de3dc737dac153319868af287610d90be49a.
+  Zero estimates: seven missing training days had unknown donor availability,
+  one lacked a usable original weekly donor, two exceeded the one-day run limit,
+  and one was a boundary gap. All 64 missing held-out days stayed unfilled.
+  Experimental bundle member checksums matched.
+- Equal training/validation cutoffs displayed a clear validation message and no preview.
+  Reset cleared all four dates and restored the baseline with no applied preparation.
+- Desktop visual layout checked. This does not constitute independent PDF verification,
+  source recovery, historical point-in-time validation or a mobile acceptance test.
+- The 75 unavailable 2024 calendar dates are a canonical-data finding, NOT proof that
+  official PDFs are absent. Source/quarantine investigation remains the next priority.

@@ -142,7 +142,9 @@
 - [x] Downloadable original snapshot, values/audit CSVs, observed monthly totals and manifest.
 - [x] Input/config identity, member checksums, stale-preview protection and protected downloads.
 - [x] Automated split, donor, zero, hold, leakage, month, identity, bundle and API/filter tests.
-- [ ] Production acceptance of new preparation preview and downloadable bundle.
+- [x] Production acceptance of new preparation preview and downloadable bundle.
+- [x] Both live bundle checksums, reconstructed snapshot ID, original-value reconciliation,
+  held-out blanks, monthly totals, experimental donor refusals, invalid splits and Reset.
 - [ ] Source-supported historical recovery and durable independently reviewed decisions.
 - [ ] Compare missing-data treatments on realistic chronological training folds.
 - [ ] Approve target definitions/sample feasibility, freeze accepted experiment and train models.
