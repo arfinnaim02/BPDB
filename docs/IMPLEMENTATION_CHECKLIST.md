@@ -183,5 +183,6 @@
 - [x] Reject mislabeled station-table source with an explicit unsupported-kind code.
 - [x] Record extraction geometry, parser SHA/runtime and bounded hosted PDF/text evidence.
 - [x] Local suite passes: 187 backend tests, one optional PostgreSQL integration skipped.
-- [ ] Complete hosted repaired-parser acceptance and inspect resulting candidates.
+- [x] Complete hosted repaired-parser acceptance and inspect resulting candidates.
+- [x] Verify both repaired days, explicit non-summary rejection, runtime identity and artifact hash.
 - [ ] Stage and verify reviewed source-supported repairs before previewing canonical promotion.

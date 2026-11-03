@@ -88,3 +88,26 @@ review disagreements and date conflicts; then stage, verify and preview promotio
 versioned ingestion. No current Neon value is changed by deploying this parser, and no
 existing frozen research bundle is overwritten. A clean parser result alone does not prove
 historical dataset coverage or authorize an imputed/estimated value as source data.
+
+## Hosted acceptance — 3 November 2026
+
+- Successful repaired-parser run:
+  https://github.com/arfinnaim02/BPDB/actions/runs/41595285319.
+  Source-grounded Windows regression gate, Drive preservation, diagnostic publication,
+  credential cleanup and both CI workflows passed. Both Vercel deployments passed.
+- The first Windows gate exposed locale-dependent reading of the UTF-8 modern reference
+  (degree symbol). Fixed fixture readers to specify UTF-8 and enabled PYTHONUTF8 for the
+  runner. That blocked run never accessed Drive or Neon investigation credentials.
+- The repeated ten-source investigation now reports TWO parsed candidates needing review:
+  7390page1.pdf for 2024-01-01 and 7396page1.pdf for 2024-01-04, five supported metrics each,
+  zero parser/numeric validation issues, saved PDF checksums matching the original journal.
+- Seven date-mismatched sources remain held; 7388 remains unsupported with explicit
+  power_station_table_first_page code. No archive hint was substituted for a PDF date.
+- Report version online_recovery_v2 records pdfplumber 0.11.10 and parser byte SHA-256
+  4985e18b97556fa85d8c0efec7de0a8d9c6b645babb313e1787d0de37f7145f4.
+  This SHA reflects the Windows checkout's CRLF bytes; it matches the same source with
+  CRLF line endings, rather than the local LF file hash.
+- Downloaded hosted artifact SHA-256 matched:
+  2b18eff4d5be4f6672ff01b41b820ca71cab869d87a9afdfcb2e3da01f019283.
+- Canonical promotions and measurement inserts remain ZERO. The 2024 gap count is still
+  75 until versioned staging, database verification and approved canonical promotion occur.
