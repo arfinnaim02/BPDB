@@ -170,6 +170,7 @@
 - [x] Verified report/worklist/plan/receipt preservation without daily checkpoint replacement.
 - [x] Diagnostic-only GitHub artifacts and credential cleanup; no canonical imports/promotions.
 - [x] Unit tests for URL, hint, cached-byte, failure, date/checksum and bounded-run behavior.
-- [ ] Complete first real hosted acceptance and inspect actual candidate findings.
+- [x] Complete first real hosted acceptance and inspect actual candidate findings.
+- [x] Verify real PDF/text/report preservation, artifact checksum and zero database promotions.
 - [ ] Independently verify PDFs, resolve supported parser/source cases, stage and promote repairs.
 - [ ] Complete backup of the historical home-PC archive if original-byte continuity is required.

@@ -106,3 +106,25 @@ reuse, changed bytes/date mismatch holds, empty/HTML rejection, parser failure p
 error-text suppression, bounded selection and report/storage receipt integration.
 Mocked services in unit tests do not establish real cloud connectivity; the first hosted
 acceptance run is the separate integration gate.
+
+## Hosted acceptance — 3 November 2026
+
+- Run https://github.com/arfinnaim02/BPDB/actions/runs/41584662421 completed successfully,
+  including credential cleanup and diagnostic artifact publication. Both CI workflows and
+  both Vercel deployments also succeeded on feature commit 38fad4f.
+- Real Drive journal produced 105 candidate URLs for 70 of the 75 selected 2024 gap dates.
+  No known candidates were found for July 19–23, 2024; this does NOT prove report absence.
+- First bounded run selected offset 0, max_files 10. Eight current official PDFs retrieved,
+  two already archived verified blobs reused. All ten matched their saved expected SHA-256.
+- All ten PDFs and first-page diagnostic texts preserved in Drive. Worklist, plan, report
+  and storage receipt were also remotely checksum-verified. Daily checkpoint unchanged.
+- Findings: two parse-failed/unsupported sources and eight held sources. Seven held sources
+  parsed to operational dates different from their candidate gaps; the other matched
+  2024-01-01 but had missing peak-generation/demand parser metrics. No automatic date reassignment.
+- Zero canonical promotions and zero measurement inserts. Source review/parser work remains.
+- Candidate plan ID: 0e57bd73d7d0656f5b2b76dc8d075fb9eb46610a802f84db65ff467b215bc4c5;
+  next_offset 10, subject to unchanged input/plan identity.
+- Downloaded GitHub diagnostic artifact matched its recorded SHA-256
+  2fe99deb2cdd4db661408a7605181a94c47e86f08d1fa127ec6fc63591fd5d71.
+- Production Source audit now links to the online workflow. No office/home runtime was used.
+  Complete archival backup and independently reviewed measurement recovery are still pending.
