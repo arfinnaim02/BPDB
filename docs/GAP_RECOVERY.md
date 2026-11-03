@@ -145,3 +145,10 @@ fixture tests alone do not establish how many of the 75 dates are recoverable.
   188-gap coverage with bounds 2019-10-19 through 2026-11-01.
 - Downloaded worklist passed the local consumer's identity/date validation. Actual local
   reconciliation against the user's historical journal/batch/PDF archive remains pending.
+
+## Online-first workflow
+
+Local reconciliation remains optional. The new **BPDB online gap investigation** action
+uses the verified online journal and known source hints, retrieves bounded official PDF
+candidates and preserves evidence in Drive. It needs no office checkout or local archive.
+See ONLINE_RECOVERY.md. This does not imply that all home-PC historical files are backed up.

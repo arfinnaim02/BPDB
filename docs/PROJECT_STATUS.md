@@ -285,3 +285,17 @@ Tested the deployed preparation page against Neon after secure sign-in.
   188-gap coverage with bounds 2019-10-19 through 2026-11-01.
 - Downloaded worklist passed the local consumer's identity/date validation. Actual local
   reconciliation against the user's historical journal/batch/PDF archive remains pending.
+
+## Hosted gap investigation — November 3, 2026
+
+- Added manual GitHub Actions online investigation; workflow-file pushes on main trigger
+  a bounded initial 2024 acceptance run (10 PDFs), without a recurring schedule.
+- Read-only Neon worklist plus checksum-verified Drive journal; registered and same/next-day
+  journal hint candidates remain unverified date matches.
+- Reuse verified archived PDFs or fetch bounded official HTTPS PDF responses, preserving
+  distinct content-addressed originals, parser results and first-page text diagnostics in Drive.
+- Immutable report/plan/worklist/receipt storage, no daily-checkpoint push and no Neon mutations.
+- Original historical archive backup is NOT complete; unavailable old bytes cannot be recreated.
+- 179 backend tests passed, one PostgreSQL integration skipped; 17 frontend tests, lint,
+  TypeScript and build passed. Hosted acceptance is a separate integration check.
+- Details, workflow inputs, preservation semantics and limits: ONLINE_RECOVERY.md.

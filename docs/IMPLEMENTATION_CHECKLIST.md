@@ -161,3 +161,15 @@
 - [ ] Run local reconciliation against actual historical PDFs and inspect its output.
 - [ ] Verify original PDFs, correct supported parser cases and review conflicts.
 - [ ] Stage/verify/promote recovered source-supported values and create a new research snapshot.
+
+## Hosted gap investigation — November 3, 2026
+- [x] Online bounded GitHub job with existing secrets and quoted/validated manual inputs.
+- [x] Read-only current worklist and checksum-verified checkpoint journal candidate selection.
+- [x] Verified Drive-PDF reuse and bounded official retrieval with distinct immutable PDF blobs.
+- [x] Parser/validation/date-match findings and bounded first-page text diagnostics.
+- [x] Verified report/worklist/plan/receipt preservation without daily checkpoint replacement.
+- [x] Diagnostic-only GitHub artifacts and credential cleanup; no canonical imports/promotions.
+- [x] Unit tests for URL, hint, cached-byte, failure, date/checksum and bounded-run behavior.
+- [ ] Complete first real hosted acceptance and inspect actual candidate findings.
+- [ ] Independently verify PDFs, resolve supported parser/source cases, stage and promote repairs.
+- [ ] Complete backup of the historical home-PC archive if original-byte continuity is required.
