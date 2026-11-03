@@ -126,6 +126,41 @@ def test_real_import_staging_is_idempotent_and_does_not_promote(session, monkeyp
     assert recovery.transact(Factory(), [item], "verify")["verified_measurements"] == 5
 
 
+def test_unregistered_reviewed_blob_registration_and_atomic_rollback(session, monkeypatch):
+    item = record()
+    item["registration_evidence"] = {"retrieved_at": "2026-11-03T00:00:00+00:00",
+                                     "size_bytes": 100, "drive_file_id": "synthetic-blob"}
+    execute = session.execute
+
+    def sqlite_execute(statement, *args, **kwargs):
+        if str(statement).startswith("SELECT pg_advisory_xact_lock"):
+            return None
+        return execute(statement, *args, **kwargs)
+
+    monkeypatch.setattr(session, "execute", sqlite_execute)
+
+    class Factory:
+        @contextmanager
+        def begin(self):
+            with session.begin_nested():
+                yield session
+
+    assert recovery.transact(Factory(), [item], "preview")["unregistered_sources"] == 1
+    assert session.scalar(recovery.select(recovery.SourceDocument)) is None
+    bad = {**item, "source_url": "https://misc.bpdb.gov.bd/other.pdf"}
+    bad.pop("registration_evidence")
+    with pytest.raises(ValueError, match="already be registered"):
+        recovery.transact(Factory(), [item, bad], "stage")
+    assert session.scalar(recovery.select(recovery.SourceDocument)) is None
+    assert session.scalar(recovery.select(DailyReport)) is None
+    result = recovery.transact(Factory(), [item], "stage")
+    assert result["inserted_measurements"] == 5 and result["unregistered_sources"] == 1
+    source = session.scalar(recovery.select(recovery.SourceDocument))
+    assert source.storage_key == "drive://synthetic-blob"
+    assert source.published_at is None and source.archive_date_hint is None
+    assert recovery.transact(Factory(), [item], "stage")["inserted_measurements"] == 0
+
+
 @pytest.mark.parametrize("alter", ["date", "value", "parser", "unit", "issues"])
 def test_exact_extraction_gate(tmp_path, monkeypatch, alter):
     item = record()["extraction"]

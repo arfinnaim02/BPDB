@@ -21,7 +21,7 @@ No local files, full archive download or new secrets are required.
 1. Run parser and recovery tests before credentials are prepared.
 2. Download the two already archived PDF blobs and verify their exact SHA-256.
 3. Reparse, validate, and compare every expected date, metric, unit and value.
-4. Preview registered source identity and canonical/conflict eligibility.
+4. Preview source registration needs and canonical/conflict eligibility.
 5. Stage both dates in one transaction without changing canonical pointers.
 6. Read back all ten measurements in a separate process and transaction.
 7. Verify again under date locks, then promote both gaps in one transaction.
@@ -35,6 +35,12 @@ Every action saves a timestamped JSON report as a verified immutable Drive blob;
 GitHub retains diagnostic JSON artifacts for 30 days. Stage and promotion also
 record the reviewed extraction and review fingerprint in Neon ingestion runs.
 The shared collection checkpoint is never replaced by this job.
+
+If a reviewed PDF is not registered yet, staging creates its source record in
+the same transaction as the measurements. Its storage key identifies the exact
+archived Drive blob. Retrieved-at is the actual archived-byte download time;
+publication time and archive-date hint remain unknown. Existing source records
+are reused by URL plus checksum. A failed second date rolls back both dates.
 
 ## Acceptance
 

@@ -78,7 +78,7 @@ jobs:
 
 
 
-      - name: Preview reviewed repairs
+      - name: Preview reviewed repairs and source registration needs
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python -u -m ingestion.reviewed_recovery preview

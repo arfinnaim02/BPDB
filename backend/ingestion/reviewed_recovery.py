@@ -12,11 +12,13 @@ from collections import Counter
 from datetime import date, datetime, timezone
 from decimal import Decimal
 from pathlib import Path
+from uuid import uuid4
 
 from app.db.models import DailyReport, IngestionRun, ReportVersion, SourceDocument, VersionSource
 from app.db.session import session_factory
 from app.services.canonical import promote_version
 from sqlalchemy import select, text
+from sqlalchemy.dialects.postgresql import insert
 
 from ingestion.import_page1_measurements import METRICS, TABLES, import_group
 from ingestion.page1_parser import parse_page1
@@ -59,7 +61,7 @@ def lock_day(session, day):
                         {"key": "bpdb:national_daily:" + day})
 
 
-def inspect_stage(session, record, *, required=False):
+def inspect_stage(session, record, *, required=False, allow_unregistered=False):
     day = date.fromisoformat(record["extraction"]["operational_date"])
     report = session.scalar(select(DailyReport).where(
         DailyReport.report_date == day, DailyReport.dataset_grain == "national_daily"
@@ -67,8 +69,6 @@ def inspect_stage(session, record, *, required=False):
     source = session.scalar(select(SourceDocument).where(
         SourceDocument.original_url == record["source_url"],
         SourceDocument.sha256 == record["source_sha256"]))
-    if source is None:
-        raise ValueError("Reviewed source must already be registered with this checksum")
     versions = list(session.scalars(select(ReportVersion).where(
         ReportVersion.report_id == report.id))) if report else []
     matches = [v for v in versions if v.parser_version == KEY]
@@ -81,6 +81,8 @@ def inspect_stage(session, record, *, required=False):
     if any(v.id != (version.id if version else None)
            and v.quality_status in ("partial", "validated", "conflict") for v in versions):
         raise ValueError("Competing staged version requires separate review")
+    if source is None and not (allow_unregistered and version is None):
+        raise ValueError("Reviewed source must already be registered with this checksum")
     if version is None:
         if required:
             raise ValueError("Reviewed stage is missing")
@@ -107,17 +109,48 @@ def inspect_stage(session, record, *, required=False):
     return report, version, source
 
 
+def register_source(session, record, run_id):
+    """Register only bytes revalidated against the pinned review in this process."""
+    evidence = record["registration_evidence"]
+    retrieved = datetime.fromisoformat(evidence["retrieved_at"])
+    if retrieved.tzinfo is None or evidence["size_bytes"] <= 0:
+        raise ValueError("Invalid verified retrieval metadata")
+    session.execute(insert(SourceDocument).values(
+        id=str(uuid4()), original_url=record["source_url"], category="page_1",
+        sha256=record["source_sha256"], storage_key="drive://" + evidence["drive_file_id"],
+        original_filename=record["source_url"].rsplit("/", 1)[-1],
+        content_type="application/pdf", size_bytes=evidence["size_bytes"],
+        report_date=date.fromisoformat(record["extraction"]["operational_date"]),
+        archive_date_hint=None, published_at=None, retrieved_at=retrieved,
+        parser_version="legacy_page1_v4", status="downloaded", ingestion_run_id=run_id,
+    ).on_conflict_do_nothing(index_elements=["original_url", "sha256"]))
+    session.flush()
+
+
 def transact(factory, records, action):
     result = {"stage": "reviewed_gap_recovery", "action": action,
               "review_sha256": REVIEW_HASH, "inserted_measurements": 0,
-              "promoted": 0, "already_canonical": 0, "verified_measurements": 0}
+              "promoted": 0, "already_canonical": 0, "verified_measurements": 0,
+              "unregistered_sources": 0}
     with factory.begin() as session:
         if session.bind.dialect.name == "postgresql":
             session.execute(text("SET LOCAL statement_timeout = '60000'"))
             session.execute(text("SET LOCAL lock_timeout = '15000'"))
+        run = None
+        if action in ("stage", "promote"):
+            run = IngestionRun(trigger="manual", status="running")
+            session.add(run)
+            session.flush()
         for record in records:
             lock_day(session, record["extraction"]["operational_date"])
-            report, version, source = inspect_stage(session, record)
+            report, version, source = inspect_stage(
+                session, record, allow_unregistered=action in ("preview", "stage")
+            )
+            if source is None:
+                result["unregistered_sources"] += 1
+                if action == "stage":
+                    register_source(session, record, run.id)
+                    report, version, source = inspect_stage(session, record)
             if action == "stage" and version is None:
                 session.info["registered_source_ids"] = {
                     (record["source_url"], record["source_sha256"]): source.id}
@@ -138,10 +171,10 @@ def transact(factory, records, action):
                     version.quality_status = "validated"
                     session.flush()
                     result["promoted"] += int(promote_version(session, report.id, version.id))
-        if action in ("stage", "promote"):
-            session.add(IngestionRun(trigger="manual", status="succeeded",
-                finished_at=datetime.now(timezone.utc),
-                statistics={**result, "reviewed_sources": records}))
+        if run:
+            run.status = "succeeded"
+            run.finished_at = datetime.now(timezone.utc)
+            run.statistics = {**result, "reviewed_sources": records}
     return result
 
 
@@ -169,7 +202,14 @@ def main():
             raise ValueError("Reviewed original PDF is not in verified Drive storage")
         target = output / review[0]
         download(service, blobs[0]["id"], target)
-        records.append(validate_pdf(target, review))
+        record = validate_pdf(target, review)
+        record["registration_evidence"] = {
+            "drive_file_id": blobs[0]["id"], "size_bytes": target.stat().st_size,
+            "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            "retrieval": "verified_archived_pdf_download",
+            "original_publication_time": "unknown",
+        }
+        records.append(record)
     result = transact(session_factory(), records, args.action)
     result["sources"] = records
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
