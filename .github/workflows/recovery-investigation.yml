@@ -146,6 +146,11 @@ jobs:
             data/recovery_online/*/candidate_plan.json
             data/recovery_online/*/storage_receipt.json
             data/recovery_online/*/pdf_*/result.json
+            data/recovery_online/*/pdf_*/first_page.txt
+            data/recovery_online/*/pdf_001/candidate.pdf
+            data/recovery_online/*/pdf_002/candidate.pdf
+            data/recovery_online/*/pdf_003/candidate.pdf
+            data/recovery_online/*/pdf_004/candidate.pdf
 
       - name: Remove temporary credentials
         if: always()
