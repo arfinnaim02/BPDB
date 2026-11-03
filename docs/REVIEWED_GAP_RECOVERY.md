@@ -56,3 +56,28 @@ If no other recovery occurs concurrently, 2024 canonical gaps fall from 75 to 73
 These two repairs do not establish complete historical coverage or resolve the
 other gaps or historical numerical-review flags. Analysis snapshots should be
 regenerated after confirming hosted acceptance.
+
+## Hosted acceptance — 3 November 2026
+
+[Run 41682208718](https://github.com/arfinnaim02/BPDB/actions/runs/41682208718)
+completed successfully at implementation commit
+`6c06c9d50d528669ad97f66ab2d69219c2b0282f`.
+
+- Preview: two sources required registration; zero writes.
+- Staging: two sources registered and ten measurements inserted; zero promotions.
+- Independent readback: all ten measurements verified.
+- Promotion: exactly two canonical dates promoted.
+- Final readback: ten measurements verified, already_canonical=2.
+- All five action reports preserved as verified immutable Drive blobs and GitHub artifacts.
+- Local backend suite: 204 passed, one opt-in database integration test skipped.
+- Hosted parser/recovery gate: 25 passed; backend and foundation workflows passed.
+- Both Vercel deployment status checks passed for the implementation commit.
+
+The first preview run stopped without writes because it discovered that the
+reviewed archived PDFs had not previously been registered in Neon. Atomic source
+registration was added and tested before the successful run above. No canonical
+record was overwritten and no missing value was estimated.
+
+To inspect the result, open Master dataset and filter 2024-01-01 through
+2024-01-04. Check the restored dates and their original source evidence. A fresh
+research export is required to include these records in an earlier snapshot.
