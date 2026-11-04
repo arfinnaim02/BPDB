@@ -134,3 +134,17 @@ acceptance run is the separate integration gate.
 See SOURCE_GROUNDED_PARSER_REPAIR.md for the real-PDF cause, fixture hashes and revised
 legacy_page1_v4 / modern_page1_v5 extraction. The workflow now runs parser regression
 tests before investigation. All parsed candidates still require reviewed versioned ingestion.
+
+## Next reviewed investigation window — 4 November 2026
+
+After the two January repairs, the active candidate plan changes. The next bounded
+run uses a date window of 2024-01-30 through 2024-05-25, offset 0, maximum 10 PDFs.
+It does not reuse an offset from the former 75-gap plan. Its fresh Neon worklist
+and journal fingerprint define the actual selection. Workflow defaults now reflect
+this window; the older defaults above describe initial acceptance only.
+
+The first ten candidate PDFs and their first-page text/JSON are retained in the
+short-lived GitHub diagnostic artifact to support independent source review.
+All original evidence remains preserved by checksum in private Drive. The workflow
+still performs no source registration, measurement staging or canonical promotion.
+Review outcomes and any subsequent explicitly reviewed repairs are recorded separately.

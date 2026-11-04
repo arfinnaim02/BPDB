@@ -6,11 +6,11 @@ on:
       start_date:
         description: First date in the gap window (YYYY-MM-DD)
         required: true
-        default: "2024-01-01"
+        default: "2024-01-30"
       end_date:
         description: Last date in the gap window (YYYY-MM-DD)
         required: true
-        default: "2024-12-31"
+        default: "2024-05-25"
       max_files:
         description: Maximum candidate PDFs in this bounded investigation
         type: choice
@@ -45,8 +45,8 @@ jobs:
       PYTHONPATH: backend
       PYTHONUNBUFFERED: "1"
       PYTHONUTF8: "1"
-      WINDOW_START: ${{ inputs.start_date || '2024-01-01' }}
-      WINDOW_END: ${{ inputs.end_date || '2024-12-31' }}
+      WINDOW_START: ${{ inputs.start_date || '2024-01-30' }}
+      WINDOW_END: ${{ inputs.end_date || '2024-05-25' }}
       MAX_FILES: ${{ inputs.max_files || '10' }}
       PLAN_OFFSET: ${{ inputs.offset || '0' }}
     steps:
@@ -155,6 +155,12 @@ jobs:
             data/recovery_online/*/pdf_002/candidate.pdf
             data/recovery_online/*/pdf_003/candidate.pdf
             data/recovery_online/*/pdf_004/candidate.pdf
+            data/recovery_online/*/pdf_005/candidate.pdf
+            data/recovery_online/*/pdf_006/candidate.pdf
+            data/recovery_online/*/pdf_007/candidate.pdf
+            data/recovery_online/*/pdf_008/candidate.pdf
+            data/recovery_online/*/pdf_009/candidate.pdf
+            data/recovery_online/*/pdf_010/candidate.pdf
 
       - name: Remove temporary credentials
         if: always()
