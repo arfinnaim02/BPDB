@@ -24,7 +24,7 @@ export function ResearchProfile({ rows, label }: { rows: ResearchPeriod[]; label
           const r = rows[i];
           return r ? `${r.label}\nMean: ${r.mean ?? "Unavailable"} million kWh\nEligible: ${r.eligible_days}/${r.calendar_days} days\nCoverage: ${r.coverage_percent}%\nMissing: ${r.missing_days} · held: ${r.held_days}` : "";
         } },
-        xAxis: { type: "category", data: rows.map(r => r.label), axisLabel: { fontSize: 10, interval: 0, rotate: rows.length > 7 ? 30 : 0 } },
+        xAxis: { type: "category", data: rows.map(r => rows.length === 7 ? r.label.slice(0, 3) : r.label), axisLabel: { fontSize: 10, interval: 0, rotate: rows.length > 7 ? 30 : 0 } },
         yAxis: [{ type: "value", name: "Mean · million kWh", nameTextStyle: { fontSize: 10 } },
           { type: "value", name: "Coverage %", min: 0, max: 100, nameTextStyle: { fontSize: 10 }, splitLine: { show: false } }],
         series: [{ name: "Mean daily energy", type: "bar", barMaxWidth: 44,

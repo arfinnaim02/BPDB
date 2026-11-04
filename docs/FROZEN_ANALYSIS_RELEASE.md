@@ -84,3 +84,15 @@ adds scoped responsive download-menu styling. Deployment acceptance is recorded 
 5. Download CSVs: 366 daily, 12 monthly, 4 quarterly and 7 weekday rows, plus headings.
 6. Open JSON and compare snapshot/analysis IDs above. Live master updates must not
    silently modify this fixed release.
+
+## Deployment acceptance — 4 November 2026
+
+Implementation commit `48ea0cd2caef40db1e1536cb05e7eb57ca83d6b8` passed
+Backend checks, Foundation checks (including frontend tests/typecheck/build), and
+both Vercel deployment status checks. The compressed verified data asset is included
+explicitly in the backend function package. The final presentation refinement uses
+three-letter weekday axis labels on the chart; tooltips/tables retain full names.
+
+This confirms CI and deployment completion, plus the local authenticated HTTP
+acceptance described above. Signed-in production visual/mobile interaction remains
+unverified; no such browser acceptance is claimed.
