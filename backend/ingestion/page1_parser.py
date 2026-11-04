@@ -67,9 +67,41 @@ def parse_page1(path):
         if not pdf.pages:
             raise ValueError("PDF has no pages")
         text, extraction_method = extract_page_text(pdf.pages[0])
-    result = parse_page1_text(text)
+        result = parse_page1_text(text)
+        result, extraction_method = retry_energy_alignment(
+            pdf.pages[0], result, extraction_method
+        )
     result["source_text_extraction"] = extraction_method
     return result
+
+
+def retry_energy_alignment(page, original, metadata):
+    """Recover a slightly displaced adjacent label without relaxing numeric guards.
+
+    The verified May source offsets System Load Factor by 0.36 points while
+    its tiny font's initial row tolerance is 0.3593. A quarter-font tolerance
+    reunites that label with its percentage, keeping distinct data rows apart.
+    """
+    if (original["parser_version"] != "legacy_page1_v4"
+            or metadata["method"] != "font_scaled_layout_v1"
+            or original["issues"] != [{"code": "missing_or_ambiguous_metric",
+                                      "metric": "energy_generated", "matches": 0}]):
+        return original, metadata
+    height = metadata["median_character_height_points"]
+    text = page.extract_text(layout=True, x_tolerance=height * 0.4, y_tolerance=height * 0.25)
+    candidate = parse_page1_text(text or "")
+    before = {(o["metric"], o["unit"], o["value"]) for o in original["observations"]}
+    after = {(o["metric"], o["unit"], o["value"]) for o in candidate["observations"]
+             if o["metric"] != "energy_generated"}
+    if (candidate["issues"] or len(candidate["observations"]) != 5
+            or len(before) != 4 or before != after
+            or candidate["operational_date"] != original["operational_date"]
+            or candidate["reporting_date"] != original["reporting_date"]):
+        return original, metadata
+    candidate["parser_version"] = "legacy_page1_v5"
+    return candidate, {**metadata, "method": "legacy_energy_row_alignment_v1",
+                        "y_tolerance_points": height * 0.25,
+                        "initial_y_tolerance_points": metadata["y_tolerance_points"]}
 
 
 def parse_page1_text(text):

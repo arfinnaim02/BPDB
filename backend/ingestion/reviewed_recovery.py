@@ -35,10 +35,18 @@ FIELDS = ("day_peak_generation", "evening_peak_generation", "evening_peak_demand
           "maximum_generation", "energy_generated")
 REVIEW_HASH = hashlib.sha256(json.dumps(REVIEW).encode()).hexdigest()
 KEY = "reviewed:" + REVIEW_HASH
+SPRING_REVIEW = (
+    ("7614page1.pdf", "a42f66f0b99d97046c2597ca4057451d1fd292579a0362f335e395205e27b8d1",
+     "2024-04-20", "2024-04-21", ("13325", "15358", "15750", "15358", "327.645")),
+    ("7684page1.pdf", "ed683801649616264678baf8d92c185f207a5c12b1b7cf5beb58bf75fb2f4235",
+     "2024-05-25", "2024-05-26", ("13726", "14623", "14900", "14707", "337.880"),
+     "legacy_page1_v5"),
+)
 
 
 def validate_pdf(path, review):
-    name, sha, day, reporting, values = review
+    name, sha, day, reporting, values = review[:5]
+    expected_parser = review[5] if len(review) > 5 else "legacy_page1_v4"
     if hashlib.sha256(path.read_bytes()).hexdigest() != sha:
         raise ValueError("Reviewed PDF checksum mismatch")
     extraction = parse_page1(path)
@@ -46,7 +54,7 @@ def validate_pdf(path, review):
     expected = sorted((m, METRICS[m][1], Decimal(v)) for m, v in zip(FIELDS, values, strict=True))
     actual = sorted((o["metric"], o["unit"], Decimal(o["value"])) for o in observations)
     if (extraction["operational_date"] != day or extraction["reporting_date"] != reporting
-            or extraction["parser_version"] != "legacy_page1_v4"
+            or extraction["parser_version"] != expected_parser
             or extraction["issues"] or check_record({"extraction": extraction})
             or actual != expected
             or any(o["source_page"] != 1 or not o["raw_text"] for o in observations)):
@@ -61,7 +69,7 @@ def lock_day(session, day):
                         {"key": "bpdb:national_daily:" + day})
 
 
-def inspect_stage(session, record, *, required=False, allow_unregistered=False):
+def inspect_stage(session, record, *, required=False, allow_unregistered=False, version_key=KEY):
     day = date.fromisoformat(record["extraction"]["operational_date"])
     report = session.scalar(select(DailyReport).where(
         DailyReport.report_date == day, DailyReport.dataset_grain == "national_daily"
@@ -71,7 +79,7 @@ def inspect_stage(session, record, *, required=False, allow_unregistered=False):
         SourceDocument.sha256 == record["source_sha256"]))
     versions = list(session.scalars(select(ReportVersion).where(
         ReportVersion.report_id == report.id))) if report else []
-    matches = [v for v in versions if v.parser_version == KEY]
+    matches = [v for v in versions if v.parser_version == version_key]
     if len(matches) > 1:
         raise ValueError("Ambiguous reviewed stage")
     version = matches[0] if matches else None
@@ -122,14 +130,16 @@ def register_source(session, record, run_id):
         content_type="application/pdf", size_bytes=evidence["size_bytes"],
         report_date=date.fromisoformat(record["extraction"]["operational_date"]),
         archive_date_hint=None, published_at=None, retrieved_at=retrieved,
-        parser_version="legacy_page1_v4", status="downloaded", ingestion_run_id=run_id,
+        parser_version=record["extraction"]["parser_version"],
+        status="downloaded", ingestion_run_id=run_id,
     ).on_conflict_do_nothing(index_elements=["original_url", "sha256"]))
     session.flush()
 
 
-def transact(factory, records, action):
+def transact(factory, records, action, review_hash=REVIEW_HASH):
+    version_key = "reviewed:" + review_hash
     result = {"stage": "reviewed_gap_recovery", "action": action,
-              "review_sha256": REVIEW_HASH, "inserted_measurements": 0,
+              "review_sha256": review_hash, "inserted_measurements": 0,
               "promoted": 0, "already_canonical": 0, "verified_measurements": 0,
               "unregistered_sources": 0}
     with factory.begin() as session:
@@ -144,25 +154,32 @@ def transact(factory, records, action):
         for record in records:
             lock_day(session, record["extraction"]["operational_date"])
             report, version, source = inspect_stage(
-                session, record, allow_unregistered=action in ("preview", "stage")
+                session, record, allow_unregistered=action in ("preview", "stage"),
+                version_key=version_key,
             )
             if source is None:
                 result["unregistered_sources"] += 1
                 if action == "stage":
                     register_source(session, record, run.id)
-                    report, version, source = inspect_stage(session, record)
+                    report, version, source = inspect_stage(
+                        session, record, version_key=version_key
+                    )
             if action == "stage" and version is None:
                 session.info["registered_source_ids"] = {
                     (record["source_url"], record["source_sha256"]): source.id}
                 _, count = import_group(session, {"operational_date":
-                    record["extraction"]["operational_date"]}, [record], KEY)
+                    record["extraction"]["operational_date"]}, [record], version_key)
                 result["inserted_measurements"] += count
-                report, version, source = inspect_stage(session, record, required=True)
+                report, version, source = inspect_stage(
+                    session, record, required=True, version_key=version_key
+                )
                 version.correction_reason = (
-                    "Source-reviewed PDF geometry recovery; review " + REVIEW_HASH
+                    "Source-reviewed PDF geometry recovery; review " + review_hash
                 )
             if action in ("verify", "promote"):
-                report, version, source = inspect_stage(session, record, required=True)
+                report, version, source = inspect_stage(
+                    session, record, required=True, version_key=version_key
+                )
             if version:
                 result["verified_measurements"] += 5
                 if report.current_version_id == version.id:
@@ -181,6 +198,7 @@ def transact(factory, records, action):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preview", "stage", "verify", "promote"))
+    parser.add_argument("--batch", choices=("january", "spring"), default="january")
     args = parser.parse_args()
     from google.auth.transport.requests import Request
     from google.oauth2.credentials import Credentials
@@ -196,7 +214,9 @@ def main():
     output = ROOT / "data" / "reviewed_recovery"
     output.mkdir(parents=True, exist_ok=True)
     records = []
-    for review in REVIEW:
+    reviews = SPRING_REVIEW if args.batch == "spring" else REVIEW
+    review_hash = hashlib.sha256(json.dumps(reviews).encode()).hexdigest()
+    for review in reviews:
         blobs = find_files(service, folder, "blob", review[1])
         if not blobs:
             raise ValueError("Reviewed original PDF is not in verified Drive storage")
@@ -210,7 +230,8 @@ def main():
             "original_publication_time": "unknown",
         }
         records.append(record)
-    result = transact(session_factory(), records, args.action)
+    result = transact(session_factory(), records, args.action, review_hash)
+    result["batch"] = args.batch
     result["sources"] = records
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     report_path = output / (stamp + "_" + args.action + ".json")
