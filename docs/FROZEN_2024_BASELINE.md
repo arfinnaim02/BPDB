@@ -57,3 +57,38 @@ Only fully observed and unheld calendar months receive additive monthly totals.
 Next: inspect the verified split/coverage report, then compare observed trends and
 coverage together. Missing-data treatment experiments must use training data only
 and realistic masks; validation/test targets remain observed and untouched.
+
+## Hosted acceptance — 4 November 2026
+
+[Run 41829042019](https://github.com/arfinnaim02/BPDB/actions/runs/41829042019)
+completed successfully at implementation commit
+`158d7f12d9e5acd3ff1de05b6da006178147eb03`.
+
+Content snapshot ID:
+`4f35dcb7da194025f79f2f7fb8ed52066e599c96f72e7cd0fc62c691fb4883a1`.
+
+Archived bundle SHA-256:
+`86904e6812876ac12184434fe66acb388f2f6b626f2d2221600d788f4ffee4da`.
+
+| Split | Calendar days | Observed values | Missing values | Review holds |
+| --- | ---: | ---: | ---: | ---: |
+| Training | 182 | 175 | 7 | 0 |
+| Validation | 92 | 78 | 14 | 0 |
+| Test | 92 | 42 | 50 | 0 |
+| Total | 366 | 295 | 71 | 0 |
+
+The four repaired dates and all twenty reviewed measurements passed exact-value,
+dimension and PDF-lineage verification. Estimated values=0; Neon writes=0;
+checkpoint_replaced=false. All five inner files and clean CSV/audit consistency
+passed. The archive, verification report and storage receipt were remotely
+checksum-verified in Drive, and the diagnostic artifact was published in GitHub.
+
+The hosted export safety gate passed 23 tests. The local full backend suite passed
+217 tests with one opt-in Postgres integration test skipped. Backend and Foundation
+workflows and both Vercel deployment checks passed for the implementation commit.
+
+This snapshot has 50 missing test-period days out of 92; results on its 42 observed
+test targets cannot be described as full-quarter performance. Zero implemented
+review holds does not certify every source value as error-free. Keep these limits
+visible in subsequent comparisons and choose modelling periods only after a
+documented coverage and definition-comparability assessment.
