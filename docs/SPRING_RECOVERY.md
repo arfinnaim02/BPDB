@@ -59,3 +59,26 @@ Both exact original PDF review gates passed locally. The source-comparison check
 compares original PDF extractions against the previous parser: only the reviewed
 May source may gain its missing energy observation. Hosted acceptance is recorded
 after the online job completes.
+
+## Hosted acceptance — 4 November 2026
+
+[Recovery run 41798409017](https://github.com/arfinnaim02/BPDB/actions/runs/41798409017)
+passed at implementation commit `0b9d20f96ca1e5fd830a5d64a5be4b32e4a5d4a1`.
+
+- Registered the two reviewed sources and inserted ten measurements atomically.
+- Independently verified all ten values, dimensions and provenance links.
+- Promoted exactly two previously missing canonical dates.
+- Final database readback verified ten measurements and already_canonical=2.
+- Preserved every action report as a remotely verified immutable Drive blob.
+- Hosted parser/recovery safety gate: 31 passed.
+- Both Vercel deployment checks and the Backend checks workflow passed.
+- Compared 19 distinct original PDFs with the previous parser: only the expected
+  May energy observation changed.
+- The initial Foundation backend job failed at test collection because its pinned
+  dependency set omitted pdfplumber. The tested dependency set now includes the
+  exact PDF runtime and its dependencies, so the geometry test executes in that
+  job rather than being silently skipped. Its rerun is the remaining CI check.
+
+The reviewed dates are now canonical in Neon; research exports created before this
+run remain frozen and must be regenerated to include these repairs. Other clipped,
+mismatched or unsupported sources remain held. No absent values were estimated.

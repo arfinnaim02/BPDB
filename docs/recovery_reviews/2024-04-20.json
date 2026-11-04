@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "source_verified_pending_staging",
+  "status": "source_verified_canonical",
   "reviewed_at": "2026-11-04",
   "investigation_run": "https://github.com/arfinnaim02/BPDB/actions/runs/41786772769",
   "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/7614page1.pdf",
@@ -41,11 +41,12 @@
       "source_page": 1
     }
   ],
-  "measurement_writes": 0,
-  "canonical_promotions": 0,
+  "measurement_writes": 5,
+  "canonical_promotions": 1,
   "limitations": [
     "Review manifest alone does not execute an import.",
     "Fresh source-byte, numeric, conflict and database readback gates remain required.",
     "Original publication/availability timestamps remain unknown."
-  ]
+  ],
+  "hosted_acceptance_run": "https://github.com/arfinnaim02/BPDB/actions/runs/41798409017"
 }
