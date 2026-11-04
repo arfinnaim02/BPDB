@@ -1,0 +1,4 @@
+.research-actions{display:flex;flex-wrap:wrap;gap:10px;min-width:0}
+.research-actions details{position:relative}
+.research-downloads{position:absolute;right:0;z-index:10;width:min(320px,80vw);display:grid;gap:8px;margin-top:10px;padding:14px;background:#fff;border:1px solid #dbe5e5;border-radius:9px;box-shadow:0 10px 25px #18333f1a}
+@media(max-width:600px){.research-actions,.research-actions details{width:100%}.research-downloads{width:100%}}

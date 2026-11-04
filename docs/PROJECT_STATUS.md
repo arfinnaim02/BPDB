@@ -359,3 +359,17 @@ Tested the deployed preparation page against Neon after secure sign-in.
   2b18eff4d5be4f6672ff01b41b820ca71cab869d87a9afdfcb2e3da01f019283.
 - Canonical promotions and measurement inserts remain ZERO. The 2024 gap count is still
   75 until versioned staging, database verification and approved canonical promotion occur.
+
+
+## Bundled frozen research analysis — 4 November 2026
+
+- Added one release with daily/complete-seven-day trends, monthly and weekday profiles,
+  quarterly/distribution tables, coverage and split audits, original PDF links and five exports.
+- Uses the verified archived 2024 snapshot (295 observed dates, 71 gaps); canonical master
+  records remain authoritative. Frozen analysis is packaged independently of live data queries.
+- Incomplete energy totals and incomparable MoM changes are withheld. No imputation,
+  forecasts, causal claims or model-performance results introduced.
+- Local checks: 223 backend tests passed, 1 opt-in integration skipped; 18 frontend tests,
+  Ruff, TypeScript, production build and authenticated page/export HTTP checks passed.
+- Visual browser QA was unavailable because the cloud browser could not reach the local
+  preview. Scope, reproduction, limits and production test list: FROZEN_ANALYSIS_RELEASE.md.
