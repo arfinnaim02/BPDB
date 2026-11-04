@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "source_verified_pending_staging",
+  "reviewed_at": "2026-11-04",
+  "investigation_run": "https://github.com/arfinnaim02/BPDB/actions/runs/41786772769",
+  "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/7614page1.pdf",
+  "source_sha256": "a42f66f0b99d97046c2597ca4057451d1fd292579a0362f335e395205e27b8d1",
+  "operational_date": "2024-04-20",
+  "reporting_date": "2024-04-21",
+  "parser_version": "legacy_page1_v4",
+  "review_method": "Original PDF rendered with Poppler; operational/reporting dates and all five labeled measurements visually checked against current extraction.",
+  "observations": [
+    {
+      "metric": "day_peak_generation",
+      "value": "13325",
+      "unit": "MW",
+      "source_page": 1
+    },
+    {
+      "metric": "evening_peak_generation",
+      "value": "15358",
+      "unit": "MW",
+      "source_page": 1
+    },
+    {
+      "metric": "evening_peak_demand",
+      "value": "15750",
+      "unit": "MW",
+      "source_page": 1
+    },
+    {
+      "metric": "maximum_generation",
+      "value": "15358",
+      "unit": "MW",
+      "source_page": 1
+    },
+    {
+      "metric": "energy_generated",
+      "value": "327.645",
+      "unit": "million_kWh",
+      "source_page": 1
+    }
+  ],
+  "measurement_writes": 0,
+  "canonical_promotions": 0,
+  "limitations": [
+    "Review manifest alone does not execute an import.",
+    "Fresh source-byte, numeric, conflict and database readback gates remain required.",
+    "Original publication/availability timestamps remain unknown."
+  ]
+}
