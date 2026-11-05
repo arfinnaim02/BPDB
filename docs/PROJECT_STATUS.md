@@ -238,3 +238,16 @@ full-history data-quality audit and analytical/model development.
 - Full backend research environment: 233 passed, 1 opt-in PostgreSQL test skipped. Frontend: 20 passed; Ruff, TypeScript and production build passed. Numerical output hashes, saved inference and common-date scores independently checked.
 - Final 2025 test remains unevaluated. Next: predefined statistical/tree alternatives, training-only selection, validation comparison, then freeze and authorize final-test evaluation.
 - Protocol and actual results/acceptance checklist: [RELEASE1_PROTOCOL.md](RELEASE1_PROTOCOL.md), [RELEASE1_TEST_REPORT.md](RELEASE1_TEST_REPORT.md).
+
+
+## Release 2 — predefined model comparison, November 5, 2026
+
+- Added autoregressive OLS, Random Forest and Gradient Boosting, with five predefined new configurations and exact Release 1 frozen input. No database writes or new snapshot selection.
+- Hosted run succeeded: https://github.com/arfinnaim02/BPDB/actions/runs/41991685905. Safe JSON models, predictions and reports are archived in private Drive.
+- Same 755 training-fold dates for all family finalists; OLS selected provisionally before validation. Final new models use 1,313 rows through last usable label 2023-12-25.
+- Six-method comparison on identical 220 validation dates: MAE lag2 19.2274, lag7 29.1578, Ridge 18.1441, OLS 18.1426, forest 22.0533, boosting 22.9775 million kWh. OLS/Ridge are practically tied; tree configurations do not improve this comparison. No significance or final-test claim.
+- Added protected Release 2 API, authenticated Model comparison page, chart, monthly errors, selection/fold evidence, model checks and five downloads. Release 1 remains available.
+- Local checks: 245 backend tests passed, 1 opt-in PostgreSQL integration skipped; 23 frontend tests, Ruff, TypeScript and production build passed. Independent manifest and score recomputation passed.
+- Historical availability remains unknown (strict feature coverage 0/366). Retrospective assumption only; 2025 remains reserved.
+- Next: freeze final evaluation design, run the reserved-year evaluation once, then integrate the evaluated research model and write thesis results.
+- See RELEASE2_PROTOCOL.md and RELEASE2_TEST_REPORT.md for actual evidence, limits and researcher acceptance checks.
