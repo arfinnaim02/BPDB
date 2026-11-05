@@ -571,9 +571,39 @@ def main():
         data = bundle(snapshot)
     else:
         data = args.bundle.read_bytes()
-    report, series = run(data, readiness)
     output = args.output
     output.mkdir(parents=True, exist_ok=True)
+    (output / "frozen_input.zip").write_bytes(data)
+    manifest_input, diagnostic_series, coverage = read_input(data)
+    diagnostics = {
+        "snapshot_id": manifest_input["snapshot_id"],
+        "coverage": coverage,
+        "availability_known": sum(bool(r["available_at"]) for r in diagnostic_series.values()),
+        "folds": [],
+    }
+    for year in (2021, 2022, 2023):
+        first = date(year, 1, 1)
+        stop = first - timedelta(days=2)
+        for policy in POLICIES:
+            eligible = [
+                d for d in diagnostic_series if d <= stop and diagnostic_series[d]["eligible"]
+            ]
+            diagnostics["folds"].append(
+                {
+                    "year": year,
+                    "policy": policy,
+                    "observed_labels": len(eligible),
+                    "timely_labels": sum(
+                        donor(diagnostic_series, d, stop + timedelta(days=2)) is not None
+                        for d in eligible
+                    ),
+                    "feature_rows": sum(
+                        feature_row(diagnostic_series, d, policy) is not None for d in eligible
+                    ),
+                }
+            )
+    (output / "input_diagnostics.json").write_bytes(encode(diagnostics))
+    report, series = run(data, readiness)
     files = {
         "frozen_input.zip": data,
         "experiment.json": encode(report),

@@ -79,7 +79,7 @@ jobs:
 
 
 
-      - name: Freeze, verify and archive the observed-only 2024 baseline
+      - name: Freeze inputs before running Release 1 models
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python -u -m research.release1 --online
