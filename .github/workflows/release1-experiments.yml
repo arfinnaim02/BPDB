@@ -79,7 +79,7 @@ jobs:
 
 
 
-      - name: Freeze inputs before running Release 1 models
+      - name: Run the fixed seven-day-feature Release 1 protocol
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python -u -m research.release1 --online

@@ -28,8 +28,13 @@ unchanged. This release reads Neon once and freezes the original snapshot and au
 
 Benchmarks are the latest eligible report at exact calendar lag 2, and the same
 weekday at lag 7. Neither fills a missing donor. Learned model: StandardScaler plus
-Ridge, solver SVD. Lag 2/7/14/28, past-only 7/28-day means ending at T-2, and known
+Ridge, solver SVD. Lag 2/7/14/28, past-only seven-day mean ending at T-2, and known
 weekday/year sine/cosine features are the only inputs.
+
+The initial execution found only 49 complete rows in the first fold when requiring
+a complete 28-day mean. Before any model comparison results were produced, that
+rolling feature was removed to preserve a usable sample. Exact lag 28 is retained;
+the complete seven-day mean remains. The minimum training-size rule was not lowered.
 
 Ridge alphas: 0.1, 1, 10, 100. Input policies: complete rows; preceding original donor
 within three days; exact original t-7 donor. Only missing INPUTS are treated. Original

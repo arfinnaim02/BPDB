@@ -26,7 +26,7 @@ def test_origin_uses_calendar_lags_and_rejects_unknown_strict_availability():
     data = series()
     target = date(2024, 4, 20)
     f = r.feature_row(data, target, "complete")
-    assert f["latest_donor"] == "2024-04-18" and f["unknown_availability_inputs"] == 28
+    assert f["latest_donor"] == "2024-04-18" and f["unknown_availability_inputs"] == 9
     assert r.feature_row(data, target, "complete", strict=True) is None
     assert r.donor(data, target - timedelta(days=1), target) is None
     data[target - timedelta(days=2)]["available_at"] = "2024-04-20T06:00:00Z"

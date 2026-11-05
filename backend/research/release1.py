@@ -33,7 +33,6 @@ FEATURES = (
     "lag_14",
     "lag_28",
     "mean_2_to_8",
-    "mean_2_to_29",
     "weekday_sin",
     "weekday_cos",
     "year_sin",
@@ -191,7 +190,7 @@ def input_value(series, requested, target, policy, strict=False):
 
 def feature_row(series, target, policy, strict=False):
     inputs, sources, estimated = {}, [], 0
-    for lag in (2, 7, 14, 28, *range(2, 30)):
+    for lag in (2, 7, 14, 28, *range(2, 9)):
         if lag in inputs:
             continue
         value, replaced = input_value(series, target - timedelta(days=lag), target, policy, strict)
@@ -203,7 +202,7 @@ def feature_row(series, target, policy, strict=False):
     angle = 2 * math.pi * ((target - date(target.year, 1, 1)).days) / 365.25
     weekday = 2 * math.pi * target.weekday() / 7
     values = [inputs[i] for i in (2, 7, 14, 28)]
-    values += [sum(inputs[i] for i in range(2, 9)) / 7, sum(inputs[i] for i in range(2, 30)) / 28]
+    values += [sum(inputs[i] for i in range(2, 9)) / 7]
     values += [math.sin(weekday), math.cos(weekday), math.sin(angle), math.cos(angle)]
     return {
         "x": values,
