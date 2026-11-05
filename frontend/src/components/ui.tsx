@@ -19,6 +19,7 @@ const navigation = [
   ["/analytics", "Generation & demand", "bolt"],
   ["/analytics/comparisons", "Trends & comparisons", "grid"],
   ["/analytics/research", "Frozen research analysis", "grid"],
+  ["/analytics/experiments", "Forecast experiments", "bolt"],
   ["/quality/review", "Measurement review", "quality"],
   ["/quality/missing", "Missing data", "dataset"],
   ["/quality/prepare", "Research preparation", "dataset"],
