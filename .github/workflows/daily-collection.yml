@@ -212,11 +212,22 @@ jobs:
         continue-on-error: true
         run: python -u -m ingestion.drive_sync push
 
+      - name: Issue tomorrow's saved-model research forecast
+        id: forecast
+        if: ${{ !cancelled() && steps.worker.outcome == 'success' && steps.save.outcome == 'success' }}
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          python -m alembic -c backend/alembic.ini upgrade head
+          python -u -m ingestion.issue_forecast --apply
+
       - name: Report pipeline result
         if: ${{ !cancelled() && steps.restore.outcome == 'success' }}
         env:
           WORKER_RESULT: ${{ steps.worker.outcome }}
           STORAGE_RESULT: ${{ steps.save.outcome }}
+          FORECAST_RESULT: ${{ steps.forecast.outcome }}
         run: |
           python - <<'PY'
           import os
@@ -224,16 +235,18 @@ jobs:
 
           worker = os.environ["WORKER_RESULT"]
           storage = os.environ["STORAGE_RESULT"]
+          forecast = os.environ["FORECAST_RESULT"]
 
           summary = (
               "## BPDB collection\n\n"
               f"- Worker: **{worker}**\n"
               f"- Drive checkpoint: **{storage}**\n"
+              f"- Research forecast execution: **{forecast}** (withholding is allowed)\n"
           )
           with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a") as handle:
               handle.write(summary)
 
-          if worker != "success" or storage != "success":
+          if worker != "success" or storage != "success" or forecast != "success":
               raise SystemExit(
                   "Pipeline needs attention. Inspect worker and storage logs."
               )

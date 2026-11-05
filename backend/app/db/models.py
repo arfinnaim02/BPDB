@@ -212,3 +212,52 @@ class DatasetVersion(Identity, Base):
     # Frozen membership, not a query over whatever is current during export.
     member_version_ids: Mapped[list] = mapped_column(JSON)
     export_storage_key: Mapped[str | None] = mapped_column(Text)
+
+
+class ResearchForecast(Base):
+    """Append-only prospective issues; never authoritative source measurements."""
+
+    __tablename__ = "research_forecasts"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    model_id: Mapped[str] = mapped_column(String(64), index=True)
+    model_experiment_id: Mapped[str] = mapped_column(String(64))
+    target_date: Mapped[date] = mapped_column(index=True)
+    issued_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    status: Mapped[str] = mapped_column(String(20))
+    prediction: Mapped[Decimal | None] = mapped_column(Numeric(24, 9))
+    input_fingerprint: Mapped[str] = mapped_column(String(64))
+    payload: Mapped[dict] = mapped_column(JSON)
+    __table_args__ = (
+        UniqueConstraint(
+            "model_id", "target_date", "input_fingerprint", name="uq_research_forecast_input"
+        ),
+        CheckConstraint("status IN ('forecast','withheld')", name="status"),
+        CheckConstraint(
+            "(status = 'forecast' AND prediction IS NOT NULL AND prediction > 0) OR "
+            "(status = 'withheld' AND prediction IS NULL)",
+            name="prediction_state",
+        ),
+        CheckConstraint(
+            "length(id) = 64 AND length(model_id) = 64 AND length(input_fingerprint) = 64",
+            name="fingerprints",
+        ),
+    )
+
+
+class ResearchForecastOutcome(Identity, Base):
+    """Each later canonical outcome revision is retained separately."""
+
+    __tablename__ = "research_forecast_outcomes"
+    forecast_id: Mapped[str] = mapped_column(ForeignKey("research_forecasts.id"), index=True)
+    actual_version_id: Mapped[str] = mapped_column(ForeignKey("daily_report_versions.id"))
+    source_id: Mapped[str] = mapped_column(ForeignKey("source_documents.id"))
+    observed: Mapped[Decimal] = mapped_column(Numeric(24, 6))
+    signed_error: Mapped[Decimal] = mapped_column(Numeric(24, 9))
+    absolute_error: Mapped[Decimal] = mapped_column(Numeric(24, 9))
+    lineage: Mapped[dict] = mapped_column(JSON)
+    __table_args__ = (
+        UniqueConstraint(
+            "forecast_id", "actual_version_id", "source_id", name="uq_forecast_outcome_version"
+        ),
+        CheckConstraint("observed > 0 AND absolute_error >= 0", name="valid_outcome"),
+    )

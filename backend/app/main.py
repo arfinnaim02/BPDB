@@ -12,6 +12,7 @@ from app.api.audit import router as audit_router
 from app.api.comparisons import router as comparisons_router
 from app.api.experiments import router as experiments_router
 from app.api.final_evaluation import router as final_evaluation_router
+from app.api.forecasts import router as forecasts_router
 from app.api.frozen_analysis import router as frozen_analysis_router
 from app.api.measurement_review import router as measurement_review_router
 from app.api.missingness import router as missingness_router
@@ -62,6 +63,7 @@ app.include_router(comparisons_router, dependencies=[Depends(require_admin)])
 app.include_router(frozen_analysis_router, dependencies=[Depends(require_admin)])
 app.include_router(experiments_router, dependencies=[Depends(require_admin)])
 app.include_router(final_evaluation_router, dependencies=[Depends(require_admin)])
+app.include_router(forecasts_router, dependencies=[Depends(require_admin)])
 app.include_router(measurement_review_router, dependencies=[Depends(require_admin)])
 app.include_router(missingness_router, dependencies=[Depends(require_admin)])
 app.include_router(preparation_router, dependencies=[Depends(require_admin)])
@@ -81,7 +83,7 @@ def ready() -> HealthResponse:
         with get_engine().connect() as connection:
             connection.execute(text("SELECT 1"))
             revision = connection.execute(text("SELECT version_num FROM alembic_version")).scalar()
-            if revision != "0002_environment_observations":
+            if revision != "0003_research_forecasts":
                 raise RuntimeError("Migration pending")
     except Exception:
         # Never return driver exception text; it can contain credentials or connection details.

@@ -51,7 +51,7 @@ def test_readiness_migration_check(monkeypatch):
             with engine.begin() as c:
                 c.execute(text(
                     "UPDATE alembic_version "
-                    "SET version_num='0002_environment_observations'"
+                    "SET version_num='0003_research_forecasts'"
                 ))
 
             assert client.get("/health/ready").json()["status"] == "ready"

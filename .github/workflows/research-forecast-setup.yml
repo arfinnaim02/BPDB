@@ -1,0 +1,110 @@
+name: BPDB research forecast setup
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/research-forecast-setup.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: bpdb-collection-writer
+  cancel-in-progress: false
+jobs:
+  setup:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONPATH: backend
+      PYTHONUTF8: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+      - name: Verify prospective inference and migration safety
+        run: python -m pytest -q backend/tests/test_forecasting.py backend/tests/test_forecast_api.py backend/tests/test_migration.py backend/tests/test_api.py
+      - name: Migrate, issue and verify idempotency without changing source measurements
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          from alembic import command
+          from alembic.config import Config
+          from sqlalchemy import func, select
+          from app.db.models import Base, ResearchForecast
+          from app.db.session import session_factory
+          from app.services.forecasting import loaded_model, utc, DHAKA
+          from app.api.forecasts import read_history
+          from ingestion.issue_forecast import execute
+
+          factory = session_factory()
+          def source_counts():
+              with factory() as session:
+                  return {
+                      name: session.scalar(select(func.count()).select_from(table))
+                      for name, table in Base.metadata.tables.items()
+                      if name not in ("research_forecasts", "research_forecast_outcomes")
+                  }
+
+          before = source_counts()
+          config = Config("backend/alembic.ini")
+          command.upgrade(config, "head")
+          command.check(config)
+          first = execute(factory, apply=True)
+          second = execute(factory, apply=True)
+          if first["id"] != second["id"] or second["inserted"]:
+              raise RuntimeError("Identical inputs did not reuse the retained issue")
+          if first["issued_at"] != second["issued_at"]:
+              raise RuntimeError("Repeated execution changed the original issue time")
+          if source_counts() != before:
+              raise RuntimeError("Authoritative source table counts changed")
+
+          model, card = loaded_model()
+          with factory() as session:
+              issue = session.get(ResearchForecast, first["id"])
+              if issue.target_date <= utc(issue.issued_at).astimezone(DHAKA).date():
+                  raise RuntimeError("Prospective target is not in the future")
+              detail = {
+                  "id": issue.id, "issued_at": issue.issued_at.isoformat(),
+                  "target_date": str(issue.target_date), "status": issue.status,
+                  "prediction": str(issue.prediction) if issue.prediction is not None else None,
+                  "payload": issue.payload, "model_id": issue.model_id,
+              }
+              history = read_history(session, 20)
+
+          report = {
+              "status": "passed", "first": first, "second": second,
+              "same_issue_retained": True, "source_table_counts_unchanged": True,
+              "schema_check": "passed", "detail": detail, "history": history,
+              "model": model, "model_card": card,
+          }
+          output = Path("data/forecasts")
+          output.mkdir(parents=True, exist_ok=True)
+          data = json.dumps(report, indent=2).encode()
+          (output / "bootstrap_verification.json").write_bytes(data)
+          (output / "bootstrap_sha256.txt").write_text(hashlib.sha256(data).hexdigest())
+          print(json.dumps({
+              "status": "passed", "first": first,
+              "idempotency": "passed", "source_table_counts": "unchanged",
+          }, indent=2))
+          PY
+      - name: Preserve forecast acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bpdb-forecast-setup-${{ github.run_id }}
+          path: data/forecasts/*
+          retention-days: 30
+          if-no-files-found: warn
