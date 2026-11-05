@@ -251,3 +251,17 @@ full-history data-quality audit and analytical/model development.
 - Historical availability remains unknown (strict feature coverage 0/366). Retrospective assumption only; 2025 remains reserved.
 - Next: freeze final evaluation design, run the reserved-year evaluation once, then integrate the evaluated research model and write thesis results.
 - See RELEASE2_PROTOCOL.md and RELEASE2_TEST_REPORT.md for actual evidence, limits and researcher acceptance checks.
+
+
+## Release 3 — locked 2025 final evaluation, November 5, 2026
+
+- Primary OLS and all fixed references refitted on eligible pre-2025 labels with no model switching or test parameter updates. Nominal cutoff 2024-12-30; 1,557 actual rows; last usable label 2024-10-18.
+- Hosted final evaluation succeeded: https://github.com/arfinnaim02/BPDB/actions/runs/42010041257. A verified private Drive receipt binds protocol/code key to retained outputs; repeat hosted runs restore the result.
+- Test sample: 365 calendar days, 330 eligible observed targets, 287 all-method common scored dates; OLS forecasts 311 dates and scores 303 on its own available targets. Missing targets remain unfilled.
+- Common MAE/RMSE million kWh: lag2 17.9007/23.3982; lag7 21.7705/28.4908; Ridge 15.5000/19.7754; primary OLS 15.5000/19.7758; forest 19.2124/24.0754; boosting 20.2079/24.9544. OLS MAE is 13.41% below lag2; OLS/Ridge practically tied. No post-test switching.
+- Predeclared paired circular-block sensitivity (7/14/28 days, 2,000 resamples) reports descriptive ranges, not prediction intervals or significance claims.
+- Added protected Final evaluation API/page, test charts, monthly scores, validation/test comparison, model card and seven individual downloads. Historical Release 1/2 pages link to the later evaluated-year result.
+- Local checks: 262 backend tests passed, 1 opt-in PostgreSQL integration skipped; 26 frontend tests, Ruff, TypeScript and production build passed. Artifact/manifest hashes and six final scores independently verified. A test-only lightweight CI dependency import was isolated; worker algorithm/results unchanged.
+- Historical availability remains unknown: strict feature coverage 0/365. Results are a disclosed retrospective scenario, not verified live accuracy. 2025 is now evaluated and cannot be reused as an untouched holdout.
+- Next: separately identified research forecast service and prospective availability tracking, then thesis methods/results/figures grounded in retained evidence.
+- See RELEASE3_PROTOCOL.md and RELEASE3_TEST_REPORT.md for final evidence, limitations and acceptance checks.

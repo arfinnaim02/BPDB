@@ -81,6 +81,21 @@ jobs:
 
       - name: Run the predefined Release 3 protocol for the locked 2025 final test
         run: python -u -m research.release3 --online
+      - name: Verify retained result matches published final evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from app.api.final_evaluation import load_final
+
+          retained = json.loads(
+              Path("data/experiments/release3/experiment.json").read_text(encoding="utf-8")
+          )
+          published = load_final()
+          if retained["experiment_id"] != published["experiment_id"]:
+              raise SystemExit("Retained and published final results differ")
+          print("Retained final result matches the published frozen evidence.")
+          PY
       - name: Save experiment results and execution test report
         if: always()
         uses: actions/upload-artifact@v4

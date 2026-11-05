@@ -21,6 +21,7 @@ const navigation = [
   ["/analytics/research", "Frozen research analysis", "grid"],
   ["/analytics/experiments", "Forecast experiments", "bolt"],
   ["/analytics/models", "Model comparison", "bolt"],
+  ["/analytics/final-evaluation", "Final evaluation", "bolt"],
   ["/quality/review", "Measurement review", "quality"],
   ["/quality/missing", "Missing data", "dataset"],
   ["/quality/prepare", "Research preparation", "dataset"],

@@ -154,6 +154,11 @@ def test_hosted_repeat_restores_result_without_refitting(monkeypatch, tmp_path, 
     def forbidden(*args):
         raise AssertionError("A retained final evaluation must not be refitted")
 
+    monkeypatch.setitem(
+        sys.modules,
+        "ingestion.drive_sync",
+        SimpleNamespace(digest=forbidden, download=forbidden, find_files=forbidden),
+    )
     monkeypatch.setattr(r3, "run", forbidden)
     monkeypatch.setattr(sys, "argv", ["release3", "--online", "--output", str(tmp_path)])
     r3.main()
