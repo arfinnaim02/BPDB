@@ -265,3 +265,16 @@ full-history data-quality audit and analytical/model development.
 - Historical availability remains unknown: strict feature coverage 0/365. Results are a disclosed retrospective scenario, not verified live accuracy. 2025 is now evaluated and cannot be reused as an untouched holdout.
 - Next: separately identified research forecast service and prospective availability tracking, then thesis methods/results/figures grounded in retained evidence.
 - See RELEASE3_PROTOCOL.md and RELEASE3_TEST_REPORT.md for final evidence, limitations and acceptance checks.
+
+
+## Release 4 — prospective research forecasts, November 5, 2026
+
+- Added separate Neon forecast/outcome tables via 0003; hosted upgrade and Alembic check passed. Master observations/canonical pointers remain separate; original source-table counts unchanged in acceptance.
+- Uses exact saved Release 3 OLS model, no retraining. Actual issue/capture times, bounded original-donor inputs, source/version IDs, checksums, features and linear arithmetic retained. Identical reruns reuse the original issue/time; changed snapshots preserve distinct attempts.
+- First real issue: target 2026-11-06, issued 2026-11-05 18:41 Bangladesh, prediction 320.957156601 million kWh. Latest used original 2026-11-03; one input slot used the prescribed previous-week original. Nine official publication times unknown; platform capture retained before actual issue.
+- Daily workflow now issues after successful collection and verified Drive checkpoint, with explicit withheld attempts and infrastructure error reporting. Later eligible completed-day actual revisions are appended separately over a 90-day reconciliation window.
+- Added authenticated Research forecasts dashboard and read-only APIs, history CSV and complete issue JSON. Prospective summary uses earliest successful issue per target and latest retained actual; initially zero scored dates, no invented accuracy.
+- Verification: 279 backend tests passed, 1 opt-in PostgreSQL test skipped; 29 frontend tests, Ruff, TypeScript and production build passed. Real hosted migration, idempotency, source-date/capture and saved inference checks passed.
+- Historical model age, retrospective evaluation assumptions and unknown official times remain visible. No operational accuracy or forecast interval is claimed.
+- Next: thesis-ready figures, automated research report and methods/results drafting using retained evidence; collect prospective outcomes before current-accuracy claims.
+- See RELEASE4_PROTOCOL.md and RELEASE4_TEST_REPORT.md.
