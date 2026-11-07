@@ -1,0 +1,29 @@
+"use client";
+import {useEffect,useRef,useState} from "react";
+import * as echarts from "echarts/core";
+import {LineChart,BarChart,HeatmapChart} from "echarts/charts";
+import {GridComponent,TooltipComponent,LegendComponent,DataZoomComponent,VisualMapComponent,AriaComponent,MarkLineComponent} from "echarts/components";
+import {SVGRenderer} from "echarts/renderers";
+import type {EChartsCoreOption} from "echarts/core";
+import type {AnalyticsReport} from "../lib/types";
+import {studioOptions} from "../lib/studio-options";
+import {exploration,analysisCsv} from "../lib/exploration";
+echarts.use([LineChart,BarChart,HeatmapChart,GridComponent,TooltipComponent,LegendComponent,DataZoomComponent,VisualMapComponent,AriaComponent,MarkLineComponent,SVGRenderer]);
+export function StudioPlot({title,description,option,height=330}:{title:string;description:string;option:EChartsCoreOption;height?:number}){
+ const ref=useRef<HTMLDivElement>(null);const chart=useRef<echarts.ECharts|null>(null);const [error,setError]=useState(false);
+ useEffect(()=>{if(!ref.current)return;let resize:ResizeObserver|undefined;try{chart.current=echarts.init(ref.current,undefined,{renderer:'svg'});chart.current.setOption({animation:false,color:['#087f76','#efad45','#487ac4','#9a6bba','#da775e','#6e909a'],textStyle:{fontFamily:'Arial, sans-serif'},aria:{enabled:true},...option});resize=new ResizeObserver(()=>chart.current?.resize());resize.observe(ref.current);setError(false);}catch{setError(true);}return()=>{resize?.disconnect();chart.current?.dispose();chart.current=null;};},[option]);
+ function save(){if(!chart.current)return;const a=document.createElement('a');a.href=chart.current.getDataURL({type:'svg',excludeComponents:['dataZoom']});a.download=title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.svg';a.click();}
+ return <section className="panel studio-chart"><div className="panel-heading"><div><h2>{title}</h2><p>{description}</p></div><button className="chart-download" onClick={save} aria-label={`Download ${title} as SVG`}>SVG ↓</button></div>{error?<div className="notice error-notice" role="alert">The chart could not render. Use the numerical data table below.</div>:null}<div ref={ref} style={{height,width:'100%'}} role="img" aria-label={`${title}. ${description}`}/></section>;
+}
+function download(content:string,name:string){const url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export function ExplorationCharts({report,compact=false}:{report:AnalyticsReport;compact?:boolean}){
+ const d=exploration(report);const [view,setView]=useState<'line'|'bar'>('line');const [tablePage,setTablePage]=useState(1);const unit=report.unit==='million_kWh'?'million kWh':report.unit;
+ const {trend,monthly,profile,coverage,histogram,weekday}=studioOptions(report,view);
+ const rows=report.points.slice((tablePage-1)*30,tablePage*30);const pages=Math.max(1,Math.ceil(report.points.length/30));
+ return <><div className="studio-toolbar"><div className="segmented" aria-label="Timeline chart type"><button aria-pressed={view==='line'} onClick={()=>setView('line')}>Line</button><button aria-pressed={view==='bar'} onClick={()=>setView('bar')}>Bars</button></div><span>Shared selection · {report.statistics.observations.toLocaleString()} observed days</span><button className="button secondary" onClick={()=>download(analysisCsv(report),`bpdb-${report.metric}-${report.start_date}-${report.end_date}.csv`)}>Download selected daily CSV ↓</button></div>
+ <StudioPlot title="Observed timeline" description={`${report.label} · ${unit}. Seven-day mean requires seven consecutive observed calendar days. Gaps remain visible.`} option={trend}/>
+ <div className="studio-grid"><StudioPlot title="Monthly comparison" description={`${d.energy?'Observed sums':'Observed daily means'} · ${unit}. Pale bars are incomplete months or selected slices.`} option={monthly}/>{compact?<StudioPlot title="Observation coverage" description="Available days divided by full calendar-month days; partial selections reduce coverage." option={coverage}/>:<StudioPlot title="Distribution of daily values" description={`Ten equal-width bins; counts of observed dates only. Values in ${unit}; missing dates excluded.`} option={histogram}/>}</div>
+ {!compact&&<><div className="studio-grid"><StudioPlot title="Year-over-year monthly profiles" description={`${d.energy?'Monthly energy sums':'Monthly daily means'} · complete calendar months only. Gaps are not interpolated.`} option={profile}/><StudioPlot title="Observation coverage" description="Available days divided by full calendar-month days; missing cells are outside this selection." option={coverage}/></div><StudioPlot title="Weekday profile" description={`Observed daily means in ${unit}, with sample sizes. Different date mixtures; no causal weekday effect.`} option={weekday}/>
+ <section className="panel"><div className="panel-heading"><div><h2>Selected daily observations</h2><p>Original decimal strings and missingness; chart calculations are display approximations.</p></div></div><div className="table-scroll"><table><thead><tr><th>Operational date</th><th>{report.label} ({unit})</th><th>Coverage</th><th>Evidence</th></tr></thead><tbody>{rows.map(p=><tr key={p.start_date}><th>{p.start_date}</th><td>{p.value??'—'}</td><td>{p.observed_days}/{p.expected_days}</td><td><a className="inline-link" href={`/dataset?start_date=${p.start_date}&end_date=${p.start_date}`}>Source record →</a></td></tr>)}</tbody></table></div><div className="pagination"><span>Page {tablePage} / {pages}</span><div><button className="button secondary" disabled={tablePage===1} onClick={()=>setTablePage(p=>p-1)}>Previous</button><button className="button secondary" disabled={tablePage===pages} onClick={()=>setTablePage(p=>p+1)}>Next</button></div></div></section></>}
+ </>;
+}

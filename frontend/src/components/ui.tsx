@@ -13,28 +13,19 @@ export function Icon({ name = "grid" }: { name?: string }) {
   };
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name] || paths.grid}</svg>;
 }
-const navigation = [
-  ["/", "Overview", "grid"], ["/collection", "Collection history", "collection"],
-  ["/dataset", "Master dataset", "dataset"], ["/quality", "Data quality", "quality"],
-  ["/analytics", "Generation & demand", "bolt"],
-  ["/analytics/comparisons", "Trends & comparisons", "grid"],
-  ["/analytics/research", "Frozen research analysis", "grid"],
-  ["/analytics/experiments", "Forecast experiments", "bolt"],
-  ["/analytics/models", "Model comparison", "bolt"],
-  ["/analytics/final-evaluation", "Final evaluation", "bolt"],
-  ["/forecasts", "Research forecasts", "bolt"],
-  ["/reports", "Research report", "collection"],
-  ["/quality/review", "Measurement review", "quality"],
-  ["/quality/missing", "Missing data", "dataset"],
-  ["/quality/prepare", "Research preparation", "dataset"],
+const navigationGroups = [
+ {label:"ANALYZE",items:[["/","Overview","grid"],["/explore","Explore data","bolt"],["/analytics/comparisons","Compare periods","grid"],["/insights","Planning insights","bolt"]]},
+ {label:"MODELS & EVIDENCE",items:[["/analytics/final-evaluation","Model results","bolt"],["/forecasts","Research forecasts","bolt"],["/reports","Research report","collection"]]},
+ {label:"DATA LIBRARY",items:[["/dataset","Master dataset","dataset"],["/quality","Data quality","quality"]]},
 ];
+const advanced = [["/analytics","Detailed observed tables","grid"],["/analytics/research","Frozen 2024 analysis","grid"],["/analytics/experiments","Baseline experiments","bolt"],["/analytics/models","Validation comparison","bolt"],["/quality/review","Measurement review","quality"],["/quality/missing","Missing data","dataset"],["/quality/prepare","Research preparation","dataset"]];
+const navigation = [...navigationGroups.flatMap(g=>g.items),...advanced,["/collection","Collection history","collection"]];
 export function Shell({ active, children }: { active: string; children: React.ReactNode }) {
   return <div className="app-shell">
     <a className="skip-link" href="#main">Skip to content</a>
     <aside className="sidebar">
       <Link href="/" className="brand"><span className="brand-mark"><Icon name="bolt"/></span><span>BPDB<span className="brand-sub">INTELLIGENCE</span></span></Link>
-      <div className="workspace-label">RESEARCH WORKSPACE</div>
-      <nav aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link href={href} key={href} className={`nav-item ${active === href ? "active" : ""}`} aria-current={active === href ? "page" : undefined}><Icon name={icon}/>{label}</Link>)}</nav>
+      <details className="workspace-menu" open><summary>Workspace navigation <span aria-hidden="true">☰</span></summary><nav aria-label="Main navigation">{navigationGroups.map(group=><div className="nav-group" key={group.label}><p className="nav-group-label">{group.label}</p>{group.items.map(([href,label,icon])=><Link href={href} key={href} className={`nav-item ${active===href?"active":""}`} aria-current={active===href?"page":undefined}><Icon name={icon}/>{label}</Link>)}</div>)}<details className="nav-advanced" open={advanced.some(x=>x[0]===active)}><summary>Advanced research</summary>{advanced.map(([href,label,icon])=><Link key={href} href={href} className={`nav-item ${active===href?"active":""}`} aria-current={active===href?"page":undefined}><Icon name={icon}/>{label}</Link>)}</details><div className="nav-group"><p className="nav-group-label">ADMINISTRATION</p><Link href="/collection" className={`nav-item ${active==='/collection'?'active':''}`} aria-current={active==='/collection'?'page':undefined}><Icon name="collection"/>Collection history</Link></div></nav></details>
       <div className="sidebar-bottom"><span className="tiny-label">DATA FOUNDATION</span><p>Official reports.<br/>Traceable observations.</p><span className="sidebar-tag">National · Page 1</span></div>
     </aside>
     <div className="main-wrap"><header className="topbar"><span className="breadcrumb">Workspace <span>/</span> <strong>{navigation.find(n => n[0] === active)?.[1]}</strong></span><div className="topbar-right"><span className="timezone">Asia/Dhaka · UTC+6</span><form action={logout}><button className="text-button">Sign out</button></form><span className="avatar" aria-hidden="true">BP</span></div></header>

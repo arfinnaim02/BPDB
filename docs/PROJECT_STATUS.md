@@ -291,3 +291,11 @@ full-history data-quality audit and analytical/model development.
 - Expanded PDF from seven to 18 pages and added complete detailed Markdown/JSON appendices; dashboard now exposes error-tail/direction and monthly coverage tables. All six models retain their original frozen scores.
 - Added deterministic descriptive quantiles and largest-error diagnostics, not new models or inference. OLS median absolute error 12.7500, 90th percentile 33.2086, 95th 37.9161, maximum 86.2362 million kWh on 287 common dates; 178 underpredictions, 109 overpredictions; 161 dates with lower absolute error than lag 2.
 - Acceptance: 293 backend passed, one skipped; 31 frontend passed; Ruff, typecheck, build and authenticated report/all-export checks passed. 18 PDF pages rendered and visually checked. Drive authorization remains the previously disclosed external blocker.
+
+## Analysis-first frontend rebuild — November 7, 2026
+
+- Rebuilt shared frontend theme/navigation and research Overview. Added Explore data studio (six chart types, filters, CSV/SVG downloads, exact daily table) and evidence-based descriptive Planning insights.
+- Added matched-date error/bias charts to Final evaluation. Original experiment assets, authentication, canonical database, automation and report outputs are unchanged.
+- 38 frontend tests, TypeScript, production build and 13 isolated authenticated HTTP acceptance groups passed. Six studio configurations rendered as SVG at desktop/mobile widths. Full browser visual review remains unverified because managed preview passed unsupported Next.js startup arguments.
+- Current Drive authorization recovery is verified by successful daily collection 42396876427 and research report/archive 42397161685; earlier blocked notes above are historical.
+- See ANALYSIS_WORKSPACE_REDESIGN.md for formulas, limitations and user acceptance. Original cost/demand/zonal objectives and complete thesis remain separate outstanding research work.
