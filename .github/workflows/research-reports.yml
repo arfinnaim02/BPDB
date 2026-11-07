@@ -1,0 +1,119 @@
+name: BPDB research reports
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/research-reports.yml"]
+  workflow_run:
+    workflows: ["BPDB daily collection"]
+    types: [completed]
+permissions:
+  contents: read
+concurrency:
+  group: bpdb-collection-writer
+  cancel-in-progress: false
+jobs:
+  report:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONPATH: backend
+      PYTHONUTF8: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install report dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+      - name: Verify report export contracts
+        run: python -m pytest -q backend/tests/test_research_report.py
+      - name: Prepare private Drive credentials
+        env:
+          DRIVE_TOKEN_JSON: ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
+          DRIVE_CONFIG_JSON: ${{ secrets.GOOGLE_DRIVE_CONFIG_JSON }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          try:
+              token = json.loads(os.environ["DRIVE_TOKEN_JSON"])
+              config = json.loads(os.environ["DRIVE_CONFIG_JSON"])
+
+              for field in ("refresh_token", "client_id", "client_secret"):
+                  if not token.get(field):
+                      raise ValueError("Incomplete token")
+
+              if not config.get("folder_id"):
+                  raise ValueError("Missing folder ID")
+          except Exception:
+              raise SystemExit(
+                  "Missing or invalid Drive secrets. "
+                  "Check the two repository JSON secrets."
+              ) from None
+
+          for field in ("refresh_token", "client_secret", "token"):
+              if token.get(field):
+                  print("::add-mask::" + token[field])
+
+          folder = Path("secrets")
+          folder.mkdir(mode=0o700, exist_ok=True)
+
+          for name, value in (
+              ("google_drive_token.json", token),
+              ("google_drive_config.json", config),
+          ):
+              target = folder / name
+              target.write_text(json.dumps(value), encoding="utf-8")
+              target.chmod(0o600)
+
+          print("Drive credentials prepared.")
+          PY
+
+
+      - name: Capture a read-only report and archive verified files
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -u -m ingestion.export_research_report --archive
+      - name: Verify report pages and manifest
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          folder = Path("data/research_reports/latest")
+          manifest = json.loads((folder / "manifest.json").read_bytes())
+          for name, spec in manifest["files"].items():
+              data = (folder / name).read_bytes()
+              assert len(data) == spec["bytes"]
+              assert hashlib.sha256(data).hexdigest() == spec["sha256"]
+          assert len(PdfReader(folder / "research_report.pdf").pages) == 7
+          print("Report manifest verified; PDF pagination: 7 pages.")
+          PY
+      - name: Preserve report acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bpdb-research-report-${{ github.run_id }}
+          path: data/research_reports/latest/*
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Remove temporary credentials
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for name in ("google_drive_token.json", "google_drive_config.json"):
+              (Path("secrets") / name).unlink(missing_ok=True)
+          PY

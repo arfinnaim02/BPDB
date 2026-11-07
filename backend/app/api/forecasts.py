@@ -67,7 +67,7 @@ def row_dict(row, outcome=None):
     }
 
 
-def read_history(session, limit, now=None):
+def read_history(session, limit, now=None, *, include_evidence=False):
     _, card = loaded_model()
     now = now or datetime.now(timezone.utc)
     today = now.astimezone(DHAKA).date()
@@ -110,7 +110,7 @@ def read_history(session, limit, now=None):
             "Earliest successful issue per model/target; latest retained actual revision"
         ),
     }
-    return {
+    report = {
         "generated_at": iso(now),
         "model": card,
         "items": [row_dict(r, comparisons.get(r.id)) for r in rows],
@@ -122,6 +122,10 @@ def read_history(session, limit, now=None):
             "over the previous 90 completed days"
         ),
     }
+    if include_evidence:
+        report["summary_evidence"] = [row_dict(r, latest.get(r.id)) for r in first.values()]
+        report["attempted_target_dates"] = sorted({str(r.target_date) for r in recent})
+    return report
 
 
 def history_csv(report):
