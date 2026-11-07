@@ -12,6 +12,7 @@ from app.api.final_evaluation import load_final
 from app.api.forecasts import read_history
 from app.api.monitoring import read_summary
 from app.api.preparation import encode
+from app.services.research_detail import detailed_markdown, details
 
 SCHEMA = "bpdb_research_report_v1"
 METHODS = (
@@ -82,7 +83,11 @@ def build_report(inventory, history, generated_at=None):
         },
         "code_sha256": {
             p.name: hashlib.sha256(p.read_text(encoding="utf-8").encode()).hexdigest()
-            for p in (Path(__file__), Path(__file__).with_name("report_pdf.py"))
+            for p in (
+                Path(__file__),
+                Path(__file__).with_name("report_pdf.py"),
+                Path(__file__).with_name("research_detail.py"),
+            )
         },
         "study": {
             "target": "National daily energy generated",
@@ -156,6 +161,7 @@ def build_report(inventory, history, generated_at=None):
             ),
         ],
     }
+    report["details"] = details(report)
     report["report_id"] = hashlib.sha256(
         encode({k: v for k, v in report.items() if k != "generated_at"})
     ).hexdigest()
@@ -330,4 +336,4 @@ def methods_markdown(r):
         ),
         "",
     ]
-    return "\n".join(lines)
+    return "\n".join(lines) + detailed_markdown(r)

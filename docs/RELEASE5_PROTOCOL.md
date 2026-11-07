@@ -4,7 +4,7 @@ The report generator reads verified frozen Releases 1-3 and a repeatable-read, r
 
 ## Outputs
 
-- A seven-page A4 PDF: study summary; chronological methods and coverage; validation/test comparison; final-year time series and monthly errors; matched-date calibration and paired sensitivity; prospective monitoring; provenance and limitations.
+- An 18-page A4 PDF: study summary; chronological methods and coverage; validation/test comparison; final-year time series and monthly errors; matched-date calibration and paired sensitivity; prospective monitoring; provenance and limitations.
 - Four standalone vector SVG figures: model MAE comparison, observed-versus-OLS 2025 series, monthly OLS/lag-2 MAE and matched-date observed/predicted scatter.
 - A clean 12-row model-comparison CSV, methods/results evidence Markdown and full report JSON.
 - A checksummed file manifest and verified private Drive archive from the hosted export workflow.
@@ -31,4 +31,8 @@ The new report workflow runs manually, on its own setup push, and after successf
 
 The website uses existing authentication and server-only API credentials. Exports are bounded and allowlisted; no arbitrary file path or model-fitting endpoint is exposed. ReportLab 4.4.9 renders vector PDFs/SVGs without a training dependency or external image service.
 
-Acceptance includes real hosted database capture/archive verification, manifest byte/SHA-256 checks, seven-page PDF verification, visual inspection of rendered pages, SVG XML/provenance checks, preview/download consistency, authentication, TypeScript/build and relevant regression tests.
+Acceptance includes real hosted database capture/archive verification, manifest byte/SHA-256 checks, 18-page PDF verification, visual inspection of rendered pages, SVG XML/provenance checks, preview/download consistency, authentication, TypeScript/build and relevant regression tests.
+
+## Detailed results expansion, 7 November 2026
+
+The original seven-page summary is followed by eleven detailed appendices: metric definitions; yearly/monthly coverage; training selection and fixed features; complete validation and test common/own samples; all-six-model monthly MAE, RMSE and bias; error quantiles/direction; 15 largest OLS errors; and observed-energy monthly summaries. These are descriptive calculations on retained predictions, not model refits or new significance tests. Quantiles use type-7 linear interpolation. The JSON includes these diagnostics and hashes their implementation.

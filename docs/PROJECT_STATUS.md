@@ -285,3 +285,9 @@ full-history data-quality audit and analytical/model development.
 - First hosted Neon capture: 2,390 canonical dates through November 4; prospective zero scored dates. All eight export hashes and PDF pagination/layout verified; 292 backend tests passed (1 skipped), 31 frontend tests, Ruff, TypeScript, production build and authenticated HTTP download checks passed.
 - Report workflow runs manually and after successful trusted-main daily collection. Drive archival is **blocked** by expired/revoked OAuth authorization (`invalid_grant`); generated files remain in the GitHub artifact. No successful Drive archive is claimed. Renew the token before expecting unattended storage-dependent collection to continue.
 - See RELEASE5_PROTOCOL.md and RELEASE5_TEST_REPORT.md for evidence, recovery instructions and dashboard checks. Next: full thesis narrative/literature review and continued prospective outcome collection; no reuse of evaluated 2025 as untouched holdout.
+
+### Release 5 detailed-results expansion
+
+- Expanded PDF from seven to 18 pages and added complete detailed Markdown/JSON appendices; dashboard now exposes error-tail/direction and monthly coverage tables. All six models retain their original frozen scores.
+- Added deterministic descriptive quantiles and largest-error diagnostics, not new models or inference. OLS median absolute error 12.7500, 90th percentile 33.2086, 95th 37.9161, maximum 86.2362 million kWh on 287 common dates; 178 underpredictions, 109 overpredictions; 161 dates with lower absolute error than lag 2.
+- Acceptance: 293 backend passed, one skipped; 31 frontend passed; Ruff, typecheck, build and authenticated report/all-export checks passed. 18 PDF pages rendered and visually checked. Drive authorization remains the previously disclosed external blocker.

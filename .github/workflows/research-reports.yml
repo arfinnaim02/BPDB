@@ -99,8 +99,8 @@ jobs:
               data = (folder / name).read_bytes()
               assert len(data) == spec["bytes"]
               assert hashlib.sha256(data).hexdigest() == spec["sha256"]
-          assert len(PdfReader(folder / "research_report.pdf").pages) == 7
-          print("Report manifest verified; PDF pagination: 7 pages.")
+          assert len(PdfReader(folder / "research_report.pdf").pages) == 18
+          print("Report manifest verified; PDF pagination: 18 pages.")
           PY
       - name: Preserve report acceptance evidence
         if: always()

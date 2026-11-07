@@ -42,3 +42,12 @@ The underlying token expiry/revocation cause is not proven by `invalid_grant`; r
 ## Next thesis work
 
 Draft the literature review and full chapter narrative around retained methods/results, with real author/university requirements and supervisor review. Continue collecting prospective outcomes; the current zero-pair sample cannot support current-accuracy claims. Further model development needs a newly declared evaluation period rather than reusing 2025 as untouched data.
+
+## Detailed-results expansion acceptance
+
+- Expanded report: 18 pages, four existing vector figures, eleven detailed appendices. All six models have monthly matched MAE/RMSE/bias; validation and final-year common/own/coverage tables are explicit.
+- Diagnostics are recalculated directly from the same 287 frozen common predictions. New tests compare reconstructed MAE with retained scores, check direction/win counts sum to sample size, sorted largest errors, quantile behavior and January empty common coverage.
+- Checks: 293 backend passed, one skipped; 31 frontend passed; Ruff, TypeScript, production build and 13 authenticated HTTP checks passed. All 18 pages rendered; dense validation/error distribution pages inspected at full render size.
+- User-facing PDF capture uses the actual Neon report generated 7 November 2026 at 12:00 Bangladesh; current canonical inventory and prospective evidence are that retained capture, not a claim of continuously refreshed file contents. The live Reports page generates new captures.
+- Detailed capture report ID: `8545ec35dc721e713fd8dcfca3f6ed6d188d1928f5fd3de6a61d79e1764da25e`. Reports remain descriptive, retrospective where stated, and distinct from a complete submitted thesis.
+- Drive token recovery remains required; this expansion does not claim that authorization was renewed.

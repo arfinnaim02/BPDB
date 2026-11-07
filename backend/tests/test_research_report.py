@@ -52,7 +52,7 @@ def test_report_numerical_tables_and_methods_keep_scope_and_missingness(session)
     assert "not a verified point-in-time backtest" in text
 
 
-def test_report_pdf_is_seven_pages_and_contains_retained_results(session):
+def test_report_pdf_is_eighteen_pages_and_contains_retained_results(session):
     pytest.importorskip("reportlab")
     from app.services.report_pdf import pdf_bytes
     from pypdf import PdfReader
@@ -60,10 +60,10 @@ def test_report_pdf_is_seven_pages_and_contains_retained_results(session):
     report = read_report(session)
     data = pdf_bytes(report)
     pdf = PdfReader(io.BytesIO(data))
-    assert len(pdf.pages) == 7 and data.startswith(b"%PDF") and len(data) < 3_500_000
+    assert len(pdf.pages) == 18 and data.startswith(b"%PDF") and len(data) < 3_500_000
     text = "\n".join(p.extract_text() for p in pdf.pages)
     assert "13.41%" in text and "15.5000" in text
-    assert "Prospective monitoring" in text and "7 / 7" in text
+    assert "Prospective monitoring" in text and "18 / 18" in text
     assert "\u25a0" not in text
 
 
@@ -152,3 +152,33 @@ def test_export_manifest_binds_every_download_and_preserves_snapshot(session, tm
         assert len(data) == spec["bytes"]
         assert hashlib.sha256(data).hexdigest() == spec["sha256"]
     assert not session.dirty and not session.new
+
+
+def test_detailed_diagnostics_match_frozen_common_sample_and_keep_month_gaps(session):
+    from app.services.research_detail import KEYS, quantile
+
+    report = read_report(session)
+    assert len(report["details"]["monthly_coverage"]) == 12
+    assert report["details"]["monthly_coverage"][0]["common_scored"] == 0
+    assert len(report["details"]["largest_ols_errors"]) == 15
+    for item in report["details"]["common_diagnostics"]:
+        assert item["n"] == 287
+        assert (
+            item["underprediction_days"] + item["overprediction_days"] + item["exact_days"] == 287
+        )
+        assert item["beats_lag2_days"] + item["ties_lag2_days"] + item["loses_lag2_days"] == 287
+        assert item["median_absolute_error"] <= item["p90_absolute_error"]
+        assert item["p90_absolute_error"] <= item["p95_absolute_error"]
+        assert item["p95_absolute_error"] <= item["maximum_absolute_error"]
+        rows = [
+            r
+            for r in report["test_predictions"]
+            if r["actual"] is not None and all(r[k] is not None for k in KEYS)
+        ]
+        mae = sum(abs(r[item["model"]] - r["actual"]) for r in rows) / len(rows)
+        retained = next(s for s in report["test_scores"] if s["model"] == item["model"])
+        assert mae == pytest.approx(retained["common_dates"]["mae"])
+    errors = [r["absolute_error"] for r in report["details"]["largest_ols_errors"]]
+    assert errors == sorted(errors, reverse=True)
+    assert quantile([], 0.5) is None and quantile([0, 10], 0.9) == 9
+    assert "Monthly matched-date RMSE" in methods_markdown(report)

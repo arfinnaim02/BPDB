@@ -702,6 +702,10 @@ def pdf_bytes(r):
         "CaptionR",
     )
 
+    from app.services.research_detail import append_pdf
+
+    append_pdf(r, next_page, heading, add, table)
+
     def page(canvas, doc):
         canvas.saveState()
         canvas.setTitle("BPDB energy forecasting research report")
@@ -713,7 +717,7 @@ def pdf_bytes(r):
         canvas.setFont("Helvetica", 8)
         canvas.setFillColor(colors.HexColor(GREY))
         canvas.drawString(48, 23, "BPDB Intelligence | Research evidence | " + r["report_id"][:12])
-        canvas.drawRightString(A4[0] - 48, 23, f"{doc.page} / 7")
+        canvas.drawRightString(A4[0] - 48, 23, f"{doc.page} / 18")
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
