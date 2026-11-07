@@ -86,6 +86,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python -u -m ingestion.export_research_report --archive
       - name: Verify report pages and manifest
+        if: always()
         run: |
           python - <<'PY'
           import hashlib

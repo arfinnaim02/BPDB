@@ -278,3 +278,10 @@ full-history data-quality audit and analytical/model development.
 - Historical model age, retrospective evaluation assumptions and unknown official times remain visible. No operational accuracy or forecast interval is claimed.
 - Next: thesis-ready figures, automated research report and methods/results drafting using retained evidence; collect prospective outcomes before current-accuracy claims.
 - See RELEASE4_PROTOCOL.md and RELEASE4_TEST_REPORT.md.
+
+## Release 5 — research report and figure exports, November 7, 2026
+
+- Added authenticated Reports page, seven-page PDF, four vector SVG figures, methods/results Markdown, twelve-row model CSV and snapshot-bound JSON. Frozen historical results and changing prospective evidence remain separate.
+- First hosted Neon capture: 2,390 canonical dates through November 4; prospective zero scored dates. All eight export hashes and PDF pagination/layout verified; 292 backend tests passed (1 skipped), 31 frontend tests, Ruff, TypeScript, production build and authenticated HTTP download checks passed.
+- Report workflow runs manually and after successful trusted-main daily collection. Drive archival is **blocked** by expired/revoked OAuth authorization (`invalid_grant`); generated files remain in the GitHub artifact. No successful Drive archive is claimed. Renew the token before expecting unattended storage-dependent collection to continue.
+- See RELEASE5_PROTOCOL.md and RELEASE5_TEST_REPORT.md for evidence, recovery instructions and dashboard checks. Next: full thesis narrative/literature review and continued prospective outcome collection; no reuse of evaluated 2025 as untouched holdout.
