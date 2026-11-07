@@ -29,7 +29,7 @@ export default async function FinalEvaluationPage({ searchParams }: { searchPara
     </Heading>
     {!result.ok && <ErrorPanel message={result.message}/>}
     {d && <>
-      <ModelEvidenceCharts report={d}/>
+      <ModelEvidenceCharts report={{scores:d.scores,checks:d.checks}}/>
       <section className="notice"><strong>Final historical evaluation completed · reporting-time assumption remains</strong><p>OLS was selected before 2025 scoring and stays the primary model regardless of which method has the lowest test error. All learned models were refitted through 2024-12-30, then kept fixed for the test year.</p><p>Issue time is noon Bangladesh T-1; latest original input T-2. Historical publication times are unknown: strict verified feature coverage is <strong>{d.strict_availability_feature_days}/365 days</strong>. These results do not establish verified live forecast accuracy. The 2025 period is now evaluated and cannot be reused as a fresh untouched holdout.</p></section>
       <div className="stat-grid"><Stat label="FINAL TEST · 2025" value="Evaluated" detail="Locked historical protocol · no model switching" accent/><Stat label="PRIMARY OLS · COMMON MAE" value={num(primary?.common_dates.mae)} detail={`million kWh · ${primary?.common_dates.n ?? 0} identical comparison dates`}/><Stat label="PRIMARY FORECAST COVERAGE" value={`${primary?.calendar_forecasts ?? 0}/365`} detail={`${primary?.own_dates.n ?? 0} observed target dates scored`}/><Stat label="FINAL TRAINING ROWS" value={String(d.models.autoregression.rows)} detail={`Last usable label ${d.models.autoregression.last_label}`}/></div>
 

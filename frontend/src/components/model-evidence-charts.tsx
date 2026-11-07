@@ -2,7 +2,7 @@
 import {StudioPlot} from './studio-charts';
 import {comparisonKeys,comparisonNames} from '../lib/model-comparison';
 import type {FinalEvaluation} from '../lib/final-evaluation';
-export function ModelEvidenceCharts({report,compact=false}:{report:FinalEvaluation;compact?:boolean}){
+export function ModelEvidenceCharts({report,compact=false}:{report:Pick<FinalEvaluation,"scores"|"checks">;compact?:boolean}){
  const names=comparisonKeys.map(k=>k==='ridge'?'Ridge':k==='autoregression'?'OLS · primary':comparisonNames[k]);
  const scores=comparisonKeys.map(k=>report.scores.find(s=>s.model===k)!.common_dates);
  const grid={left:20,right:25,top:45,bottom:25,containLabel:true};
