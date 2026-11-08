@@ -71,3 +71,17 @@ An analysis ID binds the selected aligned values, variable metadata, methods, st
 - Isolated authenticated HTTP acceptance covers multi-variable and date selection, malformed/duplicate input, empty metric, preserved single-variable workspace, dataset/quality routes, authentication and API calendar alignment. Synthetic test observations are local-only, not deployed data.
 - A separate Windows-hosted read-only acceptance workflow verifies eight real Neon variables, sample counts, source identity, artifact checksum, response size and independently recomputed Pearson coefficients. Its execution result is reported separately; do not infer real-data acceptance from local tests.
 - Full authenticated browser/mobile visual-interaction acceptance remains unverified. Server-rendered SVG and HTTP checks do not substitute for browser interaction tests.
+
+## Hosted acceptance — 8 November 2026
+
+Run: https://github.com/arfinnaim02/BPDB/actions/runs/42449442596 — succeeded.
+
+- Actual canonical window: 2019-10-19–2026-11-04; 2,574 calendar days.
+- Generation, evening generation and evening demand: 2,390 observations each.
+- Temperature, gas, per-kWh cost, total cost and energy unserved: 629 each; all-eight-variable complete dates: 629.
+- 36 unique pairs including diagonals checked against aligned original data. Defined Pearson coefficients independently recomputed with Python statistics.correlation.
+- JSON size 947,039 bytes; execution 4.38 seconds; database writes zero.
+- Analysis ID: `dcf1417daf7a0f53664572e8e5d07a26c5c8e2dfbbc17d1173b196ed0ff93142`.
+- Downloaded acceptance ZIP SHA-256 `c2e658d21a99f3d6bb06eb14f8954cce7c71d1143770920444b36a5f0e1c8fdb` verified, then analysis-file checksum verified against the acceptance record.
+- Actual-data correlation, boxplot and scatter SVGs rendered; boxes changed to a horizontal layout and large-number ticks compacted to keep labels readable. Exact values remain in tables/JSON.
+- Hosted numerical acceptance does not certify original-PDF accuracy, publication timing, causal interpretation or browser interaction behavior.

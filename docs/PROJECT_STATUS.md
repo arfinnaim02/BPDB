@@ -307,3 +307,8 @@ full-history data-quality audit and analytical/model development.
 - Backend and data source are read-only. No model refits, canonical edits, causal claims or imputation. Same-window scaling is exploratory only; undefined correlations and statistics remain unavailable.
 - Local checks: 301 backend passed, one skipped; 43 frontend passed; 36 independent NumPy/SciPy formula checks; twelve chart SVG configurations at mobile/desktop sizes; TypeScript/build and authenticated HTTP acceptance passed. Hosted real-Neon acceptance and deployment are recorded separately.
 - See MULTIVARIATE_EDA.md for exact formulas, safeguards, interpretation and acceptance.
+
+### Multivariable live acceptance
+
+- Hosted read-only Neon acceptance 42449442596 passed on eight variables over 2,574 days: core energy/generation/demand n=2,390; modern temperature/gas/cost/unserved n=629; all-variable overlap n=629. JSON <1 MB, runtime 4.38 seconds, DB writes zero.
+- Independent paired coefficient and artifact checksum checks passed. Real-data matrix/box/scatter rendering reviewed and axis readability refined. Full authenticated browser/mobile interaction remains a separate acceptance step.
