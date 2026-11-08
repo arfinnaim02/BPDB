@@ -299,3 +299,11 @@ full-history data-quality audit and analytical/model development.
 - 38 frontend tests, TypeScript, production build and 13 isolated authenticated HTTP acceptance groups passed. Six studio configurations rendered as SVG at desktop/mobile widths. Full browser visual review remains unverified because managed preview passed unsupported Next.js startup arguments.
 - Current Drive authorization recovery is verified by successful daily collection 42396876427 and research report/archive 42397161685; earlier blocked notes above are historical.
 - See ANALYSIS_WORKSPACE_REDESIGN.md for formulas, limitations and user acceptance. Original cost/demand/zonal objectives and complete thesis remain separate outstanding research work.
+
+## Multivariable descriptive and exploratory analysis — November 8, 2026
+
+- Replaced the Explore entry with a one-to-eight-variable workspace covering thirteen supported national measurements, including modern temperature, gas and costs. Original single-variable studio remains at /explore/single.
+- Added full descriptive statistics, adjusted moments, paired Pearson/Spearman/first-difference relationships, twelve chart configurations, source-bound aligned CSV/JSON exports and explicit coverage/units/sample sizes.
+- Backend and data source are read-only. No model refits, canonical edits, causal claims or imputation. Same-window scaling is exploratory only; undefined correlations and statistics remain unavailable.
+- Local checks: 301 backend passed, one skipped; 43 frontend passed; 36 independent NumPy/SciPy formula checks; twelve chart SVG configurations at mobile/desktop sizes; TypeScript/build and authenticated HTTP acceptance passed. Hosted real-Neon acceptance and deployment are recorded separately.
+- See MULTIVARIATE_EDA.md for exact formulas, safeguards, interpretation and acceptance.

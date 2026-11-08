@@ -14,7 +14,7 @@ export function Icon({ name = "grid" }: { name?: string }) {
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name] || paths.grid}</svg>;
 }
 const navigationGroups = [
- {label:"ANALYZE",items:[["/","Overview","grid"],["/explore","Explore data","bolt"],["/analytics/comparisons","Compare periods","grid"],["/insights","Planning insights","bolt"]]},
+ {label:"ANALYZE",items:[["/","Overview","grid"],["/explore","Exploratory analysis","bolt"],["/analytics/comparisons","Compare periods","grid"],["/insights","Planning insights","bolt"]]},
  {label:"MODELS & EVIDENCE",items:[["/analytics/final-evaluation","Model results","bolt"],["/forecasts","Research forecasts","bolt"],["/reports","Research report","collection"]]},
  {label:"DATA LIBRARY",items:[["/dataset","Master dataset","dataset"],["/quality","Data quality","quality"]]},
 ];

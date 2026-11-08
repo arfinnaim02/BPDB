@@ -11,6 +11,7 @@ from app.api.analytics import router as analytics_router
 from app.api.audit import router as audit_router
 from app.api.comparisons import router as comparisons_router
 from app.api.experiments import router as experiments_router
+from app.api.exploratory import router as exploratory_router
 from app.api.final_evaluation import router as final_evaluation_router
 from app.api.forecasts import router as forecasts_router
 from app.api.frozen_analysis import router as frozen_analysis_router
@@ -60,6 +61,7 @@ app.include_router(monitoring_router, dependencies=[Depends(require_admin)])
 app.include_router(quality_router, dependencies=[Depends(require_admin)])
 app.include_router(audit_router, dependencies=[Depends(require_admin)])
 app.include_router(analytics_router, dependencies=[Depends(require_admin)])
+app.include_router(exploratory_router, dependencies=[Depends(require_admin)])
 app.include_router(comparisons_router, dependencies=[Depends(require_admin)])
 app.include_router(frozen_analysis_router, dependencies=[Depends(require_admin)])
 app.include_router(experiments_router, dependencies=[Depends(require_admin)])

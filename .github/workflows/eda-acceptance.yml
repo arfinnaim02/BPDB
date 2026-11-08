@@ -1,0 +1,42 @@
+name: BPDB multivariable EDA acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/eda-acceptance.yml"]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONPATH: backend
+      PYTHONUTF8: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install application and test dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+      - name: Verify statistical and API behavior
+        run: python -m pytest -q backend/tests/test_exploratory.py
+      - name: Verify read-only multivariable analysis against Neon
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -u -m ingestion.verify_exploratory
+      - name: Retain numerical acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bpdb-eda-acceptance-${{ github.run_id }}
+          path: data/eda_acceptance/*
+          retention-days: 30
+          if-no-files-found: warn

@@ -1,14 +1,14 @@
 "use client";
 import {useEffect,useRef,useState} from "react";
 import * as echarts from "echarts/core";
-import {LineChart,BarChart,HeatmapChart} from "echarts/charts";
+import {LineChart,BarChart,HeatmapChart,ScatterChart,BoxplotChart} from "echarts/charts";
 import {GridComponent,TooltipComponent,LegendComponent,DataZoomComponent,VisualMapComponent,AriaComponent,MarkLineComponent} from "echarts/components";
 import {SVGRenderer} from "echarts/renderers";
 import type {EChartsCoreOption} from "echarts/core";
 import type {AnalyticsReport} from "../lib/types";
 import {studioOptions} from "../lib/studio-options";
 import {exploration,analysisCsv} from "../lib/exploration";
-echarts.use([LineChart,BarChart,HeatmapChart,GridComponent,TooltipComponent,LegendComponent,DataZoomComponent,VisualMapComponent,AriaComponent,MarkLineComponent,SVGRenderer]);
+echarts.use([LineChart,BarChart,HeatmapChart,ScatterChart,BoxplotChart,GridComponent,TooltipComponent,LegendComponent,DataZoomComponent,VisualMapComponent,AriaComponent,MarkLineComponent,SVGRenderer]);
 export function StudioPlot({title,description,option,height=330}:{title:string;description:string;option:EChartsCoreOption;height?:number}){
  const ref=useRef<HTMLDivElement>(null);const chart=useRef<echarts.ECharts|null>(null);const [error,setError]=useState(false);
  useEffect(()=>{if(!ref.current)return;let resize:ResizeObserver|undefined;try{chart.current=echarts.init(ref.current,undefined,{renderer:'svg'});chart.current.setOption({animation:false,color:['#087f76','#efad45','#487ac4','#9a6bba','#da775e','#6e909a'],textStyle:{fontFamily:'Arial, sans-serif'},aria:{enabled:true},...option});resize=new ResizeObserver(()=>chart.current?.resize());resize.observe(ref.current);setError(false);}catch{setError(true);}return()=>{resize?.disconnect();chart.current?.dispose();chart.current=null;};},[option]);
