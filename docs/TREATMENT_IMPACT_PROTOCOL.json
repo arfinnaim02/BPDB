@@ -1,0 +1,182 @@
+{
+  "version": "treatment_forecast_impact_v1",
+  "registration_date_bangladesh": "2026-11-08",
+  "status": "pre_registration_only_execution_not_started",
+  "objective": "Measure feature-input treatment effects on energy forecasts before any production retraining.",
+  "source": {
+    "bundle_sha256": "bbcf319b97029d15a8180849b3f7ca218ef1e3ef7debf4ed01d32c511516c81a",
+    "snapshot_id": "7d45aacb7d94c05410e3ac9e97ceba3a7734500d4a1881e4829e2d7fab70acf0",
+    "treatment_study_id": "e83ad7c06caf768c72369a6d9d3c76492a80bb608eb58cbac630094a3e0aad6e",
+    "source_recovery": "Separate evidence follow-up; no unapproved repair enters primary frozen analysis.",
+    "recoveries": "If later approved, use a separately identified snapshot sensitivity analysis; never rewrite the primary snapshot or silently revise old scores."
+  },
+  "scope": {
+    "metric": "energy_generated",
+    "unit": "million_kWh",
+    "grain": "national_daily",
+    "target_labels": "Eligible original values only; never held, imputed or zero-substituted missing targets.",
+    "excluded_years": [
+      2025
+    ],
+    "historical_max_date": "2024-12-31"
+  },
+  "historical_design": {
+    "role": "Retrospective diagnostic, not an independent confirmatory test: policy selection already used 2020-2023 masks and 2024 has prior research exposure.",
+    "folds": [
+      {
+        "id": "diagnostic_2021",
+        "fit_start": "2020-01-01",
+        "fit_stop": "2020-12-30",
+        "target_start": "2021-01-01",
+        "target_end": "2021-12-31"
+      },
+      {
+        "id": "diagnostic_2022",
+        "fit_start": "2020-01-01",
+        "fit_stop": "2021-12-30",
+        "target_start": "2022-01-01",
+        "target_end": "2022-12-31"
+      },
+      {
+        "id": "diagnostic_2023",
+        "fit_start": "2020-01-01",
+        "fit_stop": "2022-12-30",
+        "target_start": "2023-01-01",
+        "target_end": "2023-12-31"
+      }
+    ],
+    "secondary_window": {
+      "fit_start": "2020-01-01",
+      "fit_stop": "2023-12-30",
+      "target_start": "2024-01-01",
+      "target_end": "2024-12-31",
+      "role": "Previously exposed descriptive sensitivity only; never select a treatment from its results."
+    },
+    "fit": "One train-only StandardScaler + LinearRegression(fit_intercept=True) per fold, using only complete original feature rows; same frozen coefficients for all three inference policies.",
+    "minimum_fit_rows": 60,
+    "parameter_search": false,
+    "refit_within_fold": false,
+    "training_changes": "No treated training inputs in the primary experiment. End-to-end treatment-specific retraining is a separate later protocol.",
+    "runtime_lock": "backend/requirements-research.txt as committed at registration; preserve runtime/code fingerprints."
+  },
+  "features": {
+    "lags": [
+      2,
+      7,
+      14,
+      28
+    ],
+    "mean_lags": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "calendar": [
+      "weekday_sin",
+      "weekday_cos",
+      "day_of_year_sin",
+      "day_of_year_cos"
+    ],
+    "order": "Release 1 FEATURES order; nine inputs; freeze names in fit artifact."
+  },
+  "timing": {
+    "issue": "12:00 Asia/Dhaka on target T-1 (06:00 UTC). Original input dates no later than T-2.",
+    "replacement": "For missing/held requested input D, replacement originals must precede D; no recursive estimates. Use the actual forecast target's issue cutoff for known availability.",
+    "historical_unknown_times": "Assumed, not proven historical real-time availability. Preserve unknown donor-time counts.",
+    "held_requested_inputs": "May be treated as unavailable feature slots; their suspect value can never be used as a donor or label.",
+    "prospective_evidence": "Persist exact source/version/value hashes and platform capture time before issue. A before-issue captured snapshot proves platform possession, not the official publication timestamp. Refuse unavailable/unproven as-of-issue donors; never overwrite ReportVersion.available_at."
+  },
+  "policies": {
+    "observed_only": "Originals only; abstain if a required input is unavailable.",
+    "seasonal_original_7": "Current reference: unavailable input D uses exact original D-7 if eligible/available.",
+    "past_original_3": "Candidate: unavailable input D uses latest eligible available original D-1..D-3."
+  },
+  "comparisons": {
+    "primary": "Recent-original minus previous-week paired absolute forecast error on shared scored dates with at least one originally unavailable requested feature.",
+    "affected_definition": "At least one required original feature slot is unavailable at issue before applying either policy; define from source snapshot, never realized target/error.",
+    "secondary": [
+      "All shared scored dates",
+      "Own-policy scored dates",
+      "Full calendar prediction coverage",
+      "Original-target coverage",
+      "Affected-stratum coverage",
+      "Per-fold/year/month errors",
+      "Number and age of replacements",
+      "Abstention reasons"
+    ],
+    "observed_only": "Coverage and complete-feature reference. On fully original rows all three policies must predict identically; do not present that shared-sample identity as a treatment improvement.",
+    "metrics": [
+      "MAE",
+      "RMSE",
+      "signed_bias",
+      "paired_MAE_difference",
+      "relative_MAE_improvement_percent"
+    ],
+    "missing_prediction": "Abstain; unavailable error, never zero. Do not rank own-date MAEs as if samples were identical.",
+    "uncertainty": {
+      "method": "Paired circular calendar-block bootstrap descriptive sensitivity",
+      "block_days": [
+        7,
+        14
+      ],
+      "replicates": 2000,
+      "seed": 20261108,
+      "percentiles": [
+        2.5,
+        97.5
+      ],
+      "calendar": "Retain unmatched and missing-target calendar rows; resample within fold, then pool scored affected pairs.",
+      "claim": "Descriptive dependence sensitivity, not proof of causal or population-wide superiority."
+    }
+  },
+  "diagnostic_support_rule": {
+    "minimum_affected_common_dates": 30,
+    "minimum_folds_with_10_affected_dates": 2,
+    "affected_MAE_improvement_percent_at_least": 5,
+    "all_shared_MAE_must_not_worsen": true,
+    "all_shared_RMSE_degradation_percent_at_most": 2,
+    "calendar_coverage_drop_percentage_points_at_most": 1,
+    "zero_reference_error": "Relative change undefined if reference MAE is zero; report absolute errors and no automatic support decision.",
+    "interpretation": "Even if all conditions pass, support is diagnostic only; no automatic production adoption."
+  },
+  "prospective_confirmation": {
+    "status": "planned_not_started_no_schedule_created",
+    "target_start": "2026-11-10",
+    "target_end": "2026-12-09",
+    "first_issue": "2026-11-09T12:00:00+06:00",
+    "model_id": "04aac742dbd25a35070b86e12279e51a3e762099696399221cb8a23244a8a2f3",
+    "fit": "None. Both shadow policies use the same existing saved OLS coefficients.",
+    "ledger": "Append-only separate research ledger, both policies frozen before issue, source snapshot and donor evidence retained. Never replace the live forecast ledger.",
+    "actuals": "At T+7 12:00 Bangladesh, lock eligible original canonical target as of that scoring cutoff. Preserve its value/version/source hash; later revisions only in separately labelled sensitivity. No target at cutoff means unscored.",
+    "minimum_common_scored_dates": 20,
+    "minimum_affected_common_dates": 10,
+    "decision": "Require diagnostic support rule and prospective affected-MAE improvement >=5%, no worsening all-shared MAE, RMSE degradation <=2%, coverage drop <=1pp. Small samples or no affected dates mean inconclusive/policy-equivalent, not a winner.",
+    "missed_issues": "Never reconstruct a forecast after issue. If execution cannot begin before first issue, amend dates in a new commit before the replacement period starts. No automatic period extension based on outcomes.",
+    "readiness": "Execution is separate work; this registration does not start a worker, model fit or shadow deployment."
+  },
+  "safety": {
+    "database_writes_now": 0,
+    "models_fit_now": 0,
+    "production_retraining": false,
+    "production_policy_change": false,
+    "target_imputation": false,
+    "auto_promote_recovered_sources": false,
+    "reopen_2025_for_selection": false,
+    "run_experiment_now": false
+  },
+  "required_outputs": [
+    "Protocol and commit/code/environment hashes",
+    "Fold fit-row dates and coefficient fingerprints",
+    "Date-policy forecast/actual/availability/donor ledger",
+    "Own/shared/affected score tables",
+    "Coverage and abstention tables",
+    "Calendar-block sensitivity results",
+    "Recovery snapshot diff if separately approved",
+    "Acceptance report including inconclusive outcomes"
+  ],
+  "results": null
+}
