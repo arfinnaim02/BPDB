@@ -1,5 +1,16 @@
 # Project status — November 8, 2026
 
+## Latest verification — executed manual-checklist acceptance
+
+- Application source verified against commit `334f7f4005117d3d410a6543d0411b6fa79d5f8e`; test-only harness `b427ad9e60d62cb7566e48cd29ea90e10aa02069`.
+- Full local tests: backend 345 passed/1 skipped; frontend 48 passed; Ruff, TypeScript and production build passed.
+- Live read-only Neon/FastAPI acceptance [42474108903](https://github.com/arfinnaim02/BPDB/actions/runs/42474108903) succeeded, including real previews, three actual exports, manifest/CSV integrity, 422 guard refusals and stale-download 409.
+- Actual React component: 9 scenarios passed across all 8 modern-only fields. Production-build HTTP replay with captured real responses: 9 scenarios passed.
+- Real export findings: gas February 2025 has 4 blank originals; energy January 2025 has 23; unserved February preserves one original zero. No estimates were substituted and incomplete monthly totals stayed blank.
+- Live browser confirmed protected-page redirect to login. Full signed-in production-browser click-through remains **not run** because no authenticated session was available.
+- No production measurements, credentials, model coefficients or frozen research outcomes changed.
+- See [executed test report](MANUAL_ACCEPTANCE_TEST_REPORT.md) and [verification JSON](MANUAL_ACCEPTANCE_VERIFICATION.json). Passing software checks do not certify model readiness.
+
 ## Latest delivery — research-specific dataset goal
 
 - Working goal: a trustworthy dataset for each research question, using verified comparable variables and reporting periods.

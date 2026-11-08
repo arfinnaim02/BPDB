@@ -1,0 +1,236 @@
+{
+  "status": "passed_with_explicit_production_browser_limit",
+  "report_date_bangladesh": "2026-11-08",
+  "live_data_capture_bangladesh": "2026-11-08T17:05:17.182106+06:00",
+  "application_commit": "334f7f4005117d3d410a6543d0411b6fa79d5f8e",
+  "test_harness_commit": "b427ad9e60d62cb7566e48cd29ea90e10aa02069",
+  "application_source_files_verified": 206,
+  "local_backend": {
+    "passed": 345,
+    "skipped": 1
+  },
+  "local_frontend": {
+    "passed": 48,
+    "failed": 0
+  },
+  "ruff": "passed",
+  "typescript": "passed",
+  "production_build": "passed",
+  "hosted_live_backend_run": 42474108903,
+  "hosted_live_backend": {
+    "checks": [
+      {
+        "status": "passed",
+        "test": "postgresql_read_only_transaction"
+      },
+      {
+        "status": "passed",
+        "test": "authenticated_profiles_and_no_readiness_invention"
+      },
+      {
+        "status": "passed",
+        "test": "gas_feb_preview_export_and_csv"
+      },
+      {
+        "status": "passed",
+        "test": "energy_jan_preview_export_and_csv"
+      },
+      {
+        "status": "passed",
+        "test": "unserved_feb_preview_export_and_csv"
+      },
+      {
+        "status": "passed",
+        "test": "all_eight_modern_policy_bypasses_blocked"
+      },
+      {
+        "status": "passed",
+        "test": "stale_snapshot_download_refused"
+      },
+      {
+        "status": "passed",
+        "test": "invalid_dates_metric_policy_refused"
+      }
+    ],
+    "database_writes": 0,
+    "production_models_changed": 0,
+    "real_data_cases": {
+      "energy_jan": {
+        "blank_preservation": "passed",
+        "csv_rows": 31,
+        "estimated_rows": 0,
+        "held_rows": 0,
+        "manifest_checksums": "passed",
+        "missing_original_cells": 23,
+        "monthly_totals": [
+          ""
+        ],
+        "original_decimal_cells": "passed",
+        "original_zero_cells": 0,
+        "snapshot_id": "3e5383a5364f9ea38f271d516cd4948c0985dd23e9ce25f4c65c3dcf067abf13"
+      },
+      "gas_feb": {
+        "blank_preservation": "passed",
+        "csv_rows": 28,
+        "estimated_rows": 0,
+        "held_rows": 0,
+        "manifest_checksums": "passed",
+        "missing_original_cells": 4,
+        "monthly_totals": [
+          ""
+        ],
+        "original_decimal_cells": "passed",
+        "original_zero_cells": 0,
+        "snapshot_id": "63773c34b3e62a2f0c3e86eb6d533fdb579e8a7a67861a40adea4dac5aef7c58"
+      },
+      "unserved_feb": {
+        "blank_preservation": "passed",
+        "csv_rows": 28,
+        "estimated_rows": 0,
+        "held_rows": 0,
+        "manifest_checksums": "passed",
+        "missing_original_cells": 4,
+        "monthly_totals": [
+          ""
+        ],
+        "original_decimal_cells": "passed",
+        "original_zero_cells": 1,
+        "snapshot_id": "b389885afb81e5780777c8c742bdddc95a8b28cc30f3ef4b9f4bddfec198daf6"
+      }
+    },
+    "scope": "Current FastAPI application exercised against live Neon in read-only sessions, using temporary authentication only in this ephemeral test process. Not a signed-in production-browser test; no forecasting experiment executed.",
+    "status": "passed"
+  },
+  "react_component_test": {
+    "status": "passed",
+    "scope": "Actual React component rendered and change events dispatched in jsdom; not a production browser test.",
+    "component_sha256": "1b8a88930f73e4be7467bdca4a2eb4a51acb5c4f6f1282570869d9a9da408143",
+    "checks": [
+      {
+        "test": "core_experimental_policy_selectable",
+        "status": "passed"
+      },
+      {
+        "test": "gas_supplied_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "maximum_temperature_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "total_production_cost_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "day_peak_demand_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "energy_demand_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "energy_unserved_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "production_cost_per_kwh_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      },
+      {
+        "test": "minimum_generation_resets_and_disables_then_core_restores_choice",
+        "status": "passed"
+      }
+    ]
+  },
+  "http_frontend_contract": {
+    "status": "passed",
+    "scope": "Production-build local HTTP contract with real hosted Neon API/bundle fixtures; not an authenticated production-browser test.",
+    "checks": [
+      {
+        "test": "authenticated_strategy_profiles_coverage_and_question_mapping",
+        "status": "passed"
+      },
+      {
+        "test": "unauthenticated_strategy_has_no_assessment_data",
+        "status": "passed"
+      },
+      {
+        "test": "gas_feb_rendered_preview_and_exact_download_bytes",
+        "status": "passed"
+      },
+      {
+        "test": "energy_jan_rendered_preview_and_exact_download_bytes",
+        "status": "passed"
+      },
+      {
+        "test": "unserved_feb_rendered_preview_and_exact_download_bytes",
+        "status": "passed"
+      },
+      {
+        "test": "download_authentication_and_stale_fingerprint_refusal",
+        "status": "passed"
+      },
+      {
+        "test": "invalid_date_and_missing_download_identity_blocked_before_fetch",
+        "status": "passed"
+      },
+      {
+        "test": "server_rendered_modern_policy_disabled",
+        "status": "passed"
+      },
+      {
+        "test": "backend_failure_shows_error_without_cached_or_sample_assessment",
+        "status": "passed"
+      }
+    ]
+  },
+  "real_data_missing_dates": {
+    "energy_jan": [
+      "2025-01-01",
+      "2025-01-02",
+      "2025-01-03",
+      "2025-01-04",
+      "2025-01-05",
+      "2025-01-06",
+      "2025-01-07",
+      "2025-01-08",
+      "2025-01-09",
+      "2025-01-10",
+      "2025-01-11",
+      "2025-01-12",
+      "2025-01-13",
+      "2025-01-14",
+      "2025-01-15",
+      "2025-01-16",
+      "2025-01-17",
+      "2025-01-18",
+      "2025-01-19",
+      "2025-01-20",
+      "2025-01-21",
+      "2025-01-22",
+      "2025-01-29"
+    ],
+    "gas_feb": [
+      "2025-02-01",
+      "2025-02-05",
+      "2025-02-08",
+      "2025-02-11"
+    ],
+    "unserved_feb": [
+      "2025-02-01",
+      "2025-02-05",
+      "2025-02-08",
+      "2025-02-11"
+    ]
+  },
+  "production_browser": {
+    "protected_strategy_redirect_to_login": "passed_visually_in_cloud_browser",
+    "authenticated_production_walkthrough": "not_run_no_authenticated_session",
+    "credentials_entered_or_changed": false
+  },
+  "database_writes": 0,
+  "production_model_changes": 0,
+  "limitation": "No claim that every signed-in production page was manually clicked or that software acceptance certifies scientific model readiness."
+}
