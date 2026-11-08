@@ -25,6 +25,7 @@ export default async function Forecasts({ searchParams }: { searchParams: Promis
     <Heading eyebrow="RELEASE 4 · PROSPECTIVE RESEARCH LOG" title="Research forecasts" description="Tomorrow’s saved-model prediction, captured inputs and later observed outcomes.">
       <div className="research-actions"><Link href="/analytics/final-evaluation" className="button secondary">Historical final evaluation →</Link><a href={`/api/forecasts?limit=${limit}`} className="button primary">Download displayed history CSV ↓</a></div>
     </Heading>
+    <section className="notice"><strong>Looking for next-month production cost?</strong><p><Link className="inline-link" href="/analytics/monthly-cost">View December monthly cost predictions and historical checks →</Link></p><p>This page below shows daily energy forecasts; the monthly study predicts total production cost in BDT.</p></section>
     {!result.ok && <ErrorPanel message={result.message}/>}
     {d && <>
       <section className="notice"><strong>Research outputs · distinct from official measurements</strong><p>Uses the saved OLS model without retraining. Each issue targets the next Bangladesh day, with original inputs no later than target minus two days. Actual issue time is retained for every forecast. No missing target is replaced by a forecast.</p><p>Platform input capture is recorded before issuance; unknown official publication times remain disclosed. Historical test performance used a reporting-time assumption and does not guarantee future accuracy.</p></section>

@@ -15,7 +15,7 @@ export function Icon({ name = "grid" }: { name?: string }) {
 }
 const navigationGroups = [
  {label:"ANALYZE",items:[["/","Overview","grid"],["/explore","Exploratory analysis","bolt"],["/analytics/comparisons","Compare periods","grid"],["/insights","Planning insights","bolt"]]},
- {label:"MODELS & EVIDENCE",items:[["/analytics/final-evaluation","Model results","bolt"],["/forecasts","Research forecasts","bolt"],["/reports","Research report","collection"]]},
+ {label:"MODELS & EVIDENCE",items:[["/analytics/final-evaluation","Model results","bolt"],["/forecasts","Research forecasts","bolt"],["/analytics/monthly-cost","Monthly cost forecast","bolt"],["/reports","Research report","collection"]]},
  {label:"DATA LIBRARY",items:[["/dataset","Master dataset","dataset"],["/quality","Data quality","quality"],["/quality/strategy","Dataset strategy","dataset"],["/quality/treatment","Treatment study","quality"]]},
 ];
 const advanced = [["/analytics","Detailed observed tables","grid"],["/analytics/research","Frozen 2024 analysis","grid"],["/analytics/experiments","Baseline experiments","bolt"],["/analytics/models","Validation comparison","bolt"],["/quality/review","Measurement review","quality"],["/quality/missing","Missing data","dataset"],["/quality/prepare","Research preparation","dataset"]];
