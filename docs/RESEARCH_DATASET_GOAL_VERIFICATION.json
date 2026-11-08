@@ -1,0 +1,138 @@
+{
+  "core_variables": 5,
+  "coverage": [
+    {
+      "earliest_observed_date": "2019-10-19",
+      "full_history_observed_days": 2390,
+      "metric": "day_peak_generation",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2019-10-19",
+      "full_history_observed_days": 2390,
+      "metric": "evening_peak_generation",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "day_peak_demand",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2019-10-19",
+      "full_history_observed_days": 2390,
+      "metric": "evening_peak_demand",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "minimum_generation",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2019-10-19",
+      "full_history_observed_days": 2390,
+      "metric": "maximum_generation",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2019-10-19",
+      "full_history_observed_days": 2390,
+      "metric": "energy_generated",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "energy_demand",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "energy_unserved",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "maximum_temperature",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "gas_supplied",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "production_cost_per_kwh",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    },
+    {
+      "earliest_observed_date": "2025-01-23",
+      "full_history_observed_days": 629,
+      "metric": "total_production_cost",
+      "modern_calendar_coverage_percent": 93.46,
+      "modern_calendar_days": 673,
+      "modern_observed_days": 629
+    }
+  ],
+  "coverage_assessment_id": "20328a87e042dc9fc6fd8b232f3e54d5d187c3c6b648ce7640027ec273975b7c",
+  "database_writes": 0,
+  "joint_model_eligibility": "not_assessed_not_approved",
+  "models_fit": 0,
+  "modern_boundary_status": "proposed_not_universal_publication_proof",
+  "postgresql_transaction_read_only": true,
+  "status": "passed",
+  "variables": 13,
+  "captured_at_bangladesh": "2026-11-08T15:57:20.133291+06:00",
+  "source_workflow_run": 42469281560,
+  "local_backend_tests": {
+    "passed": 343,
+    "skipped": 1
+  },
+  "local_frontend_tests": {
+    "passed": 48
+  },
+  "frontend_typecheck": "passed",
+  "production_build": "passed",
+  "http_check": {
+    "status": "passed",
+    "authenticated_strategy_page": true,
+    "captured_live_coverage_rendered": true,
+    "unauthenticated_identity_exposed": false,
+    "modern_field_experimental_policy_disabled": true,
+    "scope": "Frontend HTTP contract against verified hosted assessment; live backend read separately verified in GitHub."
+  },
+  "frozen_input_sha256_unchanged": "bbcf319b97029d15a8180849b3f7ca218ef1e3ef7debf4ed01d32c511516c81a",
+  "base_protocol_sha256_unchanged": "7ab121397b48acc61261f4276b9ad5c051157c5d5d100dc03483c5977fac7469"
+}

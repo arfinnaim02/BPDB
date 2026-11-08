@@ -1,6 +1,19 @@
 # Project status — November 8, 2026
 
-## Latest delivery — source investigation and treatment-impact registration
+## Latest delivery — research-specific dataset goal
+
+- Working goal: a trustworthy dataset for each research question, using verified comparable variables and reporting periods.
+- Added protected **/quality/strategy** and **/api/v1/dataset/research-profiles**, with long-history core and proposed modern-reporting profiles, actual variable coverage and question-specific dataset guidance.
+- Five supported legacy+modern core variables; eight modern-only variables cannot use experimental previous-week preparation. Earlier originals and observed-only previews remain available.
+- The 1 January 2025 boundary remains a proposal, not publication/completeness proof. Live richer-field observations first occur on 23 January 2025.
+- Hosted read-only check [42469281560](https://github.com/arfinnaim02/BPDB/actions/runs/42469281560) passed: modern proposed window to 4 November 2026 has 629 non-null dates per field / 673 calendar days (93.46%). These are coverage counts, not approved joint training rows.
+- No original measurements, frozen inputs, previous scores, model coefficients or schedules changed. Joint eligible-row counts remain unassessed; no fitting or automatic readiness approval.
+- Published a separate [dataset-goal addendum](TREATMENT_IMPACT_AMENDMENT_01.md) before experiment execution; original impact protocol/hash remains intact.
+- Local verification: backend 343 passed/1 skipped, frontend 48 passed; TypeScript, production build, authenticated frontend HTTP contract and live PostgreSQL read-only acceptance passed.
+- See [goal and rules](RESEARCH_DATASET_GOAL.md), [test report](RESEARCH_DATASET_GOAL_TEST_REPORT.md) and [verification data](RESEARCH_DATASET_GOAL_VERIFICATION.json).
+- Next: source recovery review, then source-linked question-specific snapshots with joint eligibility and target-frequency accounting before fitting.
+
+## Previous delivery — source investigation and treatment-impact registration
 
 - Investigated the frozen study's 83 affected dates (67 absent, 16 held), across all 151 retained candidate URLs in two disjoint batches.
 - Verified 136 preserved PDF receipts, 136 text diagnostics and 30 artifact PDF checksums; visually inspected three original pages.
