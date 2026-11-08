@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": [
+    "Checksum and byte count: canonical_snapshot.json",
+    "Checksum and byte count: experiment.json",
+    "Checksum and byte count: future_forecast.json",
+    "Checksum and byte count: monthly_audit.csv",
+    "Checksum and byte count: predictions.csv",
+    "All 10 complete monthly targets equal exact original daily sums",
+    "Independent historical MAE, RMSE, bias and MAPE recomputation",
+    "December OLS and Ridge reconstructed from retained coefficients and scaler",
+    "Future fitting labels end October 2026; December actual remains undefined"
+  ],
+  "scope": "Numerical artifact consistency, not independent PDF/accounting validation"
+}
