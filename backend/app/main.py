@@ -10,6 +10,7 @@ from sqlalchemy import text
 from app.api.analytics import router as analytics_router
 from app.api.audit import router as audit_router
 from app.api.comparisons import router as comparisons_router
+from app.api.dataset_profiles import router as dataset_profiles_router
 from app.api.experiments import router as experiments_router
 from app.api.exploratory import router as exploratory_router
 from app.api.final_evaluation import router as final_evaluation_router
@@ -60,6 +61,7 @@ def require_admin(x_api_key: Annotated[str | None, Header()] = None) -> None:
 
 app.include_router(monitoring_router, dependencies=[Depends(require_admin)])
 app.include_router(quality_router, dependencies=[Depends(require_admin)])
+app.include_router(dataset_profiles_router, dependencies=[Depends(require_admin)])
 app.include_router(audit_router, dependencies=[Depends(require_admin)])
 app.include_router(analytics_router, dependencies=[Depends(require_admin)])
 app.include_router(exploratory_router, dependencies=[Depends(require_admin)])

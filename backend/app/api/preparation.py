@@ -18,6 +18,7 @@ from app.api.measurement_review import FIELDS, screen
 from app.api.measurement_review import RULE_VERSION as REVIEW_RULE
 from app.api.missingness import MissingMetric, read_missingness
 from app.api.monitoring import DAILY_COLUMNS, Database, canonical_query, materialize_days
+from app.core.dataset_policy import CORE_METRICS
 from app.db.models import DailyReport
 
 router = APIRouter(prefix="/api/v1/dataset", tags=["Research preparation"])
@@ -55,6 +56,13 @@ def build_snapshot(
     definitions = {c[1]: c for c in DAILY_COLUMNS}
     if metric not in definitions or policy not in ("observed_only", "past_week_train_only"):
         raise HTTPException(422, "Unknown measurement or treatment policy")
+    if policy != "observed_only" and metric not in CORE_METRICS:
+        raise HTTPException(
+            422,
+            "Experimental filling is blocked for modern-layout-only variables. "
+            "Use observed_only and a documented reporting window; "
+            "historically unsupported fields must not be manufactured.",
+        )
     if not start <= train_end < validation_end < end:
         raise HTTPException(422, "Use start <= training end < validation end < end")
     if not 1 <= max_gap <= 3 or (end - start).days >= 3660:

@@ -1,0 +1,42 @@
+name: BPDB research dataset goal acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/research-dataset-profiles.yml"]
+permissions:
+  contents: read
+jobs:
+  assess:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONPATH: backend
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+      - name: Verify dataset goal safeguards
+        run: python -m pytest -q backend/tests/test_dataset_profiles.py backend/tests/test_preparation.py
+      - name: Read live coverage in a PostgreSQL read-only transaction
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -u -m research.check_dataset_profiles
+      - name: Retain planning assessment and verification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bpdb-research-profiles-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: warn
+          path: data/research_dataset_profiles/*.json

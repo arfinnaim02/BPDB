@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { requireSession } from "../../../lib/auth";
 import { readApi } from "../../../lib/backend";
-import { COLUMNS, type Params } from "../../../lib/filters";
+import { type Params } from "../../../lib/filters";
 import { calendar, count, metricLabel } from "../../../lib/format";
 import { preparationFilters, type ResearchSnapshot } from "../../../lib/preparation";
+import {PreparationDatasetControls} from "../../../components/preparation-dataset-controls";
 import { Empty, ErrorPanel, Heading, Shell } from "../../../components/ui";
 export const dynamic = "force-dynamic";
 
@@ -15,13 +16,14 @@ export default async function Prepare({ searchParams }: { searchParams: Promise<
   const d = result?.ok ? result.data : null;
   const download = new URLSearchParams(f.query); if (d) download.set("expected_id", d.snapshot_id);
   return <Shell active="/quality/prepare">
-    <Heading eyebrow="REPRODUCIBLE RESEARCH" title="Prepare research dataset" description="Freeze original evidence and a documented training candidate without changing the master dataset."><Link href="/quality/missing" className="button secondary">Inspect missing data →</Link></Heading>
+    <Heading eyebrow="REPRODUCIBLE RESEARCH" title="Prepare research dataset" description="Freeze original evidence and a documented training candidate without changing the master dataset."><Link href="/quality/strategy" className="button secondary">Choose a research dataset →</Link><Link href="/quality/missing" className="button secondary">Inspect missing data →</Link></Heading>
+    <div className="notice"><strong>Dataset goal: verified comparable variables and reporting periods.</strong><p>Use long-history core variables where source definitions are comparable, or a supported modern reporting window. The proposed 1 January 2025 boundary does not certify completeness. Experimental filling is blocked for modern-layout-only fields; use observed-only preparation for those variables. Any prepared estimate is an experimental input candidate; training and scoring target labels must come from eligible original observations.</p></div>
     <div className="notice"><strong>Choose the study window and chronological splits explicitly</strong><p>Start with the observed-only baseline. Training ends on the first cutoff; validation ends on the second; the remaining days are test. These dates do not establish sufficient sample size or approve a forecasting experiment.</p><p><Link className="inline-link" href="/quality/audit">Investigate source gaps and download a recovery worklist →</Link></p><p>The optional previous-week policy fills only short internal training gaps from an original value exactly seven calendar days earlier. It never fills held-out targets, extends boundaries or chains estimates. Donors with unknown or late availability are blocked. Review holds are conservative screening, not confirmed errors.</p></div>
     {bounds?.ok && <p className="small-note">Known canonical history: {calendar(bounds.data.earliest_operational_date)} – {calendar(bounds.data.latest_operational_date)}. Metric coverage may start later; inspect Missing data first.</p>}
     <section className="panel"><form key={f.query.toString()} action="/quality/prepare" className="filter-form">
-      <div className="field"><label htmlFor="metric">Measurement</label><select id="metric" name="metric" defaultValue={f.metric}>{COLUMNS.map(m => <option key={m} value={m}>{metricLabel(m)}</option>)}</select></div>
+      <PreparationDatasetControls metric={f.metric} policy={f.policy}/>
       {[["start_date", "From date", f.start], ["train_end", "Training end", f.train], ["validation_end", "Validation end", f.validation], ["end_date", "To date", f.end]].map(([name, label, value]) => <div className="field" key={name}><label htmlFor={name}>{label}</label><input required type="date" id={name} name={name} defaultValue={value}/></div>)}
-      <div className="field"><label htmlFor="policy">Training treatment</label><select id="policy" name="policy" defaultValue={f.policy}><option value="observed_only">Observed only · baseline</option><option value="past_week_train_only">Previous week · experimental</option></select></div>
+      
       <div className="field"><label htmlFor="max_gap">Maximum internal training gap</label><select id="max_gap" name="max_gap" defaultValue={f.maxGap}>{[1,2,3].map(n => <option value={n} key={n}>{n} day{n > 1 ? "s" : ""}</option>)}</select></div>
       <div className="filter-actions"><button className="button primary">Preview snapshot</button><Link href="/quality/prepare" className="text-button">Reset</Link></div>
     </form></section>
