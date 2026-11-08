@@ -1,6 +1,21 @@
 # Project status — November 8, 2026
 
-## Latest delivery — Missing-Data Treatment Study, 8 November 2026
+## Latest delivery — source investigation and treatment-impact registration
+
+- Investigated the frozen study's 83 affected dates (67 absent, 16 held), across all 151 retained candidate URLs in two disjoint batches.
+- Verified 136 preserved PDF receipts, 136 text diagnostics and 30 artifact PDF checksums; visually inspected three original pages.
+- Found 8 absent-date sources passing current parsing/screening, pending independent review; 44 other dates have matching-date sources still requiring review, 30 need wrong-date/unparsed follow-up and 2020-02-28 has no candidate in retained evidence.
+- Confirmed three visual source-cell discrepancies: 1 → 157.6, 17 → 174.1 and 2 → 214.6 million kWh. These are source-recovery leads, not imputed values; no corrections were applied.
+- Source jobs [42456650793](https://github.com/arfinnaim02/BPDB/actions/runs/42456650793) and [42457409357](https://github.com/arfinnaim02/BPDB/actions/runs/42457409357) deliberately end non-green when retrieval fails: 15 RemoteProtocolError transport failures remain unresolved despite verified preservation of completed evidence.
+- Registered [chronological treatment-impact protocol](TREATMENT_IMPACT_PROTOCOL.md) at commit `5a0fc0d0395efaa0a69f1097738a380d284d49a2`; machine design hash `7ab121397b48acc61261f4276b9ad5c051157c5d5d100dc03483c5977fac7469`.
+- Historical 2021/2022/2023 folds are retrospective diagnostics; 2024 is previously exposed secondary evidence; 2025 remains excluded. Shared coefficients isolate inference-policy effects.
+- Future shadow confirmation is only reserved for 10 November–9 December 2026; no worker/schedule has started. Missed readiness requires a prospective amendment.
+- No canonical changes, approved repairs, production retraining or new forecast experiments in this delivery.
+- Local tests: backend 330 passed/1 skipped, frontend 46 passed; TypeScript/build and protected-page HTTP checks passed.
+- Existing Treatment Study page links both the registered design and [source findings](TRAINING_SOURCE_RECOVERY_FINDINGS.md). Source investigation is now manual-only; daily collection scheduling is unchanged.
+- Next execution: guarded source-recovery preview, independent review of eight candidate records, bounded retries of transport failures; then implement the registered research diagnostics/shadow ledger.
+
+## Previous delivery — Missing-Data Treatment Study, 8 November 2026
 
 - Completed training-only energy-input reconstruction on the original frozen snapshot, 2020–2023.
 - Study ID: `e83ad7c06caf768c72369a6d9d3c76492a80bb608eb58cbac630094a3e0aad6e`.

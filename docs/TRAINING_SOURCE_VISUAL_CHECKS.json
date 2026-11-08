@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "inspection_date_bangladesh": "2026-11-08",
+  "source_run_id": 42456650793,
+  "inspection_scope": "Three byte-verified original PDF pages visually inspected in this work session. This is not a blanket correction or an independent second-reader approval.",
+  "method": "SHA-256 check against preserved result and frozen source, Poppler render, visual reading of dated national Total Gen. (MKWH) cell.",
+  "examples": [
+    {
+      "operational_date": "2020-01-04",
+      "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/4472page1.pdf",
+      "source_page": 1,
+      "source_sha256": "24d48b47c247fe2990d6ee935680a5b1e129225aeeb85dce3943fa4d03780a6b",
+      "matches_frozen_source_bytes": true,
+      "frozen_energy_value": "1.000000",
+      "visually_read_original_energy_value": "157.6",
+      "unit": "million_kWh",
+      "current_parser_energy_value": null,
+      "current_parser_issues": [
+        {
+          "code": "missing_or_ambiguous_metric",
+          "matches": 0,
+          "metric": "energy_generated"
+        }
+      ],
+      "finding": "Original number is visible in the PDF; extracted text interleaves neighbouring System Load Factor letters with energy digits.",
+      "applied_to_database": false,
+      "repair_approved_for_promotion": false
+    },
+    {
+      "operational_date": "2020-02-04",
+      "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/4534page1.pdf",
+      "source_page": 1,
+      "source_sha256": "8852f4249335ada66a246c5103b4870c574e75457850d95dc6ee4bceb3090893",
+      "matches_frozen_source_bytes": true,
+      "frozen_energy_value": "17.000000",
+      "visually_read_original_energy_value": "174.1",
+      "unit": "million_kWh",
+      "current_parser_energy_value": null,
+      "current_parser_issues": [
+        {
+          "code": "missing_or_ambiguous_metric",
+          "matches": 0,
+          "metric": "energy_generated"
+        }
+      ],
+      "finding": "Original number is visible in the PDF; extracted text interleaves neighbouring System Load Factor letters with energy digits.",
+      "applied_to_database": false,
+      "repair_approved_for_promotion": false
+    },
+    {
+      "operational_date": "2020-06-18",
+      "source_url": "https://misc.bpdb.gov.bd/storage/daily_archive/4800page1.pdf",
+      "source_page": 1,
+      "source_sha256": "261d0309a63eadae6303a81a39c90f48d60fbc36f9d5076e5eb9cf24c5d6c583",
+      "matches_frozen_source_bytes": true,
+      "frozen_energy_value": "2.000000",
+      "visually_read_original_energy_value": "214.6",
+      "unit": "million_kWh",
+      "current_parser_energy_value": null,
+      "current_parser_issues": [
+        {
+          "code": "missing_or_ambiguous_metric",
+          "matches": 0,
+          "metric": "energy_generated"
+        }
+      ],
+      "finding": "Original number is visible in the PDF; extracted text interleaves neighbouring System Load Factor letters with energy digits.",
+      "applied_to_database": false,
+      "repair_approved_for_promotion": false
+    }
+  ],
+  "canonical_measurements_written": 0,
+  "forecast_models_fit": 0
+}
