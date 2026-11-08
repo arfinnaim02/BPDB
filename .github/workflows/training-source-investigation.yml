@@ -11,7 +11,7 @@ on:
       offset:
         description: Candidate-plan offset; compare plan fingerprints between runs
         required: true
-        default: "0"
+        default: "100"
   push:
     branches: [main]
     paths:
@@ -38,7 +38,7 @@ jobs:
       PYTHONUNBUFFERED: "1"
       PYTHONUTF8: "1"
       MAX_FILES: ${{ inputs.max_files || '100' }}
-      PLAN_OFFSET: ${{ inputs.offset || '0' }}
+      PLAN_OFFSET: ${{ inputs.offset || '100' }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
