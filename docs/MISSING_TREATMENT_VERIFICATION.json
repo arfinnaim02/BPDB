@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "study_id": "e83ad7c06caf768c72369a6d9d3c76492a80bb608eb58cbac630094a3e0aad6e",
+  "independently_reconstructed_trials": 4450,
+  "manifest_files_verified": 13,
+  "drive_receipts_verified": 14,
+  "windows_by_length": {
+    "1": 20,
+    "3": 20,
+    "7": 20,
+    "14": 20,
+    "30": 13
+  },
+  "held_proposals_refused": 16,
+  "cross_platform_uncompressed_outputs_identical": true,
+  "compressed_bytes_note": "Python/platform gzip headers may differ; hosted bytes checked against hosted manifest. Compare decompressed outputs when checking an independent rerun."
+}

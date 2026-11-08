@@ -1,4 +1,19 @@
-# Project status — November 1, 2026
+# Project status — November 8, 2026
+
+## Latest delivery — Missing-Data Treatment Study, 8 November 2026
+
+- Completed training-only energy-input reconstruction on the original frozen snapshot, 2020–2023.
+- Study ID: `e83ad7c06caf768c72369a6d9d3c76492a80bb608eb58cbac630094a3e0aad6e`.
+- Hosted archived run [42453574916](https://github.com/arfinnaim02/BPDB/actions/runs/42453574916) succeeded; 4,450 trial reconstructions independently verified.
+- Protected page **/quality/treatment**: gap-length controls, coverage/error charts, exact own/shared-date errors, frozen affected-date register and seven evidence downloads.
+- Training calendar: 1,461 dates; 1,378 eligible originals, 67 absent canonical dates, 16 held values.
+- Recent-original treatment is the provisional short-gap reconstruction candidate: shared-date MAE 12.8485 million kWh on 77 date-experiment pairs. It is **not** adopted and does **not** establish improved forecasting.
+- 30-day experiment found 13 eligible separated windows, not 20; no sample padding.
+- All held/missing labels remain unfilled; no Neon writes, retraining, previous-result changes or automatic treatment approvals.
+- Code/protocol were committed before real execution. A subsequent explicit hold-state gate changed no numeric results and was archived in a verified rerun.
+- Test results: backend 316 passed/1 skipped, frontend 46 passed; TypeScript, production build and authenticated page/download HTTP integration passed.
+- See [protocol](MISSING_TREATMENT_PROTOCOL.md), [execution/test report](MISSING_TREATMENT_TEST_REPORT.md) and [independent verification](MISSING_TREATMENT_VERIFICATION.json).
+- Next: source recovery where possible, then a separately pre-registered chronological input-treatment impact study with original-only targets and a valid confirmation period. Already evaluated 2025 data cannot become an untouched final test.
 
 ## Completed infrastructure
 

@@ -22,6 +22,7 @@ from app.api.preparation import router as preparation_router
 from app.api.quality import router as quality_router
 from app.api.recovery import router as recovery_router
 from app.api.reports import router as reports_router
+from app.api.treatment import router as treatment_router
 from app.core.config import get_settings
 from app.db.session import get_engine
 
@@ -72,6 +73,7 @@ app.include_router(missingness_router, dependencies=[Depends(require_admin)])
 app.include_router(preparation_router, dependencies=[Depends(require_admin)])
 app.include_router(recovery_router, dependencies=[Depends(require_admin)])
 app.include_router(reports_router, dependencies=[Depends(require_admin)])
+app.include_router(treatment_router, dependencies=[Depends(require_admin)])
 
 
 @app.get("/health/live", response_model=HealthResponse)
