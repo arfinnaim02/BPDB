@@ -95,7 +95,7 @@ def test_mask_windows_are_deterministic_bounded_separated_and_original(length):
 def synthetic_run(monkeypatch):
     data = calendar()
     held, missing = date(2021, 5, 3), date(2021, 5, 4)
-    data[held].update(eligible=False, value=None)
+    data[held].update(eligible=False, value=None, original=None)
     data[missing].update(eligible=False, value=None, original=None)
     rows = [
         {

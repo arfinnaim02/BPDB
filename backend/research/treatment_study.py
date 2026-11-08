@@ -331,7 +331,11 @@ def run(data):
             ),
             None,
         )
-        allowed = series[day]["original"] is None and previous is not None
+        allowed = (
+            row["category"] != "review_held"
+            and series[day]["original"] is None
+            and previous is not None
+        )
         for policy in POLICIES[1:]:
             value = estimate(series, day, policy) if allowed else None
             candidates.append(

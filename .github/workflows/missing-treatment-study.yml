@@ -1,4 +1,5 @@
 name: BPDB missing-data treatment study
+# Explicit hold-state exclusion applies even when a held record has no retained value.
 on:
   workflow_dispatch:
   push:
